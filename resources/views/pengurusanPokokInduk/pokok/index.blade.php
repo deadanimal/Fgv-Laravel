@@ -12,11 +12,11 @@
             <div class="row justify-content-center mb-5">
                 <div class="col-xl-5 border-end">
                     <h4 class="text-center">JUMLAH AKTIF</h4>
-                    <h1 class="text-center text-success fw-bold">123,456,213</h1>
+                    <h1 class="text-center text-success fw-bold">{{ $aktif }}</h1>
                 </div>
                 <div class="col-xl-6">
                     <h4 class="text-center">TANDAN TIDAK AKTIF</h4>
-                    <h1 class="text-center text-danger fw-bold">123,456,213</h1>
+                    <h1 class="text-center text-danger fw-bold">{{ $tidak_aktif }}</h1>
                 </div>
             </div>
 
@@ -95,10 +95,10 @@
                                     <thead class=" text-900">
                                         <tr style="border-bottom-color: #F89521">
                                             <th class="sort" data-sort="bil">Bil</th>
-                                            <th class="sort" data-sort="blok">No. Kakitangan</th>
-                                            <th class="sort" data-sort="baka">Nama Pekerja</th>
-                                            <th class="sort" data-sort="progeny">Nama Pekerja</th>
-                                            <th class="sort" data-sort="noPokok">Nama Pekerja</th>
+                                            <th class="sort" data-sort="blok">Blok</th>
+                                            <th class="sort" data-sort="baka">Baka</th>
+                                            <th class="sort" data-sort="progeny">Progeny</th>
+                                            <th class="sort" data-sort="noPokok">No Pokok</th>
                                             <th>Tindakan</th>
                                         </tr>
                                     </thead>

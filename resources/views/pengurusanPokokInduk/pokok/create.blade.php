@@ -91,6 +91,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-xl-6 mb-3">
+                            <div class="row align-items-center">
+                                <div class="col-xl-3">
+                                    <label class="col-form-label text-main">Status</label>
+                                </div>
+                                <div class="col-xl-8">
+                                    <select name="status_pokok" class="form-select border-main">
+                                        <option selected disabled hidden> SILA PILIH </option>
+                                        <option value="aktif">Aktif</option>
+                                        <option value="tidak_aktif">Tidak Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

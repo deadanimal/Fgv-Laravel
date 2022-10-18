@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tandan;
+
 class TandanController extends Controller
 {
     public function index()
     {
-        return view('pengurusanPokokInduk.tandan.index');
+        return view('pengurusanPokokInduk.tandan.index', [
+            'tandan' => Tandan::all(),
+        ]);
     }
 
     public function create()

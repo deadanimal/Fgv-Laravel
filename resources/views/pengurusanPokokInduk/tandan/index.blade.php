@@ -77,7 +77,8 @@
                                                     <button class=" btn btn-sm btn-danger">
                                                         <span data-feather="trash-2" style="width:15px;"></span>
                                                     </button>
-                                                    <a href="{{ route('pi.p.edit') }}" class="ms-2 btn btn-sm btn-danger">
+                                                    <a href="{{ route('pi.p.edit', $tandan) }}"
+                                                        class="ms-2 btn btn-sm btn-danger">
                                                         <span data-feather="edit" style="width:15px;"></span>
                                                     </a>
                                                 </td>

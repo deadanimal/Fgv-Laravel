@@ -10,7 +10,9 @@ class PokokController extends Controller
     public function index()
     {
         return view('pengurusanPokokInduk.pokok.index', [
-            'pokoks' => Pokok::with('user')->get(),
+            'pokoks' => Pokok::all(),
+            'aktif' => Pokok::where('status_pokok', 'aktif')->count(),
+            'tidak_aktif' => Pokok::where('status_pokok', 'tidak_aktif')->count(),
         ]);
     }
 
