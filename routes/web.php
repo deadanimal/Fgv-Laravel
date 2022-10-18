@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Auth::routes(['register' => false]);
-
+Auth::routes();
+// ['register' => false]
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('laman');
     Route::get('', [HomeController::class, 'index']);

@@ -12,7 +12,9 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            dd($request->data);
+            // dd($request->search);
+            $result = User::where('no_kakitangan', $request->search)->where('peranan', 'Pengguna')->get();
+            return response()->json([$result]);
         }
 
         return view('user.index', [

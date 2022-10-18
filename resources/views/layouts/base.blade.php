@@ -423,6 +423,10 @@
                 $(".navbar").css('margin-top', '0');
             }
         });
+
+        $('.btnRefresh').click(function() {
+            location.reload();
+        });
     </script>
     @yield('scripts')
 

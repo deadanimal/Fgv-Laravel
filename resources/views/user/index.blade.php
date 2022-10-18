@@ -20,7 +20,7 @@
                     <button class="btn btn-sm btn-danger" id="btnSearch">Cari
                         <span data-feather="search"></span>
                     </button>
-                    <button class="btn btn-sm btn-link">
+                    <button class="btn btn-sm btn-link btnRefresh">
                         <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
                     </button>
                 </div>
@@ -50,7 +50,7 @@
                                         <th>Tindakan</th>
                                     </tr>
                                 </thead>
-                                <tbody class="list">
+                                <tbody class="list" id="tablebody">
                                     @foreach ($users as $user)
                                         <tr style="border-bottom:#fff">
                                             <td class="bil">
@@ -63,9 +63,14 @@
                                                 {{ $user->nama }}
                                             </td>
                                             <td>
-                                                <button class=" btn btn-sm btn-danger">
-                                                    <span data-feather="trash-2" style="width:15px;"></span>
-                                                </button>
+                                                <form action="{{ route('pp.delete', $user->id) }}" method="post"
+                                                    class="d-inline-flex">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class=" btn btn-sm btn-danger">
+                                                        <span data-feather="trash-2" style="width:15px;"></span>
+                                                    </button>
+                                                </form>
                                                 <a href="{{ route('pp.edit', $user->id) }}"
                                                     class="ms-2 btn btn-sm btn-danger">
                                                     <span data-feather="edit" style="width:15px;"></span>
@@ -98,10 +103,42 @@
                 $.ajax({
                     type: "GET",
                     url: "{{ route('pp.index') }}",
-                    data: $data,
-                    dataType: "string",
+                    data: {
+                        "search": $data
+                    },
                     success: function(response) {
-
+                        $('#tablebody').html('');
+                        response[0].forEach(element => {
+                            let i = 0;
+                            $('#tablebody').append(`
+                                <tr style="border-bottom:#fff">
+                                    <td class="bil">
+                                        ` + i + `
+                                    </td>
+                                    <td class="kakitangan">
+                                        ` + element.no_kakitangan + `
+                                    </td>
+                                    <td class="pekerja">
+                                         ` + element.nama + `
+                                    </td>
+                                    <td>
+                                        <form action="/pengurusan_pengguna/delete/{` + element.id + `} " method="post"
+                                            class="d-inline-flex">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                <span class="fas fa-trash-alt" style="width:15px;"></span>
+                                            </button>
+                                        </form>
+                                        <a href="/pengurusan_pengguna/edit/{` + element.id + `}"
+                                            class="ms-2 btn btn-sm btn-danger">
+                                            <span class="fas fa-edit" style="width:15px;"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            `);
+                            i++;
+                        });
                     }
                 });
             });
