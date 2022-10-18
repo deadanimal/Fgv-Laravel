@@ -23,6 +23,7 @@ Auth::routes(['register' => false]);
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('laman');
+    Route::get('', [HomeController::class, 'index']);
 
     Route::prefix('/pengurusan_pengguna')->group(function () {
         Route::get('/index', [UserController::class, 'index'])->name('pp.index');
