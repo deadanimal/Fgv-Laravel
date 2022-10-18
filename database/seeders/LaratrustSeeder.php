@@ -30,6 +30,9 @@ class LaratrustSeeder extends Seeder
             'tugasan' => 'tugasansa',
             'email' => 'a@gmail.com',
             'password' => Hash::make('123'),
+            'peranan' => 'admin',
         ]);
+
+        $user->attachRole($admin);
     }
 }
