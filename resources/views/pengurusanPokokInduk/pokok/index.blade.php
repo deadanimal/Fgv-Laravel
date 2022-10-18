@@ -2,13 +2,23 @@
 @section('content')
     <x-header main="Pengurusan Pokok Induk" sub="Pokok" sub2="" />
 
-
+    {{-- 
     <h4 class="text-center mt-4">JUMLAH POKOK</h4>
-    <h1 class="text-center text-danger fw-bold">123,456,213</h1>
+    <h1 class="text-center text-danger fw-bold">123,456,213</h1> --}}
 
 
     <div class="row justify-content-center mt-4">
         <div class="col-10">
+            <div class="row justify-content-center mb-5">
+                <div class="col-xl-5 border-end">
+                    <h4 class="text-center">JUMLAH AKTIF</h4>
+                    <h1 class="text-center text-success fw-bold">123,456,213</h1>
+                </div>
+                <div class="col-xl-6">
+                    <h4 class="text-center">TANDAN TIDAK AKTIF</h4>
+                    <h1 class="text-center text-danger fw-bold">123,456,213</h1>
+                </div>
+            </div>
 
             <div class="row mb-3">
                 <div class="col-xl-6">
@@ -24,7 +34,7 @@
 
                 <div class="col-xl-6">
                     <div class="row g-3 align-items-center">
-                        <div class="col-xl-4 text-end">
+                        <div class="col-xl-4 text-center">
                             <label class="col-form-label">Progeny</label>
                         </div>
                         <div class="col-xl-8">
@@ -48,7 +58,7 @@
 
                 <div class="col-xl-6">
                     <div class="row g-3 align-items-center">
-                        <div class="col-xl-4 text-end">
+                        <div class="col-xl-4 text-center">
                             <label class="col-form-label">No. Pokok</label>
                         </div>
                         <div class="col-xl-8">
@@ -69,6 +79,7 @@
                 </div>
             </div>
 
+
             <div class="text-end mb-3 mt-5">
                 <a href="{{ route('pi.p.create') }}" class="btn btn-danger">Daftar
                     <span class="text-white" data-feather="plus-circle"></span>
@@ -78,37 +89,55 @@
                 <div class="card">
                     <div class="card-body">
                         <div id="tableExample2"
-                            data-list='{"valueNames":["bil","kakitangan","pekerja"],"page":5,"pagination":true}'>
+                            data-list='{"valueNames":["bil","blok","baka","progeny","noPokok"],"page":5,"pagination":true}'>
                             <div class="table-responsive scrollbar table-striped">
                                 <table class="table fs--1 mb-0 text-center">
                                     <thead class=" text-900">
                                         <tr style="border-bottom-color: #F89521">
                                             <th class="sort" data-sort="bil">Bil</th>
-                                            <th class="sort" data-sort="kakitangan">No. Kakitangan</th>
-                                            <th class="sort" data-sort="pekerja">Nama Pekerja</th>
+                                            <th class="sort" data-sort="blok">No. Kakitangan</th>
+                                            <th class="sort" data-sort="baka">Nama Pekerja</th>
+                                            <th class="sort" data-sort="progeny">Nama Pekerja</th>
+                                            <th class="sort" data-sort="noPokok">Nama Pekerja</th>
                                             <th>Tindakan</th>
                                         </tr>
                                     </thead>
                                     <tbody class="list">
-                                        @for ($i = 0; $i < 50; $i++)
+                                        @foreach ($pokoks as $pokok)
                                             <tr style="border-bottom:#fff">
                                                 <td class="bil">
-                                                    {{ $i }}
+                                                    {{ $loop->iteration }}
                                                 </td>
-                                                <td class="kakitangan">Anna
+                                                <td class="blok">
+                                                    {{ $pokok->blok }}
                                                 </td>
-                                                <td class="pekerja">
-                                                    anna@example.com</td>
+                                                <td class="baka">
+                                                    {{ $pokok->baka }}
+                                                </td>
+                                                <td class="progeny">
+                                                    {{ $pokok->progeny }}
+                                                </td>
+                                                <td class="noPokok">
+                                                    {{ $pokok->no_pokok }}
+                                                </td>
                                                 <td>
-                                                    <button class=" btn btn-sm btn-danger">
-                                                        <span data-feather="trash-2" style="width:15px;"></span>
-                                                    </button>
-                                                    <a href="{{ route('pi.p.edit') }}" class="ms-2 btn btn-sm btn-danger">
+                                                    <form action="{{ route('pi.p.delete', $pokok->id) }}" method="post"
+                                                        class="d-inline-flex">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class=" btn btn-sm btn-danger">
+                                                            <span data-feather="trash-2" style="width:15px;"></span>
+                                                        </button>
+                                                    </form>
+
+                                                    <a href="{{ route('pi.p.edit', $pokok->id) }}"
+                                                        class="ms-2 btn btn-sm btn-danger">
                                                         <span data-feather="edit" style="width:15px;"></span>
                                                     </a>
                                                 </td>
                                             </tr>
-                                        @endfor
+                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div>

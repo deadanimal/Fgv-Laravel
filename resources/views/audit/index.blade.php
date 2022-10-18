@@ -73,7 +73,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="list">
-                                        @for ($i = 0; $i < 50; $i++)
+                                        {{-- @for ($i = 0; $i < 50; $i++)
                                             <tr style="border-bottom:#fff">
                                                 <td class="bil">
                                                     {{ $i }}
@@ -92,7 +92,28 @@
                                                 </td>
 
                                             </tr>
-                                        @endfor
+                                        @endfor --}}
+
+                                        @foreach ($logs as $log)
+                                            <tr style="border-bottom:#fff">
+                                                <td class="bil">
+                                                    {{ $loop->iteration }}
+                                                </td>
+                                                <td class="kakitangan">
+                                                    {{ $log->causer->no_kakitangan }}
+                                                </td>
+                                                <td class="tindakan">
+                                                    {{ $log->event }}
+                                                </td>
+                                                <td class="keterangan">
+                                                    {{ $log->description }}
+                                                </td>
+                                                <td class="tarikhTindakan">
+                                                    {{ $log->updated_at->format('d/m/Y') }}
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

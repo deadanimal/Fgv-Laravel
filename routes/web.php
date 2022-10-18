@@ -45,9 +45,10 @@ Route::middleware('auth')->group(function () {
         Route::prefix('/pokok')->group(function () {
             Route::get('/index', [PokokController::class, 'index'])->name('pi.p.index');
             Route::get('/create', [PokokController::class, 'create'])->name('pi.p.create');
-            Route::get('/edit', [PokokController::class, 'edit'])->name('pi.p.edit');
-            Route::put('/update/{id}', [PokokController::class, 'update'])->name('pi.p.update');
-            Route::delete('/delete/{user}', [PokokController::class, 'delete'])->name('pi.p.delete');
+            Route::get('/edit/{pokok}', [PokokController::class, 'edit'])->name('pi.p.edit');
+            Route::post('/store', [PokokController::class, 'store'])->name('pi.p.store');
+            Route::put('/update/{pokok}', [PokokController::class, 'update'])->name('pi.p.update');
+            Route::delete('/delete/{pokok}', [PokokController::class, 'delete'])->name('pi.p.delete');
         });
 
         Route::prefix('/tandan')->group(function () {

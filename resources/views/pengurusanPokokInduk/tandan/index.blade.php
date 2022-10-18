@@ -5,36 +5,21 @@
 
     <div class="row justify-content-center mt-5">
 
-        <div class="col-8">
 
-            <div class="row justify-content-center">
-                <div class="col-xl-5 border-end">
-                    <h4 class="text-center">JUMLAH AKTIF</h4>
-                    <h1 class="text-center text-success fw-bold">123,456,213</h1>
-                </div>
-                <div class="col-xl-6">
-                    <h4 class="text-center">TANDAN TIDAK AKTIF</h4>
-                    <h1 class="text-center text-danger fw-bold">123,456,213</h1>
-                </div>
+        <div class="row mt-5">
+            <div class="col-2">
+                <p class="fw-bold">No. Kakitangan</p>
             </div>
-
-
-
-            <div class="row mt-5">
-                <div class="col-2">
-                    <p class="fw-bold">No. Kakitangan</p>
-                </div>
-                <div class="col-8 mt-1">
-                    <input type="text" name="search" class="form-control">
-                </div>
-                <div class="col-2 px-0 mt-1">
-                    <button class="btn btn-sm btn-danger">Cari
-                        <span data-feather="search"></span>
-                    </button>
-                    <button class="btn btn-sm btn-link">
-                        <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
-                    </button>
-                </div>
+            <div class="col-8 mt-1">
+                <input type="text" name="search" class="form-control">
+            </div>
+            <div class="col-2 px-0 mt-1">
+                <button class="btn btn-sm btn-danger">Cari
+                    <span data-feather="search"></span>
+                </button>
+                <button class="btn btn-sm btn-link">
+                    <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
+                </button>
             </div>
         </div>
 
