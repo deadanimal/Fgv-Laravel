@@ -15,13 +15,15 @@ return new class extends Migration
     {
         Schema::create('tandans', function (Blueprint $table) {
             $table->id();
-            $table->char('no_daftar', 128)->nullable();
-            $table->foreignId('pokok_id')->constrained('pokoks')->cascadeOnDelete();
+            $table->char('no_daftar', 128);
+            $table->char('tarikh_daftar', 128)->nullable();
+            $table->foreignId('pokok_id')->nullable();
 
             $table->char('kitaran', 128)->nullable();
             $table->char('deskripsi_kitaran', 128)->nullable();
             $table->char('status_tandan', 128)->nullable();
             $table->char('catatan', 128)->nullable();
+            $table->string('file')->nullable();
             $table->integer('umur')->nullable();
 
             $table->timestamps();

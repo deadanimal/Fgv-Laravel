@@ -341,7 +341,7 @@
 
                 @yield('content')
 
-                <div class="row mt-8">
+                <div class="row mt-5">
                     <div class="col-12 mt-5">
                         <footer class="mb-2">
                             <hr class="text-main mb-2" style="height: 3px;">

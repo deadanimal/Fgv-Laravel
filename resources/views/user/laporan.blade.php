@@ -26,8 +26,7 @@
                             <label class="col-form-label">Tarikh Mula</label>
                         </div>
                         <div class="col-xl-8">
-                            <input class="form-select datetimepicker border-danger" type="date" placeholder="SILA PILIH"
-                                data-options='{"disableMobile":true}' />
+                            <x-custom-date-input name="tarikh_mula" />
                         </div>
                     </div>
                 </div>
@@ -37,8 +36,7 @@
                             <label class="col-form-label">Tarikh Akhir</label>
                         </div>
                         <div class="col-xl-8">
-                            <input class="form-select datetimepicker border-danger" type="date" placeholder="SILA PILIH"
-                                data-options='{"disableMobile":true}' />
+                            <x-custom-date-input name="tarikh_mula" />
                         </div>
                     </div>
                 </div>

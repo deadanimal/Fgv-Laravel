@@ -6,7 +6,6 @@ use Illuminate\View\Component;
 
 class CustomDateInput extends Component
 {
-    public $id;
     public $name;
     /**
      * Create a new component instance.
@@ -14,9 +13,8 @@ class CustomDateInput extends Component
      * @return void
      */
 
-    public function __construct($id, $name)
+    public function __construct($name)
     {
-        $this->id = $id;
         $this->name = $name;
     }
 

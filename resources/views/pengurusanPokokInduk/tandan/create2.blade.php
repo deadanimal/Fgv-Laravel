@@ -3,7 +3,7 @@
 @section('content')
     <x-header main="Pengurusan Pokok Induk" sub="Tandan" sub2="Daftar Tandan" />
     <div class="container mb-10 mt-5">
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="{{ route('pi.t.update', $tandan->id) }}" method="post" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="row justify-content-center">

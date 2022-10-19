@@ -54,9 +54,10 @@ Route::middleware('auth')->group(function () {
         Route::prefix('/tandan')->group(function () {
             Route::get('/index', [TandanController::class, 'index'])->name('pi.t.index');
             Route::get('/create', [TandanController::class, 'create'])->name('pi.t.create');
-            Route::get('/edit', [TandanController::class, 'edit'])->name('pi.t.edit');
-            Route::put('/update/{id}', [TandanController::class, 'update'])->name('pi.t.update');
-            Route::delete('/delete/{user}', [TandanController::class, 'delete'])->name('pi.t.delete');
+            Route::post('/store', [TandanController::class, 'store'])->name('pi.t.store');
+            Route::get('/edit/{tandan}', [TandanController::class, 'edit'])->name('pi.t.edit');
+            Route::put('/update/{tandan}', [TandanController::class, 'update'])->name('pi.t.update');
+            Route::delete('/delete/{tandan}', [TandanController::class, 'delete'])->name('pi.t.delete');
             Route::get('/muat-naik', [TandanController::class, 'MuatNaikDokumenTandan'])->name('pi.t.muat');
 
         });
