@@ -11,7 +11,17 @@
                     <h5 class="text-main">Sila isikan maklumat pekerja berikut dengan betul.</h5>
 
                     <div class="row align-items-center mt-5">
-
+                        <div class="col-12">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
                         <div class="col-xl-6">
                             <div class="row align-items-center">
                                 <div class="col-xl-3">
@@ -20,7 +30,7 @@
                                 <div class="col-xl-8">
                                     <input type="text" name="nama"
                                         class="form-control border-main  @error('nama') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DISINI" value="{{ old('nama') }}">
                                 </div>
 
                             </div>
@@ -35,47 +45,55 @@
                                 <div class="col-xl-8">
                                     <input type="number" name="no_kakitangan"
                                         class="form-control border-main  @error('no_kakitangan') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DISINI" value="{{ old('no_kakitangan') }}">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="row align-items-center">
+                                <div class="col-xl-3">
+                                    <label class="col-form-label text-main">Peranan</label>
+                                </div>
+                                <div class="col-xl-8">
+                                    <select name="peranan"
+                                        class="form-select border-main  @error('peranan') is-invalid @enderror"
+                                        id="email">
+                                        <option selected disabled hidden> SILA PILIH </option>
+                                        @foreach ($roles as $role)
+                                            <option {{ old('peranan') == $role->name ? 'selected' : '' }}
+                                                value="{{ $role->name }}">{{ $role->display_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
 
                         <div class="col-xl-6">
                             <div class="row align-items-center">
+                                <div class="col-xl-1"></div>
                                 <div class="col-xl-3">
                                     <label class="col-form-label text-main">No. Kad Pengenalan</label>
                                 </div>
                                 <div class="col-xl-8">
                                     <input type="number" name="no_kad_pengenalan"
                                         class="form-control border-main  @error('no_kad_pengenalan') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DISINI" value="{{ old('no_kad_pengenalan') }}">
                                 </div>
                             </div>
                         </div>
 
+
+
                         <div class="col-xl-6">
                             <div class="row align-items-center">
-                                <div class="col-1"></div>
                                 <div class="col-xl-3">
                                     <label class="col-form-label text-main">No. Telefon</label>
                                 </div>
                                 <div class="col-xl-8">
                                     <input type="number" name="no_telefon"
                                         class="form-control border-main @error('no_telefon') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6 my-2">
-                            <div class="row align-items-center">
-                                <div class="col-xl-3">
-                                    <label class="col-form-label text-main">E-mel</label>
-                                </div>
-                                <div class="col-xl-8">
-                                    <input type="text" name="email"
-                                        class="form-control border-main  @error('email') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DISINI" value="{{ old('no_telefon') }}">
                                 </div>
                             </div>
                         </div>
@@ -83,6 +101,20 @@
                         <div class="col-xl-6 my-2">
                             <div class="row align-items-center">
                                 <div class="col-1"></div>
+
+                                <div class="col-xl-3">
+                                    <label class="col-form-label text-main">E-mel</label>
+                                </div>
+                                <div class="col-xl-8">
+                                    <input type="text" name="email"
+                                        class="form-control border-main  @error('email') is-invalid @enderror"
+                                        placeholder="SILA TAIP DISINI" value="{{ old('email') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 my-2">
+                            <div class="row align-items-center">
                                 <div class="col-xl-3">
                                     <label class="col-form-label text-main">Stesen</label>
                                 </div>
@@ -91,27 +123,10 @@
                                         class="form-select border-main  @error('stesen') is-invalid @enderror"
                                         id="email">
                                         <option selected disabled hidden> SILA PILIH </option>
-                                        <option value="Pahang">Pahang</option>
-                                        <option value="Sabah">Sabah</option>
-                                        <option value="Johor">Johor</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6">
-                            <div class="row align-items-center">
-                                <div class="col-xl-3">
-                                    <label class="col-form-label text-main">Kategori Petugas</label>
-                                </div>
-                                <div class="col-xl-8">
-                                    <select name="kategori_petugas"
-                                        class="form-select border-main @error('kategori_petugas') is-invalid @enderror"
-                                        id="email">
-                                        <option selected disabled hidden> SILA PILIH </option>
-                                        <option value="Petugas Am">Petugas Am</option>
-                                        <option value="Pekerja Operasi Ladang">Pekerja Operasi Ladang</option>
-                                        <option value="Tenaga Kerja Luar">Tenaga Kerja Luar</option>
+                                        @foreach ($stesens as $stesen)
+                                            <option {{ old('stesen') == $stesen->name ? 'selected' : '' }}
+                                                value="{{ $stesen->name }}">{{ $stesen->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -120,24 +135,29 @@
                         <div class="col-xl-6">
                             <div class="row align-items-center">
                                 <div class="col-1"></div>
+
                                 <div class="col-xl-3">
-                                    <label class="col-form-label text-main">Tugasan</label>
+                                    <label class="col-form-label text-main">Kategori Petugas</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <select name="tugasan"
-                                        class="form-select border-main  @error('tugasan') is-invalid @enderror"
+                                    <select name="kategori_petugas"
+                                        class="form-select border-main @error('kategori_petugas') is-invalid @enderror"
                                         id="email">
                                         <option selected disabled hidden> SILA PILIH </option>
-                                        <option value="Petugas Am">Petugas Am</option>
-                                        <option value="Pekerja Operasi Ladang">Pekerja Operasi Ladang</option>
-                                        <option value="Tenaga Kerja Luar">Tenaga Kerja Luar</option>
+                                        @foreach ($kategoris as $kp)
+                                            <option {{ old('kategori_petugas') == $kp->name ? 'selected' : '' }}
+                                                value="{{ $kp->name }}">{{ $kp->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
 
+
+
                         <div class="col-xl-6 my-2">
                             <div class="row align-items-center">
+
                                 <div class="col-xl-3">
                                     <label class="col-form-label text-main">Blok</label>
                                 </div>
@@ -152,6 +172,7 @@
                         <div class="col-xl-6">
                             <div class="row align-items-center">
                                 <div class="col-1"></div>
+
                                 <div class="col-xl-3">
                                     <label class="col-form-label text-main">Jangka Hayat Laluan</label>
                                 </div>

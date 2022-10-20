@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('no_kad_pengenalan');
             $table->string('email')->unique();
             $table->string('kategori_petugas');
-            $table->string('tugasan');
 
             $table->string('no_telefon')->nullable();
             $table->string('stesen')->nullable();

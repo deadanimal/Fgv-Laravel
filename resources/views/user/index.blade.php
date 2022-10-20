@@ -2,9 +2,10 @@
 @section('content')
     <x-header main="Pengurusan Pengguna" sub="Petugas" sub2="" />
 
-
-    <h4 class="text-center">JUMLAH PETUGAS</h4>
-    <h1 class="text-center text-danger fw-bold">{{ count($users) }}</h1>
+    <div class="my-4">
+        <h4 class="text-center">JUMLAH PETUGAS</h4>
+        <h1 class="text-center text-danger fw-bold">{{ count($users) }}</h1>
+    </div>
 
 
     <div class="row justify-content-center">
@@ -13,10 +14,10 @@
                 <div class="col-2">
                     <p class="fw-bold">No. Kakitangan</p>
                 </div>
-                <div class="col-8 mt-1">
+                <div class="col-7 mt-1">
                     <input type="text" name="search" id="search" class="form-control">
                 </div>
-                <div class="col-2 px-0 mt-1">
+                <div class="col-3 px-0 mt-1">
                     <button class="btn btn-sm btn-danger" id="btnSearch">Cari
                         <span data-feather="search"></span>
                     </button>
@@ -68,12 +69,12 @@
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class=" btn btn-sm btn-danger">
-                                                        <span data-feather="trash-2" style="width:15px;"></span>
+                                                        <span class="fas fa-trash" style="width:15px;"></span>
                                                     </button>
                                                 </form>
                                                 <a href="{{ route('pp.edit', $user->id) }}"
                                                     class="ms-2 btn btn-sm btn-danger">
-                                                    <span data-feather="edit" style="width:15px;"></span>
+                                                    <span class="fas fa-edit" style="width:15px;"></span>
                                                 </a>
                                             </td>
                                         </tr>
