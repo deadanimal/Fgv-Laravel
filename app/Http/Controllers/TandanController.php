@@ -129,9 +129,12 @@ class TandanController extends Controller
         return back();
     }
 
-    public function delete()
+    public function delete(Tandan $tandan)
     {
+        alert()->success('Berjaya Dibuang', 'Tandan ' . $tandan->no_daftar . ' telah dibuang');
+        $tandan->delete();
 
+        return back();
     }
 
     public function MuatNaikDokumenTandan()

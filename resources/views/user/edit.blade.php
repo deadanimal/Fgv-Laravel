@@ -170,6 +170,10 @@
 
             <div class="row mt-5">
                 <div class="text-center">
+                    <button class="btn btn-danger" type="button" data-bs-toggle="modal"
+                        data-bs-target="#update_password"> Password
+                        <span data-feather="settings"></span>
+                    </button>
                     <button class="btn btn-danger" type="submit">Kemaskini
                         <span data-feather="check-circle"></span>
                     </button>
@@ -178,8 +182,56 @@
 
         </form>
     </div>
+    <div class="modal fade" id="update_password" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+            <div class="modal-content position-relative">
+                <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('pp.updatePwd', $user->id) }}" method="POST" id="formpwd">
+                    @csrf
+                    <div class="modal-body p-0">
+                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                            <h4 class="mb-1" id="modalExampleDemoLabel">Kemaskini Password </h4>
+                        </div>
+                        <div class="p-4 pb-0">
+                            <div class="mb-3">
+                                <label class="col-form-label" for="p1">New Password:</label>
+                                <input class="form-control" id="p1" type="text" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label" for="p2">New Password Confirmation:</label>
+                                <input class="form-control" name="password" id="p2" type="text" />
+                            </div>
+                            <div>
+                                <p id="err-msg-pwd" class="text-danger hide">Password dimasukkan tidak sama</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary" id="btnsubmitpwd" type="submit">Simpan </button>
+                    </div>
+                </form>
 
+            </div>
+        </div>
+    </div>
     <script>
+        $('#err-msg-pwd').hide();
+
+        $('#btnsubmitpwd').click(function(e) {
+            e.preventDefault();
+            if ($('#p1').val() != $('#p2').val()) {
+                $('#err-msg-pwd').show();
+            } else {
+                $('#err-msg-pwd').hide();
+                $('#formpwd').submit();
+            }
+        });
+
+
         $("#custom-btn-white").mouseenter(function() {
             $(this).removeClass('btn-white');
             $(this).removeClass('text-danger');

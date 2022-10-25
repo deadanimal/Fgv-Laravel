@@ -91,6 +91,49 @@
                         </div>
                     </div>
 
+                    {{-- <div class="table-responsive scrollbar table-striped">
+                        <table class="table fs--1 mb-0 text-center datatable">
+                            <thead class=" text-900">
+                                <tr style="border-bottom-color: #F89521">
+                                    <th>Bil</th>
+                                    <th>No. Kakitangan</th>
+                                    <th>Nama Pekerja</th>
+                                    <th>Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list" id="tablebody">
+                                @foreach ($users as $user)
+                                    <tr style="border-bottom:#fff">
+                                        <td class="bil">
+                                            {{ $loop->iteration }}
+                                        </td>
+                                        <td class="kakitangan">
+                                            {{ $user->no_kakitangan }}
+                                        </td>
+                                        <td class="pekerja">
+                                            {{ $user->nama }}
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('pp.delete', $user->id) }}" method="post"
+                                                class="d-inline-flex">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class=" btn btn-sm btn-danger">
+                                                    <span class="fas fa-trash" style="width:15px;"></span>
+                                                </button>
+                                            </form>
+                                            <a href="{{ route('pp.edit', $user->id) }}" class="ms-2 btn btn-sm btn-danger">
+                                                <span class="fas fa-edit" style="width:15px;"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div> --}}
+
+
+
                 </div>
             </div>
         </div>

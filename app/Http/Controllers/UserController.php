@@ -86,4 +86,17 @@ class UserController extends Controller
     {
         return view('user.maklumat');
     }
+
+    public function kemaskini_password(Request $request, User $user)
+    {
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        alert()->success('Berjaya', 'Password berjaya diubah');
+
+        activity()->event('Kemaskini Data')->log('Password ' . $user->nama . ' telah diubah');
+
+        return redirect()->route('pp.index');
+    }
 }

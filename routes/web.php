@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KerosakanController;
 use App\Http\Controllers\PokokController;
 use App\Http\Controllers\TandanController;
 use App\Http\Controllers\UserController;
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{user}', [UserController::class, 'edit'])->name('pp.edit');
         Route::put('/update/{user}', [UserController::class, 'update'])->name('pp.update');
         Route::delete('/delete/{user}', [UserController::class, 'delete'])->name('pp.delete');
+        Route::post('/kemaskini_password/{user}', [UserController::class, 'kemaskini_password'])->name('pp.updatePwd');
 
         Route::get('/laporan', [UserController::class, 'laporan'])->name('pp.laporan');
         Route::get('/maklumat', [UserController::class, 'maklumat'])->name('pp.maklumat');
@@ -49,6 +51,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [PokokController::class, 'store'])->name('pi.p.store');
             Route::put('/update/{pokok}', [PokokController::class, 'update'])->name('pi.p.update');
             Route::delete('/delete/{pokok}', [PokokController::class, 'delete'])->name('pi.p.delete');
+
         });
 
         Route::prefix('/tandan')->group(function () {
@@ -62,6 +65,13 @@ Route::middleware('auth')->group(function () {
 
         });
 
+    });
+
+    Route::prefix('/konfigurasi')->group(function () {
+        Route::get('/kerosakan', [KerosakanController::class, 'index'])->name('k.index');
+        Route::post('/kerosakan', [KerosakanController::class, 'store'])->name('k.store');
+        Route::put('/kerosakan/{kerosakan}', [KerosakanController::class, 'update'])->name('k.update');
+        Route::delete('/kerosakan/{kerosakan}', [KerosakanController::class, 'delete'])->name('k.delete');
     });
 
 });

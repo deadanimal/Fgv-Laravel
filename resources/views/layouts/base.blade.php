@@ -101,6 +101,8 @@
         }
     </style>
 
+    <link rel="stylesheet" type="text/css" href="/datatable.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
 </head>
 
@@ -131,10 +133,11 @@
                                 height="20%;">
                             <div class="ms-1 ">
                                 <p class="text-main mb-0">
-                                    <span class="fw-bold">NAMA :</span> Namamama
+                                    <span class="fw-bold">NAMA :</span> <br> {{ auth()->user()->nama }}
                                 </p>
                                 <p class="text-main">
-                                    <span class="fw-bold">NO. Kakitangan:</span> 00110-090X-11XFGV
+                                    <span class="fw-bold">NO. Kakitangan:</span> <br>
+                                    {{ auth()->user()->no_kakitangan }}
                                 </p>
                             </div>
                         </div>
@@ -233,7 +236,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link p-3 my-1 dropdown-indicator" href="#laporan" role="button"
+                                <a class="nav-link p-3 my-1 dropdown-indicator " href="#laporan" role="button"
                                     data-bs-toggle="collapse" aria-expanded="false" aria-controls="laporan">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-icon">
@@ -242,29 +245,30 @@
                                         <span class="nav-link-text ps-3 text-main">Laporan</span>
                                     </div>
                                 </a>
-                                <ul class="nav collapse false" id="laporan">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="">
+                                <ul class="nav collapse ps-4" id="laporan">
+                                    <li class="nav-item ">
+                                        <a class="nav-link" href="#">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon">
                                                     <span class="fas fa-folder-open text-main"></span>
                                                 </span>
-                                                <span class="nav-link-text ps-1">Pokok</span>
+                                                <span class="nav-link-text text-main ps-1">Motherpalm</span>
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="">
+                                    <li class="nav-item ">
+                                        <a class="nav-link" href="#">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon">
                                                     <span class="fas fa-folder-open text-main"></span>
                                                 </span>
-                                                <span class="nav-link-text ps-1">Tandan</span>
+                                                <span class="nav-link-text text-main ps-1">Fatherpalm</span>
                                             </div>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+
 
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::is('audit') ? 'active' : '' }} p-3 my-1 "
@@ -286,29 +290,30 @@
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-icon">
                                             <img src="/icons/setting.ico" width="100%">
-
                                         </span>
                                         <span class="nav-link-text ps-3 text-main">Konfigurasi Sistem</span>
                                     </div>
                                 </a>
-                                <ul class="nav collapse false" id="konfigurasi-sistem">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="">
+                                <ul class="nav collapse {{ Request::is('konfigurasi/*') ? 'show' : 'false' }} ps-4"
+                                    id="konfigurasi-sistem">
+                                    <li class="nav-item  {{ Request::is('konfigurasi/kerosakan') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('k.index') }}">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon">
                                                     <span class="fas fa-folder-open text-main"></span>
                                                 </span>
-                                                <span class="nav-link-text ps-1">Pokok</span>
+                                                <span class="nav-link-text text-main ps-1">Kerosakan</span>
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="">
+                                    <li class="nav-item ">
+                                        <a class="nav-link" href="#">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon">
                                                     <span class="fas fa-folder-open text-main"></span>
                                                 </span>
-                                                <span class="nav-link-text ps-1">Tandan</span>
+                                                <span class="nav-link-text text-main ps-1">Maklumat Bulanan /
+                                                    Tahunan</span>
                                             </div>
                                         </a>
                                     </li>
@@ -430,6 +435,13 @@
     </script>
     @yield('scripts')
 
+    <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable();
+
+            $('th').addClass('text-center');
+        });
+    </script>
 
 </body>
 
