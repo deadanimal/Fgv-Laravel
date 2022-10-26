@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pokok;
 use App\Models\Tandan;
 use App\Models\Tugasan;
 use App\Models\User;
@@ -29,7 +30,7 @@ class TugasanController extends Controller
     public function create()
     {
         return view('tugasan.create', [
-            'tandans' => Tandan::all(),
+            'tandans' => Tandan::whereNotNull('pokok_id')->get(),
             'users' => User::all(),
         ]);
     }
@@ -45,7 +46,7 @@ class TugasanController extends Controller
         Tugasan::create($request->all());
         alert()->success('Berjaya', 'Tugasan berjaya disimpan');
         activity()->event('Tugasan')->log('Tugasan Ditambah');
-        return redirect()->route('pp.laporan');
+        return redirect()->route('tugasan.index');
     }
 
     /**
@@ -56,7 +57,12 @@ class TugasanController extends Controller
      */
     public function show(Tugasan $tugasan)
     {
-        //
+        $tandan = Tandan::find($tugasan->tandan_id);
+        $pokok = Pokok::find($tandan->pokok_id);
+        $namaPetugas = User::find($tugasan->petugas_id)->nama;
+        $namaPengesah = User::find($tugasan->pengesah_id)->nama;
+
+        return view('tugasan.show', compact('tugasan', 'tandan', 'pokok', 'namaPetugas', 'namaPengesah'));
     }
 
     /**
@@ -79,7 +85,29 @@ class TugasanController extends Controller
      */
     public function update(Request $request, Tugasan $tugasan)
     {
-        //
+        switch ($request->status) {
+            case 'siap':
+                $tugasan['status'] = 'siap';
+                break;
+            case 'sah':
+                $tugasan['status'] = 'sah';
+                $tugasan['pengesah_id'] = auth()->id();
+                $tugasan['tarikh_pengesahan'] = now();
+                break;
+            case 'rosak':
+                $tugasan['status'] = 'rosak';
+                $tugasan['pengesah_id'] = auth()->id();
+                $tugasan['tarikh_pengesahan'] = now();
+                break;
+            default:
+                abort(500);
+                break;
+        }
+        $tugasan->save();
+
+        activity()->event('Tugasan')->log('Tugasan Id:' . $tugasan->id . ' kepada ' . $tugasan->petugas->nama . ' telah ' . $tugasan->status);
+        alert()->success('Berjaya', 'Data dikemaskini');
+        return back();
     }
 
     /**
@@ -90,6 +118,9 @@ class TugasanController extends Controller
      */
     public function destroy(Tugasan $tugasan)
     {
-        //
+        $tugasan->delete();
+        activity()->event('Tugasan')->log('Tugasan Id:' . $tugasan->id . ' kepada ' . $tugasan->petugas->nama . ' telah dibuang');
+        alert()->success('Berjaya', 'Data tugasan dibuang');
+        return back();
     }
 }

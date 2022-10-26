@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pokok;
+use App\Models\Tandan;
 use Illuminate\Http\Request;
 
 class PokokController extends Controller
@@ -42,7 +43,9 @@ class PokokController extends Controller
 
     public function delete(Pokok $pokok)
     {
+        Tandan::where('pokok_id', $pokok->id)->delete();
         $pokok->delete();
+
         return redirect()->route('pi.p.index');
     }
 

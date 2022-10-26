@@ -38,8 +38,6 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('/tugasan', TugasanController::class);
 
-        Route::get('/maklumat', [UserController::class, 'maklumat'])->name('pp.maklumat');
-
     });
 
     Route::get('audit', [AuditController::class, 'index'])->name('audit');

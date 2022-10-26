@@ -6,52 +6,6 @@
     <div class="row justify-content-center mt-4">
         <div class="col-10">
 
-            {{-- <div class="row mb-3">
-                <div class="col-xl-6">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-xl-4">
-                            <label class="col-form-label">No. Kakitangan</label>
-                        </div>
-                        <div class="col-xl-8">
-                            <input type="text"class="form-control border-danger" placeholder="SILA TAIP DISINI">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-xl-4">
-                            <label class="col-form-label">Tarikh Mula</label>
-                        </div>
-                        <div class="col-xl-8">
-                            <x-custom-date-input name="tarikh_mula" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-xl-4 text-end">
-                            <label class="col-form-label">Tarikh Akhir</label>
-                        </div>
-                        <div class="col-xl-8">
-                            <x-custom-date-input name="tarikh_mula" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-5">
-                <div class="text-center">
-                    <button class="btn btn-sm btn-danger">Cari
-                        <span data-feather="search"></span>
-                    </button>
-                    <button class="btn btn-sm btn-link">
-                        <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
-                    </button>
-                </div>
-            </div> --}}
             <div class="row">
                 <div class="text-end">
                     <a href="{{ route('tugasan.create') }}" class="btn btn-danger">Tambah Tugasan <span
@@ -87,15 +41,74 @@
                                                 {{ $tugasan->aktiviti }}
                                             </td>
                                             <td class="status">
-                                                {{ $tugasan->status }}
+                                                @switch($tugasan->status)
+                                                    @case('dicipta')
+                                                        Dalam Proses
+                                                    @break
+
+                                                    @case('siap')
+                                                        Selesai Dilaksanakan
+                                                    @break
+
+                                                    @case('sah')
+                                                        Disahkan
+                                                    @break
+
+                                                    @case('rosak')
+                                                        Rosak
+                                                    @break
+
+                                                    @default
+                                                @endswitch
                                             </td>
                                             <td class="tarikh">
                                                 {{ $tugasan->tarikh }}
                                             </td>
-                                            <td class="">
-                                                <a href="{{ route('pp.maklumat') }}" class="btn btn-sm btn-danger">
-                                                    <span data-feather="book-open" style="width:15px;"></span>
-                                                </a>
+                                            <td>
+                                                <form action="{{ route('tugasan.update', $tugasan->id) }}" method="post"
+                                                    class="d-inline-flex">
+                                                    @csrf
+                                                    @method('put')
+
+                                                    @switch($tugasan->status)
+                                                        @case('dicipta')
+                                                            <input type="hidden" name="status" value="siap">
+                                                            <button type="submit" class="btn btn-sm btn-primary">SIAP</button>
+                                                        @break
+
+                                                        @case('siap')
+                                                            <input type="hidden" name="status" value="sah">
+                                                            <button type="submit" class="btn btn-sm btn-success">SAH</button>
+                                                        @break
+
+                                                        @default
+                                                            <a href="{{ route('tugasan.show', $tugasan->id) }}"
+                                                                class="btn btn-sm btn-danger">
+                                                                <span class="fas fa-book-open"></span>
+                                                            </a>
+                                                    @endswitch
+                                                </form>
+
+
+
+                                                @if ($tugasan->status == 'dicipta' || $tugasan->status == 'siap')
+                                                    <form action="{{ route('tugasan.update', $tugasan->id) }}"
+                                                        method="post" class="d-inline-flex">
+                                                        @csrf
+                                                        @method('put')
+                                                        <input type="hidden" name="status" value="rosak">
+                                                        <button type="submit" class="btn btn-warning btn-sm">ROSAK</button>
+                                                    </form>
+                                                    <form action="{{ route('tugasan.destroy', $tugasan->id) }}"
+                                                        method="post" class="d-inline-flex">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><span
+                                                                class="fas fa-trash-alt"></span></button>
+                                                    </form>
+                                                @endif
+
+
                                             </td>
                                         </tr>
                                     @endforeach

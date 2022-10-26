@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('tarikh');
             $table->foreignId('pengesah_id')->nullable();
+            $table->date('tarikh_pengesahan')->nullable();
             $table->foreignId('petugas_id');
             $table->timestamps();
         });
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Tugasan');
+        Schema::dropIfExists('tugasan');
     }
 };

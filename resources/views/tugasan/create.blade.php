@@ -111,7 +111,7 @@
                             </div>
                         </div>
 
-                        <input type="hidden" name="status" value="Pengguna">
+                        <input type="hidden" name="status" value="dicipta">
 
                     </div>
                 </div>

@@ -30,7 +30,7 @@
 
 
 
-        <div class="col-10 mt-5">
+        <div class="col-10 mt-2">
             <div class="text-end mb-3">
                 <a href="{{ route('pp.create') }}" class="btn btn-danger">Daftar
                     <span class="text-white" data-feather="plus-circle"></span>
