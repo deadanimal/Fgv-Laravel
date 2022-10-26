@@ -3,7 +3,7 @@
     <x-header main="Pengurusan Pengguna" sub="Laporan Petugas" sub2="Tambah Tugasan" />
 
     <div class="container">
-        <form action="{{ route('pp.store') }}" method="post">
+        <form action="{{ route('tugasan.store') }}" method="post">
             @csrf
             <div class="row justify-content-center mt-4">
                 <div class="col-10 px-0">
@@ -28,7 +28,7 @@
                                     <label class="col-form-label text-main">Tandan</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <select name="tandan"
+                                    <select name="tandan_id"
                                         class="form-select border-main @error('tandan') is-invalid @enderror">
                                         <option selected disabled hidden> SILA PILIH </option>
                                         @foreach ($tandans as $tandan)
@@ -47,9 +47,14 @@
                                     <label class="col-form-label text-main">Jenis</label>
                                 </div>
                                 <div class="col-xl-9">
-                                    <input type="text" name="jenis"
-                                        class="form-control border-main  @error('jenis') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
+                                    <select name="jenis"
+                                        class="form-select border-main @error('jenis') is-invalid @enderror">
+                                        <option selected disabled hidden> SILA PILIH </option>
+                                        <option value="balut">Balut</option>
+                                        <option value="debung">Debung</option>
+                                        <option value="kawal">Kawal</option>
+                                        <option value="tuai">Tuai</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -71,24 +76,9 @@
                             <div class="row align-items-center">
                                 <div class="col-xl-1"></div>
                                 <div class="col-xl-2">
-                                    <label class="col-form-label text-main">Status</label>
-                                </div>
-                                <div class="col-xl-9">
-                                    <input type="text" name="status"
-                                        class="form-control border-main  @error('status') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-xl-6 mb-4">
-                            <div class="row align-items-center">
-                                <div class="col-xl-3">
                                     <label class="col-form-label text-main">Tarikh</label>
                                 </div>
-                                <div class="col-xl-8">
+                                <div class="col-xl-9">
                                     <div class="input-group">
                                         <input class="form-control datetimepicker border-main border-right-0" type="text"
                                             placeholder="SILA PILIH" data-options='{"disableMobile":true}'
@@ -101,41 +91,31 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-6 mb-4">
-                            <div class="row align-items-center">
-                                <div class="col-1"></div>
-                                <div class="col-xl-2">
-                                    <label class="col-form-label text-main">Petugas</label>
-                                </div>
-                                <div class="col-xl-9">
-                                    <input type="text" name="petugas_id"
-                                        class="form-control border-main  @error('petugas_id') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="col-xl-6 mb-4 ">
                             <div class="row align-items-center">
                                 <div class="col-xl-3">
-                                    <label class="col-form-label text-main">Pengesah</label>
+                                    <label class="col-form-label text-main">Petugas</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <input type="text" name="pengesah_id"
-                                        class="form-control border-main  @error('pengesah_id') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
+                                    <select name="petugas_id" data-options='{"removeItemButton":true,"placeholder":true}'
+                                        class="form-select border-main @error('petugas_id') is-invalid @enderror  js-choice"
+                                        size="1">
+                                        <option value=""> SILA PILIH </option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->nama }}</option>
+                                        @endforeach
+                                    </select>
+
+
                                 </div>
                             </div>
                         </div>
 
-
-                        <input type="hidden" name="peranan" value="Pengguna">
+                        <input type="hidden" name="status" value="Pengguna">
 
                     </div>
                 </div>
-            </div>
 
-            <div class="row mt-5">
                 <div class="text-center">
                     <button id="custom-btn-white" type="button" class="btn btn-white me-3 border-danger text-danger">
                         Set Semula
@@ -145,6 +125,7 @@
                         <span data-feather="plus-circle"></span>
                     </button>
                 </div>
+
             </div>
 
         </form>

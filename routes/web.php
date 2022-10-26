@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KerosakanController;
 use App\Http\Controllers\PokokController;
 use App\Http\Controllers\TandanController;
+use App\Http\Controllers\TugasanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,10 +36,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete/{user}', [UserController::class, 'delete'])->name('pp.delete');
         Route::post('/kemaskini_password/{user}', [UserController::class, 'kemaskini_password'])->name('pp.updatePwd');
 
-        Route::get('/laporan', [UserController::class, 'laporan'])->name('pp.laporan');
-        Route::get('/maklumat', [UserController::class, 'maklumat'])->name('pp.maklumat');
+        Route::resource('/tugasan', TugasanController::class);
 
-        Route::get('/tugasan', [UserController::class, 'tugasan'])->name('pp.tugasan');
+        Route::get('/maklumat', [UserController::class, 'maklumat'])->name('pp.maklumat');
 
     });
 

@@ -42,8 +42,8 @@
     <link href="/vendors/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet">
     <link href="/assets/css/theme.min.css" rel="stylesheet" id="style-default">
     <link href="/vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <link href="/vendors/choices/choices.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 
     <style>
         body {
@@ -184,8 +184,8 @@
                                         </a>
                                     </li>
                                     <li
-                                        class="nav-item {{ Request::is('pengurusan_pengguna/laporan', 'pengurusan_pengguna/maklumat') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('pp.laporan') }}">
+                                        class="nav-item {{ Request::is('pengurusan_pengguna/tugasan', 'pengurusan_pengguna/tugasan/*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('tugasan.index') }}">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon">
                                                     <span class="fas fa-folder-open text-main"></span>
@@ -380,6 +380,7 @@
     <script src="/assets/js/theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="/assets/js/flatpickr.js"></script>
+    <script src="/vendors/choices/choices.min.js"></script>
     <script>
         $("#burger").click(function() {
             var navbar = $("#navbarVerticalCollapse").width();

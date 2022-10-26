@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('aktiviti');
             $table->string('status');
             $table->string('tarikh');
-            $table->foreignId('pengesah_id');
+            $table->foreignId('pengesah_id')->nullable();
             $table->foreignId('petugas_id');
             $table->timestamps();
         });

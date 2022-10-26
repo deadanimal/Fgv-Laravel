@@ -34,6 +34,12 @@ class TandanController extends Controller
 
     public function store(Request $request)
     {
+        $tandan = Tandan::where('no_daftar', $request->no_daftar)->first();
+
+        if ($tandan != null) {
+            alert()->error('Gagal', 'No daftar telah didaftar');
+            return back();
+        }
         Tandan::create($request->only('no_daftar'));
 
         return redirect()->route('pi.t.index');

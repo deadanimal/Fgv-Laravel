@@ -25,11 +25,6 @@ Route::post('/tugasan', [FgvPmpsController::class, 'cipta_tugasan']);
 Route::get('/tugasan/{id}', [FgvPmpsController::class, 'satu_tugasan']);
 Route::get('/tugasan/user/{id}', [FgvPmpsController::class, 'senarai_tugasan_user']);
 
-// Route::post('/tugasan/{id}/siap-balut', [FgvPmpsController::class, 'siap_balut']);
-// Route::post('/tugasan/{id}/siap-debung', [FgvPmpsController::class, 'siap_debung']);
-// Route::post('/tugasan/{id}/siap-kawalan', [FgvPmpsController::class, 'siap_kawalan']);
-// Route::post('/tugasan/{id}/siap-tuai', [FgvPmpsController::class, 'siap_tuai']);
-
 Route::post('/tugasan/{id}/siap', [FgvPmpsController::class, 'siap']);
 
 Route::put('/tugasan/{id}/sah', [FgvPmpsController::class, 'sah_tugasan']);
