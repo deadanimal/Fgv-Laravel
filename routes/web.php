@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/laporan', [UserController::class, 'laporan'])->name('pp.laporan');
         Route::get('/maklumat', [UserController::class, 'maklumat'])->name('pp.maklumat');
 
+        Route::get('/tugasan', [UserController::class, 'tugasan'])->name('pp.tugasan');
+
     });
 
     Route::get('audit', [AuditController::class, 'index'])->name('audit');

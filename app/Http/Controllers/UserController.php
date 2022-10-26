@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KategoriPetugas;
 use App\Models\Role;
 use App\Models\Stesen;
+use App\Models\Tandan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -98,5 +99,12 @@ class UserController extends Controller
         activity()->event('Kemaskini Data')->log('Password ' . $user->nama . ' telah diubah');
 
         return redirect()->route('pp.index');
+    }
+
+    public function tugasan()
+    {
+        return view('tugasan.create', [
+            'tandans' => Tandan::all(),
+        ]);
     }
 }

@@ -6,7 +6,7 @@
     <div class="row justify-content-center mt-4">
         <div class="col-10">
 
-            <div class="row mb-3">
+            {{-- <div class="row mb-3">
                 <div class="col-xl-6">
                     <div class="row g-3 align-items-center">
                         <div class="col-xl-4">
@@ -51,15 +51,21 @@
                         <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
                     </button>
                 </div>
+            </div> --}}
+            <div class="row">
+                <div class="text-end">
+                    <a href="{{ route('pp.tugasan') }}" class="btn btn-danger">Tambah Tugasan <span
+                            class="fas fa-plus"></span></a>
+                </div>
             </div>
 
-            <div class="row mt-5">
-                <div class="card mt-5">
+            <div class="row mt-4">
+                <div class="card">
                     <div class="card-body ">
                         <div id="tableExample2"
                             data-list='{"valueNames":["bil","kakitangan","aktiviti","status","tarikh"],"page":5,"pagination":true}'>
                             <div class="table-responsive scrollbar table-striped ">
-                                <table class="table fs--1 mb-0 text-center">
+                                <table class="table fs--1 mb-0 text-center datatable">
                                     <thead class=" text-900">
                                         <tr style="border-bottom-color: #F89521">
                                             <th class="sort" data-sort="bil">Bil</th>
