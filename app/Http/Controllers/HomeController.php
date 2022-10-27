@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tugasan;
+use Illuminate\Support\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +24,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $motherpalm['balut']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'balut'])->whereDate('created_at', Carbon::today())->count();
+        $motherpalm['balut']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'balut'])->count();
+        $motherpalm['debung']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'debung'])->whereDate('created_at', Carbon::today())->count();
+        $motherpalm['debung']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'debung'])->count();
+        $motherpalm['kawal']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'kawal'])->whereDate('created_at', Carbon::today())->count();
+        $motherpalm['kawal']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'kawal'])->count();
+        $motherpalm['tuai']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tuai'])->whereDate('created_at', Carbon::today())->count();
+        $motherpalm['tuai']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tual'])->count();
+
+        return view('dashboard', compact('motherpalm'));
     }
 }
