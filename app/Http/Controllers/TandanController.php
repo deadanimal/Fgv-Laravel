@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Balut;
-use App\Models\Kualiti;
-use App\Models\Pendebungaan;
 use App\Models\Pokok;
 use App\Models\Tandan;
-use App\Models\Tuai;
+use App\Models\Tugasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TandanController extends Controller
 {
@@ -29,7 +28,8 @@ class TandanController extends Controller
     public function edit(Tandan $tandan)
     {
         $pokoks = Pokok::all();
-        return view('pengurusanPokokInduk.tandan.edit', compact('tandan', 'pokoks'));
+        $tugasans = Tugasan::where('tandan_id', $tandan->id)->get();
+        return view('pengurusanPokokInduk.tandan.edit', compact('tandan', 'pokoks', 'tugasans'));
     }
 
     public function store(Request $request)
@@ -63,74 +63,6 @@ class TandanController extends Controller
             'umur' => $request->umur,
         ]);
 
-        if ($tandan->balut) {
-            $tandan->balut->update([
-                'tarikh' => $request->b_tarikh,
-                'petugas' => $request->b_petugas,
-                'pengesah' => $request->b_pengesah,
-            ]);
-        } else {
-            if ($request->b_tarikh) {
-                Balut::create([
-                    'tandan_id' => $tandan->id,
-                    'tarikh' => $request->b_tarikh,
-                    'petugas' => $request->b_petugas,
-                    'pengesah' => $request->b_pengesah,
-                ]);
-            }
-        }
-
-        if ($tandan->pendebungaan) {
-            $tandan->pendebungaan->update([
-                'tarikh' => $request->p_tarikh,
-                'petugas' => $request->p_petugas,
-                'pengesah' => $request->p_pengesah,
-            ]);
-        } else {
-            if ($request->p_tarikh) {
-                Pendebungaan::create([
-                    'tandan_id' => $tandan->id,
-                    'tarikh' => $request->p_tarikh,
-                    'petugas' => $request->p_petugas,
-                    'pengesah' => $request->p_pengesah,
-                ]);
-            }
-        }
-
-        if ($tandan->kualiti) {
-            $tandan->kualiti->update([
-                'tarikh' => $request->k_tarikh,
-                'petugas' => $request->k_petugas,
-                'pengesah' => $request->k_pengesah,
-            ]);
-        } else {
-            if ($request->k_tarikh) {
-                Kualiti::create([
-                    'tandan_id' => $tandan->id,
-                    'tarikh' => $request->k_tarikh,
-                    'petugas' => $request->k_petugas,
-                    'pengesah' => $request->k_pengesah,
-                ]);
-            }
-        }
-
-        if ($tandan->tuai) {
-            $tandan->tuai->update([
-                'tarikh' => $request->t_tarikh,
-                'petugas' => $request->t_petugas,
-                'pengesah' => $request->t_pengesah,
-            ]);
-        } else {
-            if ($request->t_tarikh) {
-                Tuai::create([
-                    'tandan_id' => $tandan->id,
-                    'tarikh' => $request->t_tarikh,
-                    'petugas' => $request->t_petugas,
-                    'pengesah' => $request->t_pengesah,
-                ]);
-            }
-        }
-
         alert()->success('Berjaya Dikemaskini', 'Data telah disimpan');
         return back();
     }
@@ -146,5 +78,12 @@ class TandanController extends Controller
     public function MuatNaikDokumenTandan()
     {
         return view('pengurusanPokokInduk.tandan.muatNaikDokumen');
+    }
+
+    public function downloadqr(Tandan $tandan)
+    {
+        $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
+        QrCode::generate($url, public_path('qrcode.svg'));
+        return response()->download('qrcode.svg');
     }
 }

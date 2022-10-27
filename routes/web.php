@@ -61,8 +61,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{tandan}', [TandanController::class, 'edit'])->name('pi.t.edit');
             Route::put('/update/{tandan}', [TandanController::class, 'update'])->name('pi.t.update');
             Route::delete('/delete/{tandan}', [TandanController::class, 'delete'])->name('pi.t.delete');
-            Route::get('/muat-naik', [TandanController::class, 'MuatNaikDokumenTandan'])->name('pi.t.muat');
+            // Route::get('/muat-naik', [TandanController::class, 'MuatNaikDokumenTandan'])->name('pi.t.muat');
 
+            Route::get('downloadqr/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqr');
         });
 
     });
