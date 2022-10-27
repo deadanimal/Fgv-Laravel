@@ -2,14 +2,14 @@
 @section('content')
     <x-header main="Pengurusan Pokok Induk" sub="Pokok" sub2="" />
 
-    {{-- 
+
     <h4 class="text-center mt-4">JUMLAH POKOK</h4>
-    <h1 class="text-center text-danger fw-bold">123,456,213</h1> --}}
+    <h1 class="text-center text-danger fw-bold">{{ count($pokoks) }}</h1>
 
 
     <div class="row justify-content-center mt-4">
         <div class="col-10">
-            <div class="row justify-content-center mb-5">
+            {{-- <div class="row justify-content-center mb-5">
                 <div class="col-xl-5 border-end">
                     <h4 class="text-center">JUMLAH AKTIF</h4>
                     <h1 class="text-center text-success fw-bold">{{ $aktif }}</h1>
@@ -18,7 +18,7 @@
                     <h4 class="text-center">TANDAN TIDAK AKTIF</h4>
                     <h1 class="text-center text-danger fw-bold">{{ $tidak_aktif }}</h1>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="text-end mb-3 mt-5">
                 <a href="{{ route('pi.p.create') }}" class="btn btn-danger">Daftar
