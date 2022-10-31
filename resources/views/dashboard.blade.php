@@ -49,7 +49,7 @@
                         <div class="card">
                             <img class="card-img" src="/main-image/card-bg.png">
                             <div class="card-img-overlay text-white text-center">
-                                <h3 class="text-white">PENDEBUNGAN TERKAWAL</h3>
+                                <h3 class="text-white">PENDEBUNGAAN TERKAWAL</h3>
 
                                 <div class="d-flex align-items-center mt-2">
                                     <div class="col-6">

@@ -99,8 +99,7 @@
                                 </div>
                                 <div class="col-xl-8">
                                     <select name="status_pokok" class="form-select border-main">
-                                        <option selected disabled hidden> SILA PILIH </option>
-                                        <option value="aktif">Aktif</option>
+                                        <option selected value="aktif">Aktif</option>
                                         <option value="tidak_aktif">Tidak Aktif</option>
                                     </select>
                                 </div>

@@ -33,10 +33,10 @@
                                 <thead class=" text-900">
                                     <tr style="border-bottom-color: #F89521">
                                         <th>Bil</th>
+                                        <th>No Pokok</th>
                                         <th>Blok</th>
                                         <th>Baka</th>
                                         <th>Progeny</th>
-                                        <th>No Pokok</th>
                                         <th>Tindakan</th>
                                     </tr>
                                 </thead>

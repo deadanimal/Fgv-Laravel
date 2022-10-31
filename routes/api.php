@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/profil', [FgvPmpsController::class, 'profil']);
+Route::post('/login', [FgvPmpsController::class, 'login']);
+Route::get('/profil/{user}', [FgvPmpsController::class, 'profil']);
 
 Route::get('/tugasan', [FgvPmpsController::class, 'senarai_tugasan']);
 Route::post('/tugasan', [FgvPmpsController::class, 'cipta_tugasan']);
@@ -27,6 +28,6 @@ Route::get('/tugasan/user/{id}', [FgvPmpsController::class, 'senarai_tugasan_use
 
 Route::post('/tugasan/{id}/siap', [FgvPmpsController::class, 'siap']);
 
-Route::put('/tugasan/{id}/sah', [FgvPmpsController::class, 'sah_tugasan']);
+Route::post('/tugasan/{id}/sah', [FgvPmpsController::class, 'sah_tugasan']);
 
-Route::post('/rosak', [FgvPmpsController::class, 'lapor_rosak']);
+Route::post('/tugasan/{id}/rosak', [FgvPmpsController::class, 'rosak']);

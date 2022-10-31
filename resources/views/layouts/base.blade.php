@@ -245,9 +245,10 @@
                                         <span class="nav-link-text ps-3 text-main">Laporan</span>
                                     </div>
                                 </a>
-                                <ul class="nav collapse ps-4" id="laporan">
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="#">
+                                <ul class="nav collapse {{ Request::is('laporan/*') ? 'show' : 'false' }}  ps-4"
+                                    id="laporan">
+                                    <li class="nav-item  {{ Request::is('laporan/motherpalm/*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('laporan.motherpalm') }}">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon">
                                                     <span class="fas fa-folder-open text-main"></span>
@@ -257,7 +258,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="#">
+                                        <a class="nav-link" href="">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon">
                                                     <span class="fas fa-folder-open text-main"></span>
@@ -344,10 +345,12 @@
                 </button>
                 @include('sweetalert::alert')
 
-                @yield('content')
+                <div style="min-height: 80vh;">
+                    @yield('content')
+                </div>
 
-                <div class="row mt-5">
-                    <div class="col-12 mt-5">
+                <div class="row">
+                    <div class="col-12">
                         <footer class="mb-2">
                             <hr class="text-main mb-2" style="height: 3px;">
                             <div class="text-main fw-bold text-center">

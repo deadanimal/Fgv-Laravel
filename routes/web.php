@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KerosakanController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PokokController;
 use App\Http\Controllers\TandanController;
 use App\Http\Controllers\TugasanController;
@@ -66,6 +67,11 @@ Route::middleware('auth')->group(function () {
             Route::get('downloadqr/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqr');
         });
 
+    });
+
+    Route::prefix('/laporan')->as('laporan.')->group(function () {
+        Route::get('/motherpalm/index', [LaporanController::class, 'motherpalm'])->name('motherpalm');
+        Route::get('/motherpalm/store', [LaporanController::class, 'motherpalmStore'])->name('motherpalmStore');
     });
 
     Route::prefix('/konfigurasi')->group(function () {

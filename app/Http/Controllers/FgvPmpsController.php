@@ -5,12 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Tugasan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FgvPmpsController extends Controller
 {
-    public function profil()
+
+    public function login(Request $request)
     {
-        $user = auth()->user();
+        $user = User::where('no_kakitangan', $request->no_kakitangan)->first();
+
+        if (!isset($user)) {
+            return 'User Tidak Dijumpai';
+        }
+
+        $credentials = $request->only('no_kakitangan', 'password');
+        if (!Auth::attempt($credentials)) {
+            return 'Kata Laluan Salah';
+        }
+        return response()->json($user);
+    }
+
+    public function profil(User $user)
+    {
         return response()->json($user);
     }
 
@@ -31,10 +47,12 @@ class FgvPmpsController extends Controller
             'tandan_id' => $request->tandan_id,
             'jenis' => $request->jenis, //['balut','debung','kawal','tuai']
             'aktiviti' => $request->aktiviti, // description pelaksanaan
-            'status' => $request->status, //['dicipta','siap','disahkan','rosak']
+            'status' => 'dicipta', //['dicipta','siap','disahkan','rosak']
             'tarikh' => $request->tarikh,
             'petugas_id' => $request->petugas_id, // user yang perlu melaksanakan tugas
         ]);
+
+        $tugasan['id'] = $tugasan->id;
         return response()->json($tugasan);
 
     }
@@ -61,14 +79,14 @@ class FgvPmpsController extends Controller
         $tugasan = Tugasan::find($id);
 
         $tugasan->update([
-            'status' => 'disahkan',
+            'status' => 'sah',
             'pengesah_id' => $request->pengesah_id,
         ]);
 
         return response()->json($tugasan);
     }
 
-    public function lapor_rosak($id)
+    public function rosak($id)
     {
         $tugasan = Tugasan::find($id);
 
