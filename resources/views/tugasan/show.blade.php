@@ -9,8 +9,7 @@
             <div class="row">
 
                 <div class="col-xl-5">
-                    <img src="/{{ $tugasan->url_gambar ?? 'test-image/test1.png' }}" class="img-fluid">
-                    {{-- <img src="/test-image/test1.png" class="img-fluid"> --}}
+                    <img src="{{ url($tugasan->url_gambar ?? '/test-image/test1.png') }}" class="img-fluid">
                 </div>
 
                 <div class="col-xl-1"></div>
