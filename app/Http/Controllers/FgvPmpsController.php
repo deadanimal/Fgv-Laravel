@@ -53,14 +53,6 @@ class FgvPmpsController extends Controller
             'petugas_id' => $request->petugas_id, // user yang perlu melaksanakan tugas
         ]);
 
-        $url = $request->file('url_gambar')->store(
-            'tugasan', 'public'
-        );
-
-        $t->update([
-            'url_gambar' => $url,
-        ]);
-
         return response()->json(Tugasan::find($t->id));
 
     }
@@ -75,9 +67,15 @@ class FgvPmpsController extends Controller
     {
         $tugasan = Tugasan::find($id);
 
+        $url = $request->file('url_gambar')->store(
+            'tugasan', 'public'
+        );
+
         $tugasan->update([
             'catatan_petugas' => $request->catatan_petugas,
             'status' => 'siap',
+            'url_gambar' => $url,
+
         ]);
 
         return response()->json($tugasan);
