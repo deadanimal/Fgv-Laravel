@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tandan;
 use App\Models\Tugasan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class FgvPmpsController extends Controller
         $tugasan = Tugasan::create([
             'tandan_id' => $request->tandan_id,
             'jenis' => $request->jenis, //['balut','debung','kawal','tuai']
-            'aktiviti' => $request->aktiviti, // description pelaksanaan
+            'catatan' => $request->catatan, // description pelaksanaan
             'status' => 'dicipta', //['dicipta','siap','disahkan','rosak']
             'tarikh' => $request->tarikh,
             'petugas_id' => $request->petugas_id, // user yang perlu melaksanakan tugas
@@ -96,6 +97,11 @@ class FgvPmpsController extends Controller
 
         return response()->json($tugasan);
 
+    }
+
+    public function satu_tandan(Tandan $tandan)
+    {
+        return $tandan;
     }
 
 }

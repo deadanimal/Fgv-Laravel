@@ -31,3 +31,5 @@ Route::post('/tugasan/{id}/siap', [FgvPmpsController::class, 'siap']);
 Route::post('/tugasan/{id}/sah', [FgvPmpsController::class, 'sah_tugasan']);
 
 Route::post('/tugasan/{id}/rosak', [FgvPmpsController::class, 'rosak']);
+
+Route::get('/tandan/{tandan}', [FgvPmpsController::class, 'satu_tandan']);

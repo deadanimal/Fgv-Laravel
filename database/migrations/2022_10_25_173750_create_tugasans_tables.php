@@ -18,12 +18,15 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Tandan::class)->constrained()->cascadeOnDelete();
             $table->string('jenis');
-            $table->string('aktiviti');
+            $table->string('catatan');
             $table->string('status');
             $table->string('tarikh');
-            $table->foreignId('pengesah_id')->nullable();
-            $table->date('tarikh_pengesahan')->nullable();
             $table->foreignId('petugas_id');
+            $table->string('catatan_petugas')->nullable();
+            $table->foreignId('pengesah_id')->nullable();
+            $table->string('catatan_pengesah')->nullable();
+            $table->date('tarikh_pengesahan')->nullable();
+            $table->string('url_gambar')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tugasan');
+        Schema::dropIfExists('tugasans');
     }
 };

@@ -7,6 +7,7 @@ use App\Models\Tandan;
 use App\Models\Tugasan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TugasanController extends Controller
 {
@@ -43,7 +44,17 @@ class TugasanController extends Controller
      */
     public function store(Request $request)
     {
-        Tugasan::create($request->all());
+
+        $tugasan = Tugasan::create($request->except('url_gambar'));
+
+        $url = $request->file('url_gambar')->store(
+            'tugasan', 'public'
+        );
+
+        $tugasan->update([
+            'url_gambar' => $url,
+        ]);
+
         alert()->success('Berjaya', 'Tugasan berjaya disimpan');
         activity()->event('Tugasan')->log('Tugasan Ditambah');
         return redirect()->route('tugasan.index');
@@ -59,8 +70,8 @@ class TugasanController extends Controller
     {
         $tandan = Tandan::find($tugasan->tandan_id);
         $pokok = Pokok::find($tandan->pokok_id);
-        $namaPetugas = User::find($tugasan->petugas_id)->nama;
-        $namaPengesah = User::find($tugasan->pengesah_id)->nama;
+        $namaPetugas = User::find($tugasan->petugas_id)->nama ?? 'User telah dibuang';
+        $namaPengesah = User::find($tugasan->pengesah_id)->nama ?? 'User telah dibuang';
 
         return view('tugasan.show', compact('tugasan', 'tandan', 'pokok', 'namaPetugas', 'namaPengesah'));
     }
@@ -88,11 +99,13 @@ class TugasanController extends Controller
         switch ($request->status) {
             case 'siap':
                 $tugasan['status'] = 'siap';
+                $tugasan['catatan_petugas'] = $request->catatan_petugas;
                 break;
             case 'sah':
                 $tugasan['status'] = 'sah';
                 $tugasan['pengesah_id'] = auth()->id();
                 $tugasan['tarikh_pengesahan'] = now();
+                $tugasan['catatan_pengesah'] = $request->catatan_pengesah;
                 break;
             case 'rosak':
                 $tugasan['status'] = 'rosak';

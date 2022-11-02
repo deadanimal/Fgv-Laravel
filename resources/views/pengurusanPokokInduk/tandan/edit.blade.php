@@ -31,7 +31,7 @@
                             <label for="">Nombor Pokok</label>
                         </div>
                         <div class="col-8 mb-3">
-                            <select name="pokok_id" class="form-select" required>
+                            <select name="pokok_id" class="form-select border-danger" required>
                                 <option selected disabled hidden> Sila Pilih</option>
                                 @foreach ($pokoks as $pokok)
                                     <option {{ $pokok->id == $tandan->pokok_id ? 'selected' : '' }}
@@ -44,15 +44,21 @@
                             <label for="">Tarikh Daftar</label>
                         </div>
                         <div class="col-8 mb-3">
-                            <input type="date" class="form-control" name="tarikh_daftar"
-                                value="{{ $tandan->tarikh_daftar }}" required>
+                            <div class="input-group">
+                                <input class="form-control datetimepicker border-danger border-right-0" type="text"
+                                    placeholder="SILA PILIH" data-options='{"disableMobile":true}' aria-describedby="date"
+                                    value="{{ $tandan->tarikh_daftar }}" name="tarikh_daftar" required />
+                                <button type="button" class="btn border-danger border-left-0" id="date"><span
+                                        class="far fa-calendar-alt text-danger"></button>
+                            </div>
                         </div>
 
                         <div class="col-4 mb-3">
                             <label for="">Umur Tandan</label>
                         </div>
                         <div class="col-8 mb-3">
-                            <input type="number" class="form-control" name="umur" value="{{ $tandan->umur }}" required>
+                            <input type="number" class="form-control border-danger" name="umur"
+                                value="{{ $tandan->umur }}" required>
                         </div>
 
                         <h4 class="h4 text-main mt-5">Tugasan Tandan</h4>
@@ -64,7 +70,7 @@
                                             <tr style="border-bottom-color: #F89521">
                                                 <th class="sort" data-sort="bil">Bil</th>
                                                 <th class="sort" data-sort="kakitangan">No. Kakitangan</th>
-                                                <th class="sort" data-sort="aktiviti">Aktiviti</th>
+                                                <th class="sort" data-sort="catatan">Aktiviti</th>
                                                 <th class="sort" data-sort="status">Status</th>
                                                 <th class="sort" data-sort="tarikh">Tarikh</th>
                                                 <th>Tindakan</th>
@@ -79,8 +85,8 @@
                                                     <td class="kakitangan">
                                                         {{ $tugasan->petugas->no_kakitangan }}
                                                     </td>
-                                                    <td class="aktiviti">
-                                                        {{ $tugasan->aktiviti }}
+                                                    <td class="catatan">
+                                                        {{ $tugasan->jenis }}
                                                     </td>
                                                     <td class="status">
                                                         @switch($tugasan->status)
@@ -170,4 +176,10 @@
             </div>
         </form>
     </div>
+
+    <script>
+        $("#date").click(function() {
+            $(this).siblings("input").trigger("click");
+        });
+    </script>
 @endsection

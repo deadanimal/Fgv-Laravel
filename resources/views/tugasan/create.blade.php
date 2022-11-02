@@ -3,7 +3,7 @@
     <x-header main="Pengurusan Pengguna" sub="Laporan Petugas" sub2="Tambah Tugasan" />
 
     <div class="container">
-        <form action="{{ route('tugasan.store') }}" method="post">
+        <form action="{{ route('tugasan.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row justify-content-center mt-4">
                 <div class="col-10 px-0">
@@ -61,11 +61,11 @@
                         <div class="col-xl-6 mb-4">
                             <div class="row align-items-center">
                                 <div class="col-xl-3">
-                                    <label class="col-form-label text-main">Aktiviti</label>
+                                    <label class="col-form-label text-main">Catatan</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <input type="text" name="aktiviti"
-                                        class="form-control border-main  @error('aktiviti') is-invalid @enderror"
+                                    <input type="text" name="catatan"
+                                        class="form-control border-main  @error('catatan') is-invalid @enderror"
                                         placeholder="SILA TAIP DISINI">
                                 </div>
 
@@ -107,6 +107,19 @@
                                     </select>
 
 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-xl-1"></div>
+                                <div class="col-xl-2">
+                                    <label class="col-form-label text-main">Gambar</label>
+                                </div>
+                                <div class="col-xl-9">
+                                    <input type="file" class="form-control"
+                                        name="url_gambar"accept="image/png, image/gif, image/jpeg">
                                 </div>
                             </div>
                         </div>

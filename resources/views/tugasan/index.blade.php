@@ -38,8 +38,9 @@
                                                 {{ $tugasan->petugas->no_kakitangan }}
                                             </td>
                                             <td class="aktiviti">
-                                                {{ $tugasan->aktiviti }}
+                                                {{ $tugasan->jenis }}
                                             </td>
+
                                             <td class="status">
                                                 @switch($tugasan->status)
                                                     @case('dicipta')
@@ -65,29 +66,103 @@
                                                 {{ $tugasan->tarikh }}
                                             </td>
                                             <td>
-                                                <form action="{{ route('tugasan.update', $tugasan->id) }}" method="post"
-                                                    class="d-inline-flex">
-                                                    @csrf
-                                                    @method('put')
 
-                                                    @switch($tugasan->status)
-                                                        @case('dicipta')
-                                                            <input type="hidden" name="status" value="siap">
-                                                            <button type="submit" class="btn btn-sm btn-primary">SIAP</button>
-                                                        @break
 
-                                                        @case('siap')
-                                                            <input type="hidden" name="status" value="sah">
-                                                            <button type="submit" class="btn btn-sm btn-success">SAH</button>
-                                                        @break
+                                                @switch($tugasan->status)
+                                                    @case('dicipta')
+                                                        <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#modal-siap">SIAP</button>
+                                                        <div class="modal fade" id="modal-siap" tabindex="-1" role="dialog"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document"
+                                                                style="max-width: 500px">
+                                                                <div class="modal-content position-relative">
+                                                                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                                                                        <button
+                                                                            class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <form action="{{ route('tugasan.update', $tugasan->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('put')
+                                                                        <div class="modal-body p-0">
+                                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                                                <h4 class="mb-1"> Siap
+                                                                                    Tugasan</h4>
+                                                                            </div>
 
-                                                        @default
-                                                            <a href="{{ route('tugasan.show', $tugasan->id) }}"
-                                                                class="btn btn-sm btn-danger">
-                                                                <span class="fas fa-book-open"></span>
-                                                            </a>
-                                                    @endswitch
-                                                </form>
+                                                                            <div class="p-4 pb-0">
+                                                                                <div class="mb-3">
+                                                                                    <label class="col-form-label">Catatan</label>
+                                                                                    <textarea class="form-control" name="catatan_petugas"></textarea>
+                                                                                </div>
+                                                                                <input type="hidden" name="status" value="siap">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-secondary" type="button"
+                                                                                data-bs-dismiss="modal">Tutup</button>
+                                                                            <button class="btn btn-success" type="submit">Simpan
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @break
+
+                                                    @case('siap')
+                                                        <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#modal-sah">SAH</button>
+                                                        <div class="modal fade" id="modal-sah" tabindex="-1" role="dialog"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document"
+                                                                style="max-width: 500px">
+                                                                <div class="modal-content position-relative">
+                                                                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                                                                        <button
+                                                                            class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <form action="{{ route('tugasan.update', $tugasan->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('put')
+                                                                        <div class="modal-body p-0">
+                                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                                                <h4 class="mb-1"> Sah Tugasan</h4>
+                                                                            </div>
+
+                                                                            <div class="p-4 pb-0">
+                                                                                <div class="mb-3">
+                                                                                    <label class="col-form-label">Catatan</label>
+                                                                                    <textarea class="form-control" name="catatan_pengesah"></textarea>
+                                                                                </div>
+                                                                                <input type="hidden" name="status" value="sah">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-secondary" type="button"
+                                                                                data-bs-dismiss="modal">Tutup</button>
+                                                                            <button class="btn btn-success" type="submit">Simpan
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @break
+
+                                                    @default
+                                                        <a href="{{ route('tugasan.show', $tugasan->id) }}"
+                                                            class="btn btn-sm btn-danger">
+                                                            <span class="fas fa-book-open"></span>
+                                                        </a>
+                                                @endswitch
+
 
 
 
@@ -97,7 +172,8 @@
                                                         @csrf
                                                         @method('put')
                                                         <input type="hidden" name="status" value="rosak">
-                                                        <button type="submit" class="btn btn-warning btn-sm">ROSAK</button>
+                                                        <button type="submit"
+                                                            class="btn btn-warning btn-sm">ROSAK</button>
                                                     </form>
                                                     <form action="{{ route('tugasan.destroy', $tugasan->id) }}"
                                                         method="post" class="d-inline-flex">
@@ -124,4 +200,12 @@
 
         </div>
     </div>
+
+    <script>
+        $('.btnSiap').click(function(e) {
+            e.preventDefault();
+            alert($(this).parent('form'));
+
+        });
+    </script>
 @endsection
