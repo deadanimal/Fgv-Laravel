@@ -7,6 +7,7 @@ use App\Models\Tandan;
 use App\Models\Tugasan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class TugasanController extends Controller
@@ -131,7 +132,12 @@ class TugasanController extends Controller
      */
     public function destroy(Tugasan $tugasan)
     {
-        $tugasan->delete();
+        if (File::exists(public_path('/storage/' . $tugasan->url_gambar))) {
+            File::delete(public_path('/storage/' . $tugasan->url_gambar));
+        } else {
+            dd('File does not exists.', $tugasan->url_gambar);
+        }
+
         activity()->event('Tugasan')->log('Tugasan Id:' . $tugasan->id . ' kepada ' . $tugasan->petugas->nama . ' telah dibuang');
         alert()->success('Berjaya', 'Data tugasan dibuang');
         return back();

@@ -44,7 +44,7 @@ class FgvPmpsController extends Controller
 
     public function cipta_tugasan(Request $request)
     {
-        $tugasan = Tugasan::create([
+        $t = Tugasan::create([
             'tandan_id' => $request->tandan_id,
             'jenis' => $request->jenis, //['balut','debung','kawal','tuai']
             'catatan' => $request->catatan, // description pelaksanaan
@@ -53,8 +53,15 @@ class FgvPmpsController extends Controller
             'petugas_id' => $request->petugas_id, // user yang perlu melaksanakan tugas
         ]);
 
-        $tugasan['id'] = $tugasan->id;
-        return response()->json($tugasan);
+        $url = $request->file('url_gambar')->store(
+            'tugasan', 'public'
+        );
+
+        $t->update([
+            'url_gambar' => $url,
+        ]);
+
+        return response()->json(Tugasan::find($t->id));
 
     }
 
@@ -69,6 +76,7 @@ class FgvPmpsController extends Controller
         $tugasan = Tugasan::find($id);
 
         $tugasan->update([
+            'catatan_petugas' => $request->catatan_petugas,
             'status' => 'siap',
         ]);
 
@@ -81,6 +89,7 @@ class FgvPmpsController extends Controller
 
         $tugasan->update([
             'status' => 'sah',
+            'catatan_pengesah' => $request->catatan_pengesah,
             'pengesah_id' => $request->pengesah_id,
         ]);
 
