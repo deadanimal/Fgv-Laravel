@@ -188,12 +188,10 @@
                                                 @endif
 
                                                 @if ($tugasan->status == 'siap')
-                                                    <form action="{{ route('tugasan.destroy', $tugasan->id) }}" <a
-                                                        href="{{ route('tugasan.show', $tugasan->id) }}"
+                                                    <a href="{{ route('tugasan.show', $tugasan->id) }}"
                                                         class="btn btn-sm btn-danger">
                                                         <span class="fas fa-book-open"></span>
-                                                        </a>
-                                                    </form>
+                                                    </a>
                                                 @endif
 
                                                 <form action="{{ route('tugasan.destroy', $tugasan->id) }}"
