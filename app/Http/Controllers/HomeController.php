@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tugasan;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
@@ -34,5 +35,14 @@ class HomeController extends Controller
         $motherpalm['tuai']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tual'])->count();
 
         return view('dashboard', compact('motherpalm'));
+    }
+
+    public function test()
+    {
+        $u1 = User::find(14);
+        $u1->attachRole('worker');
+        $u1 = User::find(15);
+        $u1->attachRole('supervisor');
+
     }
 }

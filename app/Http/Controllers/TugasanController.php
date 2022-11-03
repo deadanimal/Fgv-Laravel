@@ -48,14 +48,6 @@ class TugasanController extends Controller
 
         $tugasan = Tugasan::create($request->except('url_gambar'));
 
-        $url = $request->file('url_gambar')->store(
-            'tugasan', 'public'
-        );
-
-        $tugasan->update([
-            'url_gambar' => $url,
-        ]);
-
         alert()->success('Berjaya', 'Tugasan berjaya disimpan');
         activity()->event('Tugasan')->log('Tugasan Ditambah');
         return redirect()->route('tugasan.index');
@@ -99,6 +91,10 @@ class TugasanController extends Controller
     {
         switch ($request->status) {
             case 'siap':
+                $url = $request->file('url_gambar')->store(
+                    'tugasan', 'public'
+                );
+                $tugasan['url_gambar'] = $url;
                 $tugasan['status'] = 'siap';
                 $tugasan['catatan_petugas'] = $request->catatan_petugas;
                 break;
@@ -141,5 +137,11 @@ class TugasanController extends Controller
         activity()->event('Tugasan')->log('Tugasan Id:' . $tugasan->id . ' kepada ' . $tugasan->petugas->nama . ' telah dibuang');
         alert()->success('Berjaya', 'Data tugasan dibuang');
         return back();
+    }
+
+    public function tugasan_user()
+    {
+        $tugasans = Tugasan::where('petugas_id', auth()->id())->orderByDesc('created_at')->get();
+        return view('tugasan.user', compact('tugasans'));
     }
 }

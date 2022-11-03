@@ -157,169 +157,184 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link p-3 my-1 dropdown-indicator" href="#pengurusan-pengguna"
-                                    role="button" data-bs-toggle="collapse"
-                                    aria-expanded="{{ Request::is('pengurusan_pengguna/*') ? 'true' : 'false' }}"
-                                    aria-controls="pengurusan-pengguna">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-icon">
-                                            <img src="/icons/pengurusan-pengguna.ico" width="100%">
-                                        </span>
-                                        <span class="nav-link-text ps-3 text-main">Pengurusan Pengguna</span>
-                                    </div>
-                                </a>
-                                <ul class="nav collapse {{ Request::is('pengurusan_pengguna/*') ? 'show' : 'false' }} ps-4"
-                                    id="pengurusan-pengguna">
-                                    <li
-                                        class="nav-item 
+                            @role('worker')
+                                <li class="nav-item">
+                                    <a class="nav-link p-3 my-1 {{ Request::is('tugasan') ? 'active' : '' }}"
+                                        href="/tugasan" role="button">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-icon fas fa-tasks text-main">
+                                            </span>
+                                            <span class="nav-link-text ps-3 text-main">Tugasan</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endrole
+
+                            @role('supervisor')
+                                <li class="nav-item">
+                                    <a class="nav-link p-3 my-1 dropdown-indicator" href="#pengurusan-pengguna"
+                                        role="button" data-bs-toggle="collapse"
+                                        aria-expanded="{{ Request::is('pengurusan_pengguna/*') ? 'true' : 'false' }}"
+                                        aria-controls="pengurusan-pengguna">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-icon">
+                                                <img src="/icons/pengurusan-pengguna.ico" width="100%">
+                                            </span>
+                                            <span class="nav-link-text ps-3 text-main">Pengurusan Pengguna</span>
+                                        </div>
+                                    </a>
+                                    <ul class="nav collapse {{ Request::is('pengurusan_pengguna/*') ? 'show' : 'false' }} ps-4"
+                                        id="pengurusan-pengguna">
+                                        <li
+                                            class="nav-item 
                                         {{ Request::is('pengurusan_pengguna/index', 'pengurusan_pengguna/daftar', 'pengurusan_pengguna/edit') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('pp.index') }}">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon">
-                                                    <span class="fas fa-folder-open text-main"></span>
-                                                </span>
-                                                <span class="nav-link-text text-main ps-1">Petugas</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li
-                                        class="nav-item {{ Request::is('pengurusan_pengguna/tugasan', 'pengurusan_pengguna/tugasan/*') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('tugasan.index') }}">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon">
-                                                    <span class="fas fa-folder-open text-main"></span>
-                                                </span>
-                                                <span class="nav-link-text text-main ps-1">Laporan Petugas</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                            <a class="nav-link" href="{{ route('pp.index') }}">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon">
+                                                        <span class="fas fa-folder-open text-main"></span>
+                                                    </span>
+                                                    <span class="nav-link-text text-main ps-1">Petugas</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li
+                                            class="nav-item {{ Request::is('pengurusan_pengguna/tugasan', 'pengurusan_pengguna/tugasan/*') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('tugasan.index') }}">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon">
+                                                        <span class="fas fa-folder-open text-main"></span>
+                                                    </span>
+                                                    <span class="nav-link-text text-main ps-1">Laporan Petugas</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link p-3 my-1 dropdown-indicator " href="#pokok-induk" role="button"
-                                    data-bs-toggle="collapse" aria-expanded="false" aria-controls="pokok-induk">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-icon">
-                                            <img src="/icons/palm.ico" width="100%">
-                                        </span>
-                                        <span class="nav-link-text ps-3 text-main">Pengurusan Pokok Induk</span>
-                                    </div>
-                                </a>
-                                <ul class="nav collapse {{ Request::is('pengurusan-pokok-induk/*') ? 'show' : 'false' }} ps-4"
-                                    id="pokok-induk">
-                                    <li
-                                        class="nav-item 
+                                <li class="nav-item">
+                                    <a class="nav-link p-3 my-1 dropdown-indicator " href="#pokok-induk" role="button"
+                                        data-bs-toggle="collapse" aria-expanded="false" aria-controls="pokok-induk">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-icon">
+                                                <img src="/icons/palm.ico" width="100%">
+                                            </span>
+                                            <span class="nav-link-text ps-3 text-main">Pengurusan Pokok Induk</span>
+                                        </div>
+                                    </a>
+                                    <ul class="nav collapse {{ Request::is('pengurusan-pokok-induk/*') ? 'show' : 'false' }} ps-4"
+                                        id="pokok-induk">
+                                        <li
+                                            class="nav-item 
                                             {{ Request::is('pengurusan-pokok-induk/pokok/*') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('pi.p.index') }}">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon">
-                                                    <span class="fas fa-folder-open text-main"></span>
-                                                </span>
-                                                <span class="nav-link-text text-main ps-1">Pokok</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li
-                                        class="nav-item {{ Request::is('pengurusan-pokok-induk/tandan/*') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('pi.t.index') }}">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon">
-                                                    <span class="fas fa-folder-open text-main"></span>
-                                                </span>
-                                                <span class="nav-link-text text-main ps-1">Tandan</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                            <a class="nav-link" href="{{ route('pi.p.index') }}">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon">
+                                                        <span class="fas fa-folder-open text-main"></span>
+                                                    </span>
+                                                    <span class="nav-link-text text-main ps-1">Pokok</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li
+                                            class="nav-item {{ Request::is('pengurusan-pokok-induk/tandan/*') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('pi.t.index') }}">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon">
+                                                        <span class="fas fa-folder-open text-main"></span>
+                                                    </span>
+                                                    <span class="nav-link-text text-main ps-1">Tandan</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link p-3 my-1 dropdown-indicator " href="#laporan" role="button"
-                                    data-bs-toggle="collapse" aria-expanded="false" aria-controls="laporan">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-icon">
-                                            <img src="/icons/laporan.ico" width="100%">
-                                        </span>
-                                        <span class="nav-link-text ps-3 text-main">Laporan</span>
-                                    </div>
-                                </a>
-                                <ul class="nav collapse {{ Request::is('laporan/*') ? 'show' : 'false' }}  ps-4"
-                                    id="laporan">
-                                    <li class="nav-item  {{ Request::is('laporan/motherpalm/*') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('laporan.motherpalm') }}">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon">
-                                                    <span class="fas fa-folder-open text-main"></span>
-                                                </span>
-                                                <span class="nav-link-text text-main ps-1">Motherpalm</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon">
-                                                    <span class="fas fa-folder-open text-main"></span>
-                                                </span>
-                                                <span class="nav-link-text text-main ps-1">Fatherpalm</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link p-3 my-1 dropdown-indicator " href="#laporan" role="button"
+                                        data-bs-toggle="collapse" aria-expanded="false" aria-controls="laporan">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-icon">
+                                                <img src="/icons/laporan.ico" width="100%">
+                                            </span>
+                                            <span class="nav-link-text ps-3 text-main">Laporan</span>
+                                        </div>
+                                    </a>
+                                    <ul class="nav collapse {{ Request::is('laporan/*') ? 'show' : 'false' }}  ps-4"
+                                        id="laporan">
+                                        <li class="nav-item  {{ Request::is('laporan/motherpalm/*') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('laporan.motherpalm') }}">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon">
+                                                        <span class="fas fa-folder-open text-main"></span>
+                                                    </span>
+                                                    <span class="nav-link-text text-main ps-1">Motherpalm</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item ">
+                                            <a class="nav-link" href="">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon">
+                                                        <span class="fas fa-folder-open text-main"></span>
+                                                    </span>
+                                                    <span class="nav-link-text text-main ps-1">Fatherpalm</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
 
-                            <li class="nav-item">
-                                <a class="nav-link {{ Request::is('audit') ? 'active' : '' }} p-3 my-1 "
-                                    href="{{ route('audit') }}" role="button">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-icon">
-                                            <img src="/icons/audit.ico" width="130%">
-                                        </span>
-                                        <span class="nav-link-text ps-3 text-main">Jejak Audit</span>
-                                    </div>
-                                </a>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Request::is('audit') ? 'active' : '' }} p-3 my-1 "
+                                        href="{{ route('audit') }}" role="button">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-icon">
+                                                <img src="/icons/audit.ico" width="130%">
+                                            </span>
+                                            <span class="nav-link-text ps-3 text-main">Jejak Audit</span>
+                                        </div>
+                                    </a>
 
-                            </li>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link p-3 my-1 dropdown-indicator " href="#konfigurasi-sistem"
-                                    role="button" data-bs-toggle="collapse" aria-expanded="false"
-                                    aria-controls="konfigurasi-sistem">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-icon">
-                                            <img src="/icons/setting.ico" width="100%">
-                                        </span>
-                                        <span class="nav-link-text ps-3 text-main">Konfigurasi Sistem</span>
-                                    </div>
-                                </a>
-                                <ul class="nav collapse {{ Request::is('konfigurasi/*') ? 'show' : 'false' }} ps-4"
-                                    id="konfigurasi-sistem">
-                                    <li class="nav-item  {{ Request::is('konfigurasi/kerosakan') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('k.index') }}">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon">
-                                                    <span class="fas fa-folder-open text-main"></span>
-                                                </span>
-                                                <span class="nav-link-text text-main ps-1">Kerosakan</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="#">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon">
-                                                    <span class="fas fa-folder-open text-main"></span>
-                                                </span>
-                                                <span class="nav-link-text text-main ps-1">Maklumat Bulanan /
-                                                    Tahunan</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link p-3 my-1 dropdown-indicator " href="#konfigurasi-sistem"
+                                        role="button" data-bs-toggle="collapse" aria-expanded="false"
+                                        aria-controls="konfigurasi-sistem">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-icon">
+                                                <img src="/icons/setting.ico" width="100%">
+                                            </span>
+                                            <span class="nav-link-text ps-3 text-main">Konfigurasi Sistem</span>
+                                        </div>
+                                    </a>
+                                    <ul class="nav collapse {{ Request::is('konfigurasi/*') ? 'show' : 'false' }} ps-4"
+                                        id="konfigurasi-sistem">
+                                        <li class="nav-item  {{ Request::is('konfigurasi/kerosakan') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('k.index') }}">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon">
+                                                        <span class="fas fa-folder-open text-main"></span>
+                                                    </span>
+                                                    <span class="nav-link-text text-main ps-1">Kerosakan</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item ">
+                                            <a class="nav-link" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon">
+                                                        <span class="fas fa-folder-open text-main"></span>
+                                                    </span>
+                                                    <span class="nav-link-text text-main ps-1">Maklumat Bulanan /
+                                                        Tahunan</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endrole
 
                             <div class="mt-5 d-flex flex-row-reverse">
                                 <a href="{{ route('logout') }}"

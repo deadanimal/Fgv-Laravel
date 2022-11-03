@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+// Route::get('/test', [Homecontroller::class, 'test']);
+
 Auth::routes();
 // ['register' => false]
 Route::middleware('auth')->group(function () {
@@ -40,6 +42,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/tugasan', TugasanController::class);
 
     });
+
+    Route::get('/tugasan', [TugasanController::class, 'tugasan_user'])->name('tu');
 
     Route::get('audit', [AuditController::class, 'index'])->name('audit');
 

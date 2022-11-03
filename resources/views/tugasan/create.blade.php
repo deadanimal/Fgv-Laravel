@@ -3,7 +3,7 @@
     <x-header main="Pengurusan Pengguna" sub="Laporan Petugas" sub2="Tambah Tugasan" />
 
     <div class="container">
-        <form action="{{ route('tugasan.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('tugasan.store') }}" method="post">
             @csrf
             <div class="row justify-content-center mt-4">
                 <div class="col-10 px-0">
@@ -111,18 +111,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-6 mb-4">
-                            <div class="row align-items-center">
-                                <div class="col-xl-1"></div>
-                                <div class="col-xl-2">
-                                    <label class="col-form-label text-main">Gambar</label>
-                                </div>
-                                <div class="col-xl-9">
-                                    <input type="file" class="form-control"
-                                        name="url_gambar"accept="image/png, image/gif, image/jpeg">
-                                </div>
-                            </div>
-                        </div>
+
 
                         <input type="hidden" name="status" value="dicipta">
 
