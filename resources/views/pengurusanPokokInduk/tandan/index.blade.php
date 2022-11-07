@@ -43,12 +43,39 @@
                 <a href="{{ route('pi.t.create') }}" class="ms-3 btn btn-danger">Daftar
                     <span class="text-white" data-feather="plus-circle"></span>
                 </a>
-                {{-- <a href="{{ route('pi.t.create') }}" class="ms-3 btn btn-danger">Kod QR Pelupusan
-                    <span class="text-white fas fas fa-qrcode"></span>
-                </a>
-                <a href="{{ route('pi.t.muat') }}" class="ms-3 btn btn-danger">Muat Naik Dokumen
-                    <span class="text-white" data-feather="upload-cloud"></span>
-                </a> --}}
+
+                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#error-modal">Cipta
+                    QR</button>
+                <div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+                        <div class="modal-content position-relative">
+                            <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                                <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{{ route('generateQR') }}" method="POST">
+                                @csrf
+                                <div class="modal-body p-0">
+                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                        <h4 class="mb-1" id="modalExampleDemoLabel">Cipta QR</h4>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <div class="mb-3">
+                                            <label class="col-form-label" for="bilqr">Isi bilangan QR yang akan
+                                                dicipta:</label>
+                                            <input class="form-control" id="bilqr" type="number" name="bilqr"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Padam</button>
+                                    <button class="btn btn-danger" type="submit">Teruskan </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row">

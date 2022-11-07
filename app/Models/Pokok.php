@@ -14,4 +14,9 @@ class Pokok extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function tandan()
+    {
+        return $this->hasMany(Tandan::class);
+    }
 }

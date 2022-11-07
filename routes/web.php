@@ -69,6 +69,8 @@ Route::middleware('auth')->group(function () {
             // Route::get('/muat-naik', [TandanController::class, 'MuatNaikDokumenTandan'])->name('pi.t.muat');
 
             Route::get('downloadqr/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqr');
+            Route::post('/generateQR', [TandanController::class, 'generateQR'])->name('generateQR');
+            Route::post('/downloadmanyQR', [TandanController::class, 'downloadmanyQR'])->name('downloadmanyQR');
         });
 
     });

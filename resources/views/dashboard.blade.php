@@ -136,7 +136,8 @@
 
                                 <div class="d-flex align-items-center mt-2">
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">70</span> <br>
+                                        <span class="text-white h3 fw-bolder">{{ $fatherpalm['balut']['hariini'] }}</span>
+                                        <br>
                                         <span class="text-white h7">HARI INI</span>
                                     </div>
                                     <div class="d-flex" style="height: 5rem;">
@@ -144,7 +145,9 @@
                                     </div>
 
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">1049</span> <br>
+                                        <span
+                                            class="text-white h3 fw-bolder">{{ $fatherpalm['balut']['hinggakini'] }}</span>
+                                        <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>
                                 </div>
@@ -159,7 +162,8 @@
 
                                 <div class="d-flex align-items-center mt-2">
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">70</span> <br>
+                                        <span class="text-white h3 fw-bolder">{{ $fatherpalm['tuai']['hariini'] }}</span>
+                                        <br>
                                         <span class="text-white h7">HARI INI</span>
                                     </div>
                                     <div class="d-flex" style="height: 5rem;">
@@ -167,7 +171,9 @@
                                     </div>
 
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">1049</span> <br>
+                                        <span
+                                            class="text-white h3 fw-bolder">{{ $fatherpalm['tuai']['hinggakini'] }}</span>
+                                        <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>
                                 </div>

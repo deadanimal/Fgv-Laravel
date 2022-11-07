@@ -34,7 +34,12 @@ class HomeController extends Controller
         $motherpalm['tuai']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tuai'])->whereDate('created_at', Carbon::today())->count();
         $motherpalm['tuai']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tual'])->count();
 
-        return view('dashboard', compact('motherpalm'));
+        $fatherpalm['balut']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'balut'])->whereDate('created_at', Carbon::today())->count();
+        $fatherpalm['balut']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'balut'])->count();
+        $fatherpalm['tuai']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tuai'])->whereDate('created_at', Carbon::today())->count();
+        $fatherpalm['tuai']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tual'])->count();
+
+        return view('dashboard', compact('motherpalm', 'fatherpalm'));
     }
 
     public function test()

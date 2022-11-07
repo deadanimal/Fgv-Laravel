@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pokok;
 use App\Models\Tandan;
 use App\Models\Tugasan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -85,5 +86,28 @@ class TandanController extends Controller
         $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
         QrCode::generate($url, public_path('qrcode.svg'));
         return response()->download('qrcode.svg');
+    }
+
+    public function generateQR(Request $requests)
+    {
+        $bilqr = $requests->bilqr;
+        for ($i = 0; $i < $bilqr; $i++) {
+            $pokok[] = Pokok::create([
+                'user_id' => auth()->id(),
+            ]);
+        }
+
+        $pdf = Pdf::loadView('pengurusanPokokInduk.tandan.pdfQR', [
+            'pokoks' => $pokok,
+            'bilqr' => $bilqr,
+        ]);
+        return $pdf->download('QR.pdf');
+
+    }
+
+    public function downloadmanyQR(Request $request)
+    {
+        $pokoks = $request->pokok;
+
     }
 }
