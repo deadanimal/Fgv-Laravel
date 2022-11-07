@@ -123,47 +123,53 @@
                                                     @break
 
                                                     @case('siap')
-                                                        <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#modal-sah">SAH</button>
-                                                        <div class="modal fade" id="modal-sah" tabindex="-1" role="dialog"
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document"
-                                                                style="max-width: 500px">
-                                                                <div class="modal-content position-relative">
-                                                                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
-                                                                        <button
-                                                                            class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
-                                                                            data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <form action="{{ route('tugasan.update', $tugasan->id) }}"
-                                                                        method="post">
-                                                                        @csrf
-                                                                        @method('put')
-                                                                        <div class="modal-body p-0">
-                                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                                                <h4 class="mb-1"> Sah Tugasan</h4>
-                                                                            </div>
-
-                                                                            <div class="p-4 pb-0">
-                                                                                <div class="mb-3">
-                                                                                    <label class="col-form-label">Catatan</label>
-                                                                                    <textarea class="form-control" name="catatan_pengesah"></textarea>
+                                                        @if (auth()->user()->peranan != 'pekerja')
+                                                            <button class="btn btn-sm btn-success" type="button"
+                                                                data-bs-toggle="modal" data-bs-target="#modal-sah">SAH</button>
+                                                            <div class="modal fade" id="modal-sah" tabindex="-1" role="dialog"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document"
+                                                                    style="max-width: 500px">
+                                                                    <div class="modal-content position-relative">
+                                                                        <div
+                                                                            class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                                                                            <button
+                                                                                class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <form action="{{ route('tugasan.update', $tugasan->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('put')
+                                                                            <div class="modal-body p-0">
+                                                                                <div
+                                                                                    class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                                                    <h4 class="mb-1"> Sah Tugasan</h4>
                                                                                 </div>
-                                                                                <input type="hidden" name="status"
-                                                                                    value="sah">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button class="btn btn-secondary" type="button"
-                                                                                data-bs-dismiss="modal">Tutup</button>
-                                                                            <button class="btn btn-success" type="submit">Simpan
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
 
+                                                                                <div class="p-4 pb-0">
+                                                                                    <div class="mb-3">
+                                                                                        <label
+                                                                                            class="col-form-label">Catatan</label>
+                                                                                        <textarea class="form-control" name="catatan_pengesah"></textarea>
+                                                                                    </div>
+                                                                                    <input type="hidden" name="status"
+                                                                                        value="sah">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn btn-secondary" type="button"
+                                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                                <button class="btn btn-success"
+                                                                                    type="submit">Simpan
+                                                                                </button>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
                                                     @break
 
                                                     @default
@@ -193,14 +199,15 @@
                                                         <span class="fas fa-book-open"></span>
                                                     </a>
                                                 @endif
-
-                                                <form action="{{ route('tugasan.destroy', $tugasan->id) }}"
-                                                    method="post" class="d-inline-flex">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><span
-                                                            class="fas fa-trash-alt"></span></button>
-                                                </form>
+                                                @if (auth()->user()->peranan != 'pekerja')
+                                                    <form action="{{ route('tugasan.destroy', $tugasan->id) }}"
+                                                        method="post" class="d-inline-flex">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><span
+                                                                class="fas fa-trash-alt"></span></button>
+                                                    </form>
+                                                @endif
 
 
                                             </td>
