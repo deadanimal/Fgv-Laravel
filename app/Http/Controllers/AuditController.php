@@ -8,7 +8,7 @@ class AuditController extends Controller
 {
     public function index()
     {
-        $logs = Activity::orderByDesc('updated_at')->get();
+        $logs = Activity::with('causer')->orderByDesc('updated_at')->get();
 
         return view('audit.index', [
             'logs' => $logs,

@@ -170,7 +170,7 @@
                                 </li>
                             @endrole
 
-                            @role('supervisor')
+                            @role(['supervisor', 'super-admin', 'admin'])
                                 <li class="nav-item">
                                     <a class="nav-link p-3 my-1 dropdown-indicator" href="#pengurusan-pengguna"
                                         role="button" data-bs-toggle="collapse"
@@ -185,18 +185,20 @@
                                     </a>
                                     <ul class="nav collapse {{ Request::is('pengurusan_pengguna/*') ? 'show' : 'false' }} ps-4"
                                         id="pengurusan-pengguna">
-                                        <li
-                                            class="nav-item 
+                                        @role(['super-admin', 'admin'])
+                                            <li
+                                                class="nav-item 
                                         {{ Request::is('pengurusan_pengguna/index', 'pengurusan_pengguna/daftar', 'pengurusan_pengguna/edit') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ route('pp.index') }}">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon">
-                                                        <span class="fas fa-folder-open text-main"></span>
-                                                    </span>
-                                                    <span class="nav-link-text text-main ps-1">Petugas</span>
-                                                </div>
-                                            </a>
-                                        </li>
+                                                <a class="nav-link" href="{{ route('pp.index') }}">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon">
+                                                            <span class="fas fa-folder-open text-main"></span>
+                                                        </span>
+                                                        <span class="nav-link-text text-main ps-1">Petugas</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endrole
                                         <li
                                             class="nav-item {{ Request::is('pengurusan_pengguna/tugasan', 'pengurusan_pengguna/tugasan/*') ? 'active' : '' }}">
                                             <a class="nav-link" href="{{ route('tugasan.index') }}">
@@ -297,7 +299,8 @@
                                     </a>
 
                                 </li>
-
+                            @endrole
+                            @role(['super-admin', 'admin'])
                                 <li class="nav-item">
                                     <a class="nav-link p-3 my-1 dropdown-indicator " href="#konfigurasi-sistem"
                                         role="button" data-bs-toggle="collapse" aria-expanded="false"
