@@ -139,7 +139,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <a href="{{ route('downloadqr', $tandan->id) }}"
+                                                    <a href="{{ route('downloadqrtandan', $tandan->id) }}"
                                                         class="ms-2 btn btn-danger btn-sm">
                                                         <span class="fas fa-download" style="width:15px;"></span>
                                                     </a>

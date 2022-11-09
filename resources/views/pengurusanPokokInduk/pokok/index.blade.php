@@ -29,6 +29,7 @@
                                         <th>Blok</th>
                                         <th>Baka</th>
                                         <th>Progeny</th>
+                                        <th>QR Code</th>
                                         <th>Tindakan</th>
                                     </tr>
                                 </thead>
@@ -51,6 +52,17 @@
                                                 {{ $pokok->progeny }}
                                             </td>
                                             <td>
+                                                <button
+                                                    onclick="qrbtn('{{ URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id) }}')"
+                                                    type="button" class="btn btn-danger btn-sm ms-1">
+                                                    <span data-feather="eye" style="width:15px;"></span>
+                                                </button>
+                                                <a href="{{ route('downloadqrpokok', $pokok->id) }}"
+                                                    class="ms-2 btn btn-danger btn-sm">
+                                                    <span class="fas fa-download" style="width:15px;"></span>
+                                                </a>
+                                            </td>
+                                            <td>
                                                 <form action="{{ route('pi.p.delete', $pokok->id) }}" method="post"
                                                     class="d-inline-flex">
                                                     @csrf
@@ -64,14 +76,6 @@
                                                     class="ms-1 btn btn-sm btn-danger">
                                                     <span data-feather="edit" style="width:15px;"></span>
                                                 </a>
-
-                                                <button
-                                                    onclick="qrbtn('{{ URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id) }}')"
-                                                    type="button" class="btn btn-danger btn-sm ms-1">
-                                                    <span data-feather="eye" style="width:15px;"></span>
-                                                </button>
-
-
                                             </td>
                                         </tr>
                                     @endforeach

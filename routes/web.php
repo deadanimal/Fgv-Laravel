@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [PokokController::class, 'store'])->name('pi.p.store');
             Route::put('/update/{pokok}', [PokokController::class, 'update'])->name('pi.p.update');
             Route::delete('/delete/{pokok}', [PokokController::class, 'delete'])->name('pi.p.delete');
+            Route::get('downloadqrpokok/{pokok}', [PokokController::class, 'downloadqr'])->name('downloadqrpokok');
 
         });
 
@@ -68,7 +69,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{tandan}', [TandanController::class, 'delete'])->name('pi.t.delete');
             // Route::get('/muat-naik', [TandanController::class, 'MuatNaikDokumenTandan'])->name('pi.t.muat');
 
-            Route::get('downloadqr/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqr');
+            Route::get('downloadqrtandan/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqrtandan');
             Route::post('/generateQR', [TandanController::class, 'generateQR'])->name('generateQR');
             Route::post('/downloadmanyQR', [TandanController::class, 'downloadmanyQR'])->name('downloadmanyQR');
         });

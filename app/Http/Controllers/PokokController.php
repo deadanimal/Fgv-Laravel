@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pokok;
 use App\Models\Tandan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PokokController extends Controller
 {
@@ -47,6 +49,13 @@ class PokokController extends Controller
         $pokok->delete();
 
         return redirect()->route('pi.p.index');
+    }
+
+    public function downloadqr(Pokok $pokok)
+    {
+        $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
+        QrCode::generate($url, public_path('qrcode_pokok.svg'));
+        return response()->download('qrcode_pokok.svg');
     }
 
 }

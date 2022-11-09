@@ -84,8 +84,8 @@ class TandanController extends Controller
     public function downloadqr(Tandan $tandan)
     {
         $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
-        QrCode::generate($url, public_path('qrcode.svg'));
-        return response()->download('qrcode.svg');
+        QrCode::generate($url, public_path('qrcode_tandan.svg'));
+        return response()->download('qrcode_tandan.svg');
     }
 
     public function generateQR(Request $requests)
