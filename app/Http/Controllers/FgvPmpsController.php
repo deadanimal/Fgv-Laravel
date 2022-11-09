@@ -46,23 +46,9 @@ class FgvPmpsController extends Controller
     {
 
         $tandan = Tandan::where('no_daftar', $request->no_daftar)->first();
-        if ($tandan == null) {
-            return [
-                'error' => '404',
-                'log' => 'Tandan tidak wujud',
-            ];
-        }
-
-        $tandan = Tandan::where('no_daftar', $request->no_daftar)->whereNotNull('pokok_id')->first();
-        if ($tandan == null) {
-            return [
-                'error' => '404',
-                'log' => 'Data tandan belum didaftarkan pokok',
-            ];
-        }
 
         $tugasan = Tugasan::create([
-            'tandan_id' => $tandan->id,
+            'tandan_id' => $tandan->id ?? null,
             'jenis' => $request->jenis, //['balut','debung','kawal','tuai']
             'catatan' => $request->catatan, // description pelaksanaan
             'status' => 'dicipta', //['dicipta','siap','disahkan','rosak']
@@ -70,8 +56,11 @@ class FgvPmpsController extends Controller
             'petugas_id' => $request->petugas_id, // user yang perlu melaksanakan tugas
         ]);
 
-        $tugasan['no_daftar'] = $tandan->no_daftar;
-        $tugasan['pokok_id'] = $tandan->pokok_id;
+        if ($tandan != null) {
+            $tugasan['no_daftar'] = $tandan->no_daftar;
+            $tugasan['pokok_id'] = $tandan->pokok_id;
+        }
+
         return response()->json($tugasan);
 
     }
