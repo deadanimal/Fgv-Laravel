@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\FgvPmpsController;
+use App\Http\Controllers\PokokApiController;
+use App\Http\Controllers\TandanApiController;
+use App\Http\Controllers\TugasanApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +36,9 @@ Route::post('/tugasan/{id}/sah', [FgvPmpsController::class, 'sah_tugasan']);
 Route::post('/tugasan/{id}/rosak', [FgvPmpsController::class, 'rosak']);
 
 Route::get('/tandan/{tandan}', [FgvPmpsController::class, 'satu_tandan']);
+
+Route::apiResources([
+    '/pokok' => PokokApiController::class,
+    '/tandan' => TandanApiController::class,
+    '/tugasan' => TugasanApiController::class,
+]);
