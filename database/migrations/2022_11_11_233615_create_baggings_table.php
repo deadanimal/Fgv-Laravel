@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Pokok;
 use App\Models\Tandan;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,12 +15,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('baluts', function (Blueprint $table) {
+        Schema::create('baggings', function (Blueprint $table) {
             $table->id();
+            $table->string('no_bagging')->nullable();
+            $table->foreignIdFor(Pokok::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Tandan::class)->constrained()->cascadeOnDelete();
-            $table->date('tarikh');
-            $table->string('petugas');
-            $table->string('pengesah');
+            $table->string('url_gambar')->nullable();
+            $table->foreignId('id_sv_balut')->nullable();
+            $table->string('catatan')->nullable();
+            $table->foreignId('pengesah_id')->nullable();
+            $table->string('catatan_pengesah')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('baluts');
+        Schema::dropIfExists('baggings');
     }
 };

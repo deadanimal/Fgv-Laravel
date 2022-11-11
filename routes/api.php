@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Controllers\BaggingApiController;
+use App\Http\Controllers\ControlPollinationApiController;
 use App\Http\Controllers\FgvPmpsController;
+use App\Http\Controllers\HarvestApiController;
+use App\Http\Controllers\KerosakanApiController;
 use App\Http\Controllers\PokokApiController;
+use App\Http\Controllers\PollenApiController;
+use App\Http\Controllers\QualityControlApiController;
+use App\Http\Controllers\StokPollenApiController;
 use App\Http\Controllers\TandanApiController;
 use App\Http\Controllers\TugasanApiController;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +49,10 @@ Route::apiResources([
     '/tandan' => TandanApiController::class,
     '/tugasan' => TugasanApiController::class,
     '/kerosakan' => KerosakanApiController::class,
+    '/pollen' => PollenApiController::class,
+    '/stok_pollen' => StokPollenApiController::class,
+    '/bagging' => BaggingApiController::class,
+    '/control_pollination' => ControlPollinationApiController::class,
+    '/quality_control' => QualityControlApiController::class,
+    '/harvest' => HarvestApiController::class,
 ]);
