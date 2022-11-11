@@ -75,14 +75,16 @@ class FgvPmpsController extends Controller
     {
         $tugasan = Tugasan::find($id);
 
-        $url = $request->file('url_gambar')->store(
-            'tugasan', 'public'
-        );
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'tugasan', 'public'
+            );
+        }
 
         $tugasan->update([
             'catatan_petugas' => $request->catatan_petugas,
             'status' => 'siap',
-            'url_gambar' => $url,
+            'url_gambar' => $url ?? null,
 
         ]);
 

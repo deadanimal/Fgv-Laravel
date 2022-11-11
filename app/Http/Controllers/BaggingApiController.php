@@ -26,7 +26,17 @@ class BaggingApiController extends Controller
      */
     public function store(Request $request)
     {
+
         $info = Bagging::create($request->all());
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'bagging', 'public'
+            );
+            $info->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
         return response()->json($info);
 
     }

@@ -25,7 +25,18 @@ class TugasanApiController extends Controller
      */
     public function store(Request $request)
     {
+
         $info = Tugasan::create($request->all());
+
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'tugasan', 'public'
+            );
+            $info->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
         return response()->json($info);
 
     }

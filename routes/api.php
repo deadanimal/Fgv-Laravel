@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [FgvPmpsController::class, 'login']);
 Route::get('/profil/{user}', [FgvPmpsController::class, 'profil']);
 
-Route::get('/tugasan', [FgvPmpsController::class, 'senarai_tugasan']);
+// Route::get('/tugasan', [FgvPmpsController::class, 'senarai_tugasan']);
 Route::post('/tugasan', [FgvPmpsController::class, 'cipta_tugasan']);
 Route::get('/tugasan/{id}', [FgvPmpsController::class, 'satu_tugasan']);
 Route::get('/tugasan/user/{id}', [FgvPmpsController::class, 'senarai_tugasan_user']);

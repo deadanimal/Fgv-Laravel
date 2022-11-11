@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ControlPollination extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
+
 }
