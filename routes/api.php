@@ -41,4 +41,5 @@ Route::apiResources([
     '/pokok' => PokokApiController::class,
     '/tandan' => TandanApiController::class,
     '/tugasan' => TugasanApiController::class,
+    '/kerosakan' => KerosakanApiController::class,
 ]);
