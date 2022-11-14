@@ -26,7 +26,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 // ['register' => false]
-Route::middleware('auth')->group(function () {
+Route::middleware('auth.basic')->group(function () {
+
     Route::get('/dashboard', [HomeController::class, 'index'])->name('laman');
     Route::get('', [HomeController::class, 'index']);
 
@@ -45,7 +46,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tugasan', [TugasanController::class, 'tugasan_user'])->name('tu');
 
-    Route::get('audit', [AuditController::class, 'index'])->name('audit');
+    Route::get('/audit', [AuditController::class, 'index'])->name('audit');
     Route::post('/search/audit', [AuditController::class, 'search'])->name('search.audit');
 
     Route::prefix('/pengurusan-pokok-induk')->group(function () {
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{pokok}', [PokokController::class, 'delete'])->name('pi.p.delete');
             Route::get('downloadqrpokok/{pokok}', [PokokController::class, 'downloadqr'])->name('downloadqrpokok');
             Route::post('/search/pokok', [PokokController::class, 'search'])->name('search.pokok');
+            Route::post('/bulkqr', [PokokController::class, 'bulkqr'])->name('pokok.bulkqr');
         });
 
         Route::prefix('/tandan')->group(function () {
@@ -70,7 +72,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{tandan}', [TandanController::class, 'delete'])->name('pi.t.delete');
             // Route::get('/muat-naik', [TandanController::class, 'MuatNaikDokumenTandan'])->name('pi.t.muat');
 
-            Route::get('downloadqrtandan/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqrtandan');
+            Route::get('/downloadqrtandan/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqrtandan');
             Route::post('/generateQR', [TandanController::class, 'generateQR'])->name('generateQR');
             Route::post('/downloadmanyQR', [TandanController::class, 'downloadmanyQR'])->name('downloadmanyQR');
             Route::post('/search/tandan', [TandanController::class, 'search'])->name('search.tandan');

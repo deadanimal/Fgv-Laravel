@@ -58,7 +58,7 @@
                                     <label class="col-form-label text-main">Induk</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <select name="induk" class="form-select border-main">
+                                    <select name="jantina" class="form-select border-main">
                                         <option selected disabled hidden> SILA PILIH </option>
                                         <option value="Motherpalm">Motherpalm</option>
                                         <option value="Fatherpalm">Fatherpalm</option>

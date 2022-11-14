@@ -58,7 +58,7 @@
                                     <label class="col-form-label text-main">Induk</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <select name="induk" class="form-select border-main">
+                                    <select name="jantina" class="form-select border-main">
                                         <option {{ $pokok->induk == 'Motherpalm' ? 'selected' : '' }} value="Motherpalm">
                                             Motherpalm</option>
                                         <option {{ $pokok->induk == 'Fatherpalm' ? 'selected' : '' }} value="Fatherpalm">

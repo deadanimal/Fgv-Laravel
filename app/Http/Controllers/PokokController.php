@@ -60,6 +60,7 @@ class PokokController extends Controller
 
         $pdf = Pdf::loadView('pengurusanPokokInduk.pokok.downloadQR', [
             'pokok' => $pokok,
+            'type' => 1,
         ]);
 
         return $pdf->download('qrcode.pdf');
@@ -95,6 +96,27 @@ class PokokController extends Controller
             // 'aktif' => Pokok::where('status_pokok', 'aktif')->count(),
             // 'tidak_aktif' => Pokok::where('status_pokok', 'tidak_aktif')->count(),
         ]);
+
+    }
+
+    public function bulkqr(Request $request)
+    {
+        foreach ($request->pokoks as $pokok) {
+            $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok);
+            $name = "bulkpokok/pokok" . $pokok . ".svg";
+            QrCode::size(500)->generate($url, public_path($name));
+
+            $p['no_pokok'][$pokok] = Pokok::find($pokok)->no_pokok;
+            $p['name'][$pokok] = $name;
+        }
+
+        $pdf = Pdf::loadView('pengurusanPokokInduk.pokok.downloadQR', [
+            'type' => 2,
+            'pokoks' => $request->pokoks,
+            'no_pokoks' => $p,
+        ]);
+
+        return $pdf->download('qrcode.pdf');
 
     }
 
