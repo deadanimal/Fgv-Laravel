@@ -56,9 +56,9 @@ class PokokController extends Controller
     {
 
         $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
-        QrCode::size(500)->generate($url, public_path('qrcode_pokok.svg'));
+        QrCode::size(500)->generate($url, public_path('qr/qrcode_pokok.svg'));
 
-        $pdf = Pdf::loadView('pengurusanPokokInduk.pokok.downloadQR', [
+        $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
             'pokok' => $pokok,
             'type' => 1,
         ]);
@@ -110,7 +110,7 @@ class PokokController extends Controller
             $p['name'][$pokok] = $name;
         }
 
-        $pdf = Pdf::loadView('pengurusanPokokInduk.pokok.downloadQR', [
+        $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
             'type' => 2,
             'pokoks' => $request->pokoks,
             'no_pokoks' => $p,

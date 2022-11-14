@@ -103,7 +103,11 @@
                                                 {{ $tandan->no_daftar }}
                                             </td>
                                             <td>
-                                                {{ $tandan->pokok->no_pokok ?? 'Belum didaftar pokok' }}
+                                                {{ $tandan->pokok->no_pokok ?? '' }}
+                                                @if ($tandan->pokok == null)
+                                                    <span class='badge rounded-pill badge-soft-warning'> Belum Daftar
+                                                    </span>
+                                                @endif
                                             </td>
                                             <td>
                                                 @if ($tandan->pokok)
@@ -129,7 +133,6 @@
                                                                     <div class="p-4">
                                                                         <div class="visible-print text-center">
                                                                             {!! QrCode::size(100)->generate(URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id)) !!}
-                                                                            {{-- <p>Scan me to return to the original page.</p> --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -145,7 +148,8 @@
                                                         <span class="fas fa-download" style="width:15px;"></span>
                                                     </a>
                                                 @else
-                                                    Perlu daftar Pokok
+                                                    <span class="badge rounded-pill badge-soft-warning"> Perlu
+                                                        Daftar</span>
                                                 @endif
 
 

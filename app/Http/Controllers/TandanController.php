@@ -17,7 +17,7 @@ class TandanController extends Controller
     public function index()
     {
         return view('pengurusanPokokInduk.tandan.index', [
-            'tandans' => Tandan::with('pokok')->orderByDesc('updated_at')->get(),
+            'tandans' => Tandan::with('pokok')->orderByDesc('created_at')->get(),
         ]);
     }
 
@@ -84,8 +84,16 @@ class TandanController extends Controller
     public function downloadqr(Tandan $tandan)
     {
         $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
-        QrCode::generate($url, public_path('qrcode_tandan.svg'));
-        return response()->download('qrcode_tandan.svg');
+
+        QrCode::size(500)->generate($url, public_path('qr/qrcode_tandan.svg'));
+
+        $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
+            'tandan' => $tandan,
+            'type' => 3,
+        ]);
+
+        return $pdf->download('qrcode.pdf');
+
     }
 
     public function generateQR(Request $requests)

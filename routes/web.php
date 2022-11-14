@@ -83,7 +83,10 @@ Route::middleware('auth.basic')->group(function () {
 
     Route::prefix('/laporan')->as('laporan.')->group(function () {
         Route::get('/motherpalm/index', [LaporanController::class, 'motherpalm'])->name('motherpalm');
-        Route::get('/motherpalm/store', [LaporanController::class, 'motherpalmStore'])->name('motherpalmStore');
+        Route::post('/motherpalm/store', [LaporanController::class, 'motherpalmStore'])->name('motherpalmStore');
+
+        Route::get('/fatherpalm/index', [LaporanController::class, 'fatherpalm'])->name('fatherpalm');
+        Route::post('/fatherpalm/store', [LaporanController::class, 'fatherpalmStore'])->name('fatherpalmStore');
     });
 
     Route::prefix('/konfigurasi')->group(function () {
