@@ -40,12 +40,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/kemaskini_password/{user}', [UserController::class, 'kemaskini_password'])->name('pp.updatePwd');
 
         Route::resource('/tugasan', TugasanController::class);
-
+        Route::post('/search/tugasan', [TugasanController::class, 'search'])->name('search.tugasan');
     });
 
     Route::get('/tugasan', [TugasanController::class, 'tugasan_user'])->name('tu');
 
     Route::get('audit', [AuditController::class, 'index'])->name('audit');
+    Route::post('/search/audit', [AuditController::class, 'search'])->name('search.audit');
 
     Route::prefix('/pengurusan-pokok-induk')->group(function () {
 
@@ -57,7 +58,7 @@ Route::middleware('auth')->group(function () {
             Route::put('/update/{pokok}', [PokokController::class, 'update'])->name('pi.p.update');
             Route::delete('/delete/{pokok}', [PokokController::class, 'delete'])->name('pi.p.delete');
             Route::get('downloadqrpokok/{pokok}', [PokokController::class, 'downloadqr'])->name('downloadqrpokok');
-
+            Route::post('/search/pokok', [PokokController::class, 'search'])->name('search.pokok');
         });
 
         Route::prefix('/tandan')->group(function () {
@@ -72,6 +73,8 @@ Route::middleware('auth')->group(function () {
             Route::get('downloadqrtandan/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqrtandan');
             Route::post('/generateQR', [TandanController::class, 'generateQR'])->name('generateQR');
             Route::post('/downloadmanyQR', [TandanController::class, 'downloadmanyQR'])->name('downloadmanyQR');
+            Route::post('/search/tandan', [TandanController::class, 'search'])->name('search.tandan');
+
         });
 
     });

@@ -152,9 +152,5 @@
         $('#custom-btn-white').click(function() {
             location.reload();
         });
-
-        $(".customdate").click(function() {
-            $(this).siblings("input").trigger("click");
-        });
     </script>
 @endsection

@@ -6,13 +6,75 @@
 
 
     <h4 class="text-center mt-4">JUMLAH POKOK</h4>
-    <h1 class="text-center text-danger fw-bold">{{ count($pokoks) }}</h1>
+    <h1 class="text-center text-danger fw-bold">{{ App\Models\Pokok::all()->count() }}</h1>
 
 
     <div class="row justify-content-center mt-4">
         <div class="col-10">
 
-            <div class="text-end mb-3 mt-5">
+            <form action="{{ route('search.pokok') }}" method="POST" class="row mb-3">
+                @csrf
+                <div class="col-xl-6 mb-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-xl-2">
+                            <label class="col-form-label">Blok</label>
+                        </div>
+                        <div class="col-xl-8">
+                            <input type="text"class="form-control border-danger" name="blok"
+                                placeholder="SILA TAIP DISINI" value="{{ $blok ?? '' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 mb-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-xl-4 text-end">
+                            <label class="col-form-label">Progeny</label>
+                        </div>
+                        <div class="col-xl-8">
+                            <input type="text"class="form-control border-danger" name="progeny"
+                                placeholder="SILA TAIP DISINI" value="{{ $progeny ?? '' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-xl-2">
+                            <label class="col-form-label">Baka</label>
+                        </div>
+                        <div class="col-xl-8">
+                            <input type="text"class="form-control border-danger" name="baka"
+                                placeholder="SILA TAIP DISINI" value="{{ $baka ?? '' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-xl-4 text-end">
+                            <label class="col-form-label">No. Pokok</label>
+                        </div>
+                        <div class="col-xl-8">
+                            <input type="text"class="form-control border-danger" name="no_pokok"
+                                placeholder="SILA TAIP DISINI" value="{{ $no_pokok ?? '' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-sm btn-danger" id="btnSearch">Cari
+                        <span data-feather="search"></span>
+                    </button>
+                    <a href="{{ route('pi.p.index') }}" class="btn btn-sm btn-link">
+                        <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
+                    </a>
+                </div>
+            </form>
+
+
+
+            <div class="text-end mb-3 mt-4">
                 <a href="{{ route('pi.p.create') }}" class="btn btn-danger">Daftar
                     <span class="text-white" data-feather="plus-circle"></span>
                 </a>

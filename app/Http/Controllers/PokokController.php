@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pokok;
 use App\Models\Tandan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -53,9 +54,48 @@ class PokokController extends Controller
 
     public function downloadqr(Pokok $pokok)
     {
+
         $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
-        QrCode::generate($url, public_path('qrcode_pokok.svg'));
-        return response()->download('qrcode_pokok.svg');
+        QrCode::size(500)->generate($url, public_path('qrcode_pokok.svg'));
+
+        $pdf = Pdf::loadView('pengurusanPokokInduk.pokok.downloadQR', [
+            'pokok' => $pokok,
+        ]);
+
+        return $pdf->download('qrcode.pdf');
+        // $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
+        // QrCode::size(500)->generate($url, public_path('qrcode_pokok.svg'));
+        // return response()->download('qrcode_pokok.svg');
+
+    }
+
+    public function search(Request $request)
+    {
+        $pokok = Pokok::whereNotNull('id');
+
+        if ($request->blok != null) {
+            $pokok->where('blok', $request->blok);
+        }
+        if ($request->baka != null) {
+            $pokok->where('baka', $request->baka);
+        }
+        if ($request->progeny != null) {
+            $pokok->where('progeny', $request->progeny);
+        }
+        if ($request->no_pokok != null) {
+            $pokok->where('no_pokok', $request->no_pokok);
+        }
+
+        return view('pengurusanPokokInduk.pokok.index', [
+            'pokoks' => $pokok->get(),
+            'blok' => $request->blok,
+            'baka' => $request->baka,
+            'progeny' => $request->progeny,
+            'no_pokok' => $request->no_pokok,
+            // 'aktif' => Pokok::where('status_pokok', 'aktif')->count(),
+            // 'tidak_aktif' => Pokok::where('status_pokok', 'tidak_aktif')->count(),
+        ]);
+
     }
 
 }

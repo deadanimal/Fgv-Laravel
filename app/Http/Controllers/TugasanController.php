@@ -128,10 +128,11 @@ class TugasanController extends Controller
      */
     public function destroy(Tugasan $tugasan)
     {
+        $tugasan->delete();
         if (File::exists(public_path('/storage/' . $tugasan->url_gambar))) {
             File::delete(public_path('/storage/' . $tugasan->url_gambar));
         } else {
-            dd('File does not exists.', $tugasan->url_gambar);
+            // dd('File does not exists.', $tugasan->url_gambar);
         }
 
         activity()->event('Tugasan')->log('Tugasan Id:' . $tugasan->id . ' kepada ' . $tugasan->petugas->nama . ' telah dibuang');
@@ -144,4 +145,32 @@ class TugasanController extends Controller
         $tugasans = Tugasan::where('petugas_id', auth()->id())->orderByDesc('created_at')->get();
         return view('tugasan.user', compact('tugasans'));
     }
+
+    public function search(Request $request)
+    {
+        if ($request->tarikh == null) {
+            $petugas = User::where('no_kakitangan', $request->no_kakitangan)->first();
+            $result = Tugasan::with('petugas')->where('petugas_id', $petugas->id)->orderByDesc('updated_at')->get();
+        }
+
+        if ($request->no_kakitangan == null) {
+            $result = Tugasan::with('petugas')->where('tarikh', $request->tarikh)->orderByDesc('updated_at')->get();
+        }
+
+        if ($request->no_kakitangan != null && $request->tarikh != null) {
+            $petugas = User::where('no_kakitangan', $request->no_kakitangan)->first();
+
+            $result = Tugasan::with('petugas')->where('petugas_id', $petugas->id)
+                ->where('tarikh', $request->tarikh)
+                ->orderByDesc('updated_at')->get();
+        }
+
+        return view('tugasan.index', [
+            'tugasans' => $result,
+            'no_kakitangan' => $request->no_kakitangan,
+            'tarikh' => $request->tarikh,
+        ]);
+
+    }
+
 }

@@ -3,37 +3,38 @@
     <x-header main="Pengurusan Pokok Induk" sub="Tandan" sub2="" />
 
 
-    {{-- <div class="row justify-content-center mt-5">
+    <form class="row justify-content-center mt-5" action="{{ route('search.tandan') }}" method="POST">
+        @csrf
         <div class="col-8">
             <div class="row align-items-center">
-                <div class="col-2 text-end">
+                <div class="col-2 mt-3 text-end">
                     <p class="fw-bold">No. Daftar</p>
                 </div>
-                <div class="col-7 ">
-                    <input type="text" name="search" id="search" class="form-control">
+                <div class="col-7">
+                    <input type="text" name="no_daftar" class="form-control" value="{{ $no_daftar ?? '' }}" required>
                 </div>
                 <div class="col-3 px-0">
                     <button class="btn btn-sm btn-danger">Cari
                         <span data-feather="search"></span>
                     </button>
-                    <button class="btn btn-sm btn-link btnRefresh">
+                    <a href="{{ route('pi.t.index') }}" class="btn btn-sm btn-link">
                         <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
-                    </button>
+                    </a>
                 </div>
-                <div class="col-2 mt-4 text-end">
+                {{-- <div class="col-2 mt-4 text-end">
                     <p class="fw-bold">Bulan</p>
                 </div>
                 <div class="col-7 mt-3">
-                    <select id="bulan" class="form-select">
+                    <select name="bulan" class="form-select">
                         <option selected disabled hidden>Sila Pilih</option>
                         @for ($i = 1; $i <= 12; $i++)
-                            <option value="$i">{{ $i }}</option>
+                            <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
                     </select>
-                </div>
+                </div> --}}
             </div>
         </div>
-    </div> --}}
+    </form>
 
 
 

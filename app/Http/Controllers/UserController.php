@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $result = User::where('no_kakitangan', $request->search)->where('peranan', 'Pengguna')->orderByDesc('updated_at')->get();
+            $result = User::where('no_kakitangan', $request->search)->orderByDesc('updated_at')->get();
             return response()->json([$result]);
         }
 
