@@ -56,3 +56,9 @@ Route::apiResources([
     '/quality_control' => QualityControlApiController::class,
     '/harvest' => HarvestApiController::class,
 ]);
+
+Route::get('/tandan/{id_tandan}/pollen', [TandanApiController::class, 'findPollen']);
+Route::get('/tandan/{id_tandan}/bagging', [TandanApiController::class, 'findBagging']);
+Route::get('/tandan/{id_tandan}/cp', [TandanApiController::class, 'findCp']);
+Route::get('/tandan/{id_tandan}/qc', [TandanApiController::class, 'findQc']);
+Route::get('/tandan/{id_tandan}/harvest', [TandanApiController::class, 'findHarvest']);

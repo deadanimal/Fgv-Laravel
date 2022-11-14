@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bagging;
+use App\Models\ControlPollination;
+use App\Models\Harvest;
+use App\Models\Pollen;
+use App\Models\QualityControl;
 use App\Models\Tandan;
 use Illuminate\Http\Request;
 
@@ -70,5 +75,31 @@ class TandanApiController extends Controller
             'Delete' => 'Successful',
         ];
 
+    }
+
+    public function findPollen($id_tandan)
+    {
+        $pollens = Pollen::where('tandan_id', $id_tandan)->get();
+        return response()->json($pollens);
+    }
+    public function findBagging($id_tandan)
+    {
+        $bagging = Bagging::where('tandan_id', $id_tandan)->get();
+        return response()->json($bagging);
+    }
+    public function findQc($id_tandan)
+    {
+        $qc = QualityControl::where('tandan_id', $id_tandan)->get();
+        return response()->json($qc);
+    }
+    public function findCp($id_tandan)
+    {
+        $cp = ControlPollination::where('tandan_id', $id_tandan)->get();
+        return response()->json($cp);
+    }
+    public function findHarvest($id_tandan)
+    {
+        $harvest = Harvest::where('tandan_id', $id_tandan)->get();
+        return response()->json($harvest);
     }
 }
