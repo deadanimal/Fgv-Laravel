@@ -69,7 +69,7 @@
                                                 {{ $loop->iteration }}
                                             </td>
                                             <td>
-                                                {{ $log->causer->no_kakitangan }}
+                                                {{ $log->causer->no_kakitangan ?? '' }}
                                             </td>
                                             <td>
                                                 {{ $log->event }}

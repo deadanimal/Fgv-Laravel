@@ -41,7 +41,7 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/kemaskini_password/{user}', [UserController::class, 'kemaskini_password'])->name('pp.updatePwd');
 
         Route::resource('/tugasan', TugasanController::class);
-        Route::post('/search/tugasan', [TugasanController::class, 'search'])->name('search.tugasan');
+        Route::post('/tugasan/search', [TugasanController::class, 'search'])->name('search.tugasan');
     });
 
     Route::get('/tugasan', [TugasanController::class, 'tugasan_user'])->name('tu');
@@ -59,7 +59,7 @@ Route::middleware('auth.basic')->group(function () {
             Route::put('/update/{pokok}', [PokokController::class, 'update'])->name('pi.p.update');
             Route::delete('/delete/{pokok}', [PokokController::class, 'delete'])->name('pi.p.delete');
             Route::get('downloadqrpokok/{pokok}', [PokokController::class, 'downloadqr'])->name('downloadqrpokok');
-            Route::post('/search/pokok', [PokokController::class, 'search'])->name('search.pokok');
+            Route::post('/pokok/search', [PokokController::class, 'search'])->name('search.pokok');
             Route::get('/bulkqr', [PokokController::class, 'bulkqr'])->name('pokok.bulkqr');
         });
 
@@ -75,7 +75,7 @@ Route::middleware('auth.basic')->group(function () {
             Route::get('/downloadqrtandan/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqrtandan');
             Route::post('/generateQR', [TandanController::class, 'generateQR'])->name('generateQR');
             Route::post('/downloadmanyQR', [TandanController::class, 'downloadmanyQR'])->name('downloadmanyQR');
-            Route::post('/search/tandan', [TandanController::class, 'search'])->name('search.tandan');
+            Route::post('/tandan/search', [TandanController::class, 'search'])->name('search.tandan');
 
         });
 

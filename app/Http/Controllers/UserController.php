@@ -41,17 +41,20 @@ class UserController extends Controller
             "no_kakitangan" => "required|string|unique:users",
             "peranan" => "required|string",
             "no_kad_pengenalan" => "required|integer|unique:users|digits:12",
-            "no_telefon" => "required|regex:/(01)[0-9]/",
+            "no_telefon" => "required",
             "email" => "required|string",
             "stesen" => "required|string",
             "kategori_petugas" => "required|string",
             "blok" => "required|string",
             "luput_pwd" => "required|integer",
-            'peranan' => "required|string",
         ]);
+        $role = Role::where('name', $request->peranan)->first();
 
+        $validated['peranan'] = $role->display_name;
         $validated['password'] = Hash::make('123');
         $user = User::create($validated);
+
+        $user->attachRole($request->peranan);
 
         alert()->success('Pendaftaran Berjaya');
         return redirect()->route('pp.index');
@@ -62,11 +65,27 @@ class UserController extends Controller
     {
         return view('user.edit', [
             'user' => $user,
+            'roles' => Role::all(),
+            'stesens' => Stesen::all(),
+            'kategoris' => KategoriPetugas::all(),
         ]);
     }
 
     public function update(Request $request, User $user)
     {
+        $request->validate([
+            "nama" => "required|string",
+            "no_kakitangan" => "required|string",
+            "peranan" => "required|string",
+            "no_kad_pengenalan" => "required|integer|digits:12",
+            "no_telefon" => "required",
+            "email" => "required|string",
+            "stesen" => "required|string",
+            "kategori_petugas" => "required|string",
+            "blok" => "required|string",
+            "luput_pwd" => "required|integer",
+        ]);
+
         $user->update($request->all());
         return redirect()->route('pp.index');
     }

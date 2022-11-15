@@ -62,9 +62,13 @@ class TugasanController extends Controller
     public function show(Tugasan $tugasan)
     {
         $tandan = Tandan::find($tugasan->tandan_id);
-        $pokok = Pokok::find($tandan->pokok_id ?? 1);
-        $namaPetugas = User::find($tugasan->petugas_id)->nama ?? 'User telah dibuang';
-        $namaPengesah = User::find($tugasan->pengesah_id)->nama ?? 'User telah dibuang';
+        $pokok = [];
+        if ($tandan != null) {
+            $pokok = Pokok::find($tandan->pokok_id);
+        }
+
+        $namaPetugas = User::find($tugasan->petugas_id)->nama ?? '';
+        $namaPengesah = User::find($tugasan->pengesah_id)->nama ?? '';
 
         return view('tugasan.show', compact('tugasan', 'tandan', 'pokok', 'namaPetugas', 'namaPengesah'));
     }
@@ -148,27 +152,43 @@ class TugasanController extends Controller
 
     public function search(Request $request)
     {
-        if ($request->tarikh == null) {
-            $petugas = User::where('no_kakitangan', $request->no_kakitangan)->first();
-            $result = Tugasan::with('petugas')->where('petugas_id', $petugas->id)->orderByDesc('updated_at')->get();
+        if ($request->tarikh_mula == null || $request->tarikh_tamat == null) {
+            alert()->error('Gagal', 'Pilih Tarikh Mula dan Tarikh Tamat');
+            return back();
         }
 
-        if ($request->no_kakitangan == null) {
-            $result = Tugasan::with('petugas')->where('tarikh', $request->tarikh)->orderByDesc('updated_at')->get();
+        $petugas = User::where('no_kakitangan', $request->no_kakitangan)->first();
+        if ($petugas == null) {
+            alert()->warning('Gagal', 'Tiada laporan untuk no kakitangan ' . $request->no_kakitangan);
+            return back();
         }
 
-        if ($request->no_kakitangan != null && $request->tarikh != null) {
-            $petugas = User::where('no_kakitangan', $request->no_kakitangan)->first();
+        $tugasans = Tugasan::with('petugas')->where('petugas_id', $petugas->id)->orderByDesc('updated_at')->get();
 
-            $result = Tugasan::with('petugas')->where('petugas_id', $petugas->id)
-                ->where('tarikh', $request->tarikh)
-                ->orderByDesc('updated_at')->get();
+        $mula = date($request->tarikh_mula);
+        $akhir = date($request->tarikh_tamat);
+
+        $result = null;
+        foreach ($tugasans as $tugasan) {
+            $str = explode('/', $tugasan->tarikh);
+            $new_tarikh = $str[2] . "-" . $str[1] . "-" . $str[0];
+            $f_tarikh = date('Y-m-d', strtotime($new_tarikh));
+
+            if (($f_tarikh >= $mula) && ($f_tarikh <= $akhir)) {
+                $result[] = $tugasan;
+            }
+        }
+
+        if ($result == null) {
+            alert()->warning('Gagal', 'Tiada laporan dalam jangka tersebut');
+            return back();
         }
 
         return view('tugasan.index', [
             'tugasans' => $result,
             'no_kakitangan' => $request->no_kakitangan,
-            'tarikh' => $request->tarikh,
+            'tarikh_mula' => $request->tarikh_mula,
+            'tarikh_tamat' => $request->tarikh_tamat,
         ]);
 
     }

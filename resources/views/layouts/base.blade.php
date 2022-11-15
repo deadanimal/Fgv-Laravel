@@ -161,7 +161,8 @@
                                 </a>
                             </li>
 
-                            @role('worker')
+                            @role(['pekerja_balut_pendebungaan', 'pekerja_kawalan_kualiti', 'pekerja_penuaian',
+                                'pekerja_makmal'])
                                 <li class="nav-item">
                                     <a class="nav-link p-3 my-1 {{ Request::is('tugasan') ? 'active' : '' }}"
                                         href="/tugasan" role="button">
@@ -174,7 +175,8 @@
                                 </li>
                             @endrole
 
-                            @role(['supervisor', 'super-admin', 'admin'])
+                            @role(['penyelia_balut_pendebungaan', 'penyelia_kawalan_kualiti', 'penyelia_penuaian',
+                                'penyelia_penuaian', 'superadmin'])
                                 <li class="nav-item">
                                     <a class="nav-link p-3 my-1 dropdown-indicator" href="#pengurusan-pengguna"
                                         role="button" data-bs-toggle="collapse"
@@ -189,10 +191,10 @@
                                     </a>
                                     <ul class="nav collapse {{ Request::is('pengurusan_pengguna/*') ? 'show' : 'false' }} ps-4"
                                         id="pengurusan-pengguna">
-                                        @role(['super-admin', 'admin'])
+                                        @role(['superadmin'])
                                             <li
                                                 class="nav-item 
-                                        {{ Request::is('pengurusan_pengguna/index', 'pengurusan_pengguna/daftar', 'pengurusan_pengguna/edit') ? 'active' : '' }}">
+                                        {{ Request::is('pengurusan_pengguna/index', 'pengurusan_pengguna/create', 'pengurusan_pengguna/edit/*') ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ route('pp.index') }}">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon">
@@ -304,7 +306,7 @@
 
                                 </li>
                             @endrole
-                            @role(['super-admin', 'admin'])
+                            @role(['superadmin'])
                                 <li class="nav-item">
                                     <a class="nav-link p-3 my-1 dropdown-indicator " href="#konfigurasi-sistem"
                                         role="button" data-bs-toggle="collapse" aria-expanded="false"
