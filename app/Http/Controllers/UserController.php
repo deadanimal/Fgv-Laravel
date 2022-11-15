@@ -41,7 +41,7 @@ class UserController extends Controller
             "no_kakitangan" => "required|string|unique:users",
             "peranan" => "required|string",
             "no_kad_pengenalan" => "required|integer|unique:users|digits:12",
-            "no_telefon" => "required|integer",
+            "no_telefon" => "required|regex:/(01)[0-9]/",
             "email" => "required|string",
             "stesen" => "required|string",
             "kategori_petugas" => "required|string",

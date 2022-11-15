@@ -62,7 +62,7 @@ class TugasanController extends Controller
     public function show(Tugasan $tugasan)
     {
         $tandan = Tandan::find($tugasan->tandan_id);
-        $pokok = Pokok::find($tandan->pokok_id);
+        $pokok = Pokok::find($tandan->pokok_id ?? 1);
         $namaPetugas = User::find($tugasan->petugas_id)->nama ?? 'User telah dibuang';
         $namaPengesah = User::find($tugasan->pengesah_id)->nama ?? 'User telah dibuang';
 

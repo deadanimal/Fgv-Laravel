@@ -92,7 +92,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-6 mb-3">
+                        {{-- <div class="col-xl-6 mb-3">
                             <div class="row align-items-center">
                                 <div class="col-xl-3">
                                     <label class="col-form-label text-main">Status</label>
@@ -104,8 +104,8 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> --}}
+                        <input type="hidden" name="status" value="aktif">
                     </div>
                 </div>
             </div>

@@ -55,7 +55,7 @@
                             <div class="row align-items-center">
                                 <div class="col-1"></div>
                                 <div class="col-xl-3">
-                                    <label class="col-form-label text-main">Induk</label>
+                                    <label class="col-form-label text-main">Jantina</label>
                                 </div>
                                 <div class="col-xl-8">
                                     <select name="jantina" class="form-select border-main">
@@ -92,6 +92,34 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        <div class="col-xl-6 mb-3">
+                            <div class="row align-items-center">
+                                <div class="col-xl-3">
+                                    <label class="col-form-label text-main">Status</label>
+                                </div>
+                                <div class="col-xl-8">
+                                    <select name="status_pokok" class="form-select border-main">
+                                        <option @selected($pokok->status_pokok == 'Aktif') value="Aktif">Aktif</option>
+                                        <option @selected($pokok->status_pokok == 'Tidak Aktif') value="Tidak Aktif">Tidak Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 mb-3">
+                            <div class="row align-items-center">
+                                <div class="col-1"></div>
+                                <div class="col-xl-3">
+                                    <label class="col-form-label text-main">Catatan</label>
+                                </div>
+                                <div class="col-xl-8">
+                                    <input type="text" name="catatan" class="form-control border-main">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

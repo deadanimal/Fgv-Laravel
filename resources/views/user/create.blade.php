@@ -78,7 +78,7 @@
                                 <div class="col-xl-8">
                                     <input type="number" name="no_kad_pengenalan"
                                         class="form-control border-main  @error('no_kad_pengenalan') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI" value="{{ old('no_kad_pengenalan') }}">
+                                        placeholder="000000000000" value="{{ old('no_kad_pengenalan') }}">
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                 <div class="col-xl-8">
                                     <input type="number" name="no_telefon"
                                         class="form-control border-main @error('no_telefon') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI" value="{{ old('no_telefon') }}">
+                                        placeholder="0171231233" value="{{ old('no_telefon') }}">
                                 </div>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                                 <div class="col-xl-8">
                                     <input type="text" name="email"
                                         class="form-control border-main  @error('email') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI" value="{{ old('email') }}">
+                                        placeholder="a@b.com" value="{{ old('email') }}">
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                                 <div class="col-xl-8">
                                     <input type="text" name="blok"
                                         class="form-control border-main  @error('blok') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DISINI" value="{{ old('blok') }}">
                                 </div>
                             </div>
                         </div>
@@ -181,9 +181,9 @@
                                         class="form-select border-main  @error('luput_pwd') is-invalid @enderror"
                                         id="email">
                                         <option selected disabled hidden> SILA PILIH </option>
-                                        <option value="90">90 Hari</option>
-                                        <option value="180">180 Hari</option>
-                                        <option value="270">270 Hari</option>
+                                        <option @selected(old('luput_pwd') == 90) value="90">90 Hari</option>
+                                        <option @selected(old('luput_pwd') == 180) value="180">180 Hari</option>
+                                        <option @selected(old('luput_pwd') == 270) value="270">270 Hari</option>
                                     </select>
                                 </div>
                             </div>
@@ -229,5 +229,9 @@
         $('#custom-btn-white').click(function() {
             location.reload();
         });
+
+        $('input[name=nama]').val(function() {
+            return this.value.toUpperCase();
+        })
     </script>
 @endsection
