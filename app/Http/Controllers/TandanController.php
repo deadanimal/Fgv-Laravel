@@ -85,7 +85,7 @@ class TandanController extends Controller
     {
         $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
 
-        QrCode::size(500)->generate($url, public_path('qr/qrcode_tandan.svg'));
+        QrCode::size(113.38582677)->generate($url, public_path('qr/qrcode_tandan.svg'));
 
         $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
             'tandan' => $tandan,
@@ -98,17 +98,68 @@ class TandanController extends Controller
 
     public function generateQR(Request $requests)
     {
+        $bulan = now()->monthName;
+        switch ($bulan) {
+            case 'January':
+                $code = "A";
+                break;
+            case 'February':
+                $code = "B";
+                break;
+            case 'March':
+                $code = "C";
+                break;
+            case 'April':
+                $code = "D";
+                break;
+            case 'May':
+                $code = "E";
+                break;
+            case 'June':
+                $code = "F";
+                break;
+            case 'July':
+                $code = "G";
+                break;
+            case 'August':
+                $code = "H";
+                break;
+            case 'September':
+                $code = "I";
+                break;
+            case 'October':
+                $code = "J";
+                break;
+            case 'November':
+                $code = "K";
+                break;
+            case 'December':
+                $code = "L";
+                break;
+        }
+
         $bilqr = $requests->bilqr;
         for ($i = 0; $i < $bilqr; $i++) {
-            $pokok[] = Pokok::create([
-                'user_id' => auth()->id(),
+            $tandan = Tandan::create([
+            ]);
+            $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
+            $name = "bulktandan/tandan" . $tandan->id . ".svg";
+            QrCode::size(113.38582677)->generate($url, public_path($name));
+            $temp = $code . $tandan->id;
+            $t['no_tandan'][$tandan->id] = str_replace(' ', '', $temp);
+            $t['name'][$tandan->id] = $name;
+            $tandans[] = $tandan;
+            $tandan->update([
+                'tempid' => str_replace(' ', '', $temp),
             ]);
         }
 
-        $pdf = Pdf::loadView('pengurusanPokokInduk.tandan.pdfQR', [
-            'pokoks' => $pokok,
-            'bilqr' => $bilqr,
+        $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
+            'type' => 4,
+            'tandans' => $tandans,
+            'no_tandans' => $t,
         ]);
+
         return $pdf->download('QR.pdf');
 
     }

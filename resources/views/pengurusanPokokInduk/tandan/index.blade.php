@@ -51,7 +51,8 @@
                     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
                         <div class="modal-content position-relative">
                             <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
-                                <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                                <button
+                                    id="submitManyQr"class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                                     data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form action="{{ route('generateQR') }}" method="POST">
@@ -101,6 +102,10 @@
                                             </td>
                                             <td>
                                                 {{ $tandan->no_daftar }}
+                                                @if ($tandan->no_daftar == null)
+                                                    <span class='badge rounded-pill badge-soft-warning'> Belum Daftar
+                                                    </span>
+                                                @endif
                                             </td>
                                             <td>
                                                 {{ $tandan->pokok->no_pokok ?? '' }}
@@ -148,7 +153,7 @@
                                                         <span class="fas fa-download" style="width:15px;"></span>
                                                     </a>
                                                 @else
-                                                    <span class="badge rounded-pill badge-soft-warning"> Perlu
+                                                    <span class="badge rounded-pill badge-soft-warning"> Belum
                                                         Daftar</span>
                                                 @endif
 
@@ -181,4 +186,11 @@
         </div>
 
     </div>
+
+    <script>
+        $("#submitManyQr").click(function() {
+            location.reload();
+
+        });
+    </script>
 @endsection

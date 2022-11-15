@@ -60,7 +60,7 @@ Route::middleware('auth.basic')->group(function () {
             Route::delete('/delete/{pokok}', [PokokController::class, 'delete'])->name('pi.p.delete');
             Route::get('downloadqrpokok/{pokok}', [PokokController::class, 'downloadqr'])->name('downloadqrpokok');
             Route::post('/search/pokok', [PokokController::class, 'search'])->name('search.pokok');
-            Route::post('/bulkqr', [PokokController::class, 'bulkqr'])->name('pokok.bulkqr');
+            Route::get('/bulkqr', [PokokController::class, 'bulkqr'])->name('pokok.bulkqr');
         });
 
         Route::prefix('/tandan')->group(function () {

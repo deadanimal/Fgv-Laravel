@@ -75,10 +75,14 @@
 
 
             <div class="text-end mb-3 mt-4">
-                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalQRBulk">
+                {{-- <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalQRBulk">
                     QR Download
                     <span class="text-white" data-feather="download"></span>
-                </button>
+                </button> --}}
+                <a href="{{ route('pokok.bulkqr') }}" class="btn btn-danger">
+                    QR Download
+                    <span class="text-white" data-feather="download"></span>
+                </a>
                 <a href="{{ route('pi.p.create') }}" class="btn btn-danger">Daftar
                     <span class="text-white" data-feather="plus-circle"></span>
                 </a>
@@ -163,7 +167,7 @@
 
 
 
-    <div class="modal fade" id="modalQRBulk" tabindex="-1" role="dialog" aria-hidden="true">
+    {{-- <div class="modal fade" id="modalQRBulk" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 45%">
             <div class="modal-content position-relative">
                 <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
@@ -198,7 +202,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
