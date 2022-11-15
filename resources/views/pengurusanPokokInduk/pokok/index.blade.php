@@ -12,6 +12,17 @@
     <div class="row justify-content-center mt-4">
         <div class="col-10">
 
+            <div class="row justify-content-center mb-5">
+                <div class="col-xl-5 border-end">
+                    <h4 class="text-center">JUMLAH AKTIF</h4>
+                    <h1 class="text-center text-success fw-bold">{{ $aktif }}</h1>
+                </div>
+                <div class="col-xl-6">
+                    <h4 class="text-center">TANDAN TIDAK AKTIF</h4>
+                    <h1 class="text-center text-danger fw-bold">{{ $tidak_aktif }}</h1>
+                </div>
+            </div>
+
             <form action="{{ route('search.pokok') }}" method="POST" class="row mb-3">
                 @csrf
                 <div class="col-xl-6 mb-3">

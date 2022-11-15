@@ -101,8 +101,8 @@
                                 </div>
                                 <div class="col-xl-8">
                                     <select name="status_pokok" class="form-select border-main">
-                                        <option @selected($pokok->status_pokok == 'Aktif') value="Aktif">Aktif</option>
-                                        <option @selected($pokok->status_pokok == 'Tidak Aktif') value="Tidak Aktif">Tidak Aktif</option>
+                                        <option @selected($pokok->status_pokok == 'aktif') value="aktif">Aktif</option>
+                                        <option @selected($pokok->status_pokok == 'tak aktif') value="tak aktif">Tidak Aktif</option>
                                     </select>
                                 </div>
                             </div>
