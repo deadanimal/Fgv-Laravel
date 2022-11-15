@@ -127,16 +127,17 @@ class FgvPmpsController extends Controller
 
     public function searchQC(Request $request)
     {
-        $pokok = Pokok::where([
+        $pokok = Pokok::where(
             ['blok' => $request->blok],
             ['progeny' => $request->progeny],
-        ])->first();
-
-        $qc = QualityControl::with(['tandan', 'pokok'])
-            ->where([
-                ['pokok_id' => $pokok->id],
-                ['id_sv_qc' => $request->pembalut],
-            ])->get();
+        )->first();
+        if ($pokok != null) {
+            $qc = QualityControl::with(['tandan', 'pokok'])
+                ->where(
+                    ['pokok_id' => $pokok->id],
+                    ['id_sv_qc' => $request->pembalut],
+                )->get();
+        }
 
         return response()->json($qc);
 
