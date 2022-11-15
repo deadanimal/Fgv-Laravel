@@ -173,7 +173,6 @@ class TandanController extends Controller
     public function search(Request $request)
     {
         $tandan = Tandan::with('pokok:id,no_pokok')->where('no_daftar', $request->no_daftar)->orderByDesc('updated_at')->get();
-        dd($tandan);
         return view('pengurusanPokokInduk.tandan.index', [
             'tandans' => $tandan,
             'no_daftar' => $request->no_daftar,
