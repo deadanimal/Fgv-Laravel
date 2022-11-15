@@ -42,8 +42,6 @@ Route::post('/tugasan/{id}/sah', [FgvPmpsController::class, 'sah_tugasan']);
 
 Route::post('/tugasan/{id}/rosak', [FgvPmpsController::class, 'rosak']);
 
-Route::get('/tandan/{tandan}', [FgvPmpsController::class, 'satu_tandan']);
-
 Route::apiResources([
     '/pokok' => PokokApiController::class,
     '/tandan' => TandanApiController::class,
@@ -62,3 +60,6 @@ Route::get('/tandan/{id_tandan}/bagging', [TandanApiController::class, 'findBagg
 Route::get('/tandan/{id_tandan}/cp', [TandanApiController::class, 'findCp']);
 Route::get('/tandan/{id_tandan}/qc', [TandanApiController::class, 'findQc']);
 Route::get('/tandan/{id_tandan}/harvest', [TandanApiController::class, 'findHarvest']);
+
+Route::get('/users/peranan/{peranan}', [FgvPmpsController::class, 'userByPeranan']);
+Route::post('/search/qc', [FgvPmpsController::class, 'searchQC']);

@@ -44,4 +44,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function qualityControl()
+    {
+        return $this->hasMany(QualityControl::class, 'id_sv_qc', 'id');
+    }
 }

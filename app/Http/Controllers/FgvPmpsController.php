@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pokok;
+use App\Models\QualityControl;
 use App\Models\Tandan;
 use App\Models\Tugasan;
 use App\Models\User;
@@ -116,9 +118,28 @@ class FgvPmpsController extends Controller
 
     }
 
-    public function satu_tandan(Tandan $tandan)
+    public function userByPeranan($peranan)
     {
-        return $tandan;
+        $users = User::with('qualityControl')->where('peranan', $peranan)->get();
+        return response()->json($users);
+
+    }
+
+    public function searchQC(Request $request)
+    {
+        $pokok = Pokok::where([
+            ['blok' => $request->blok],
+            ['progeny' => $request->progeny],
+        ])->first();
+
+        $qc = QualityControl::with(['tandan', 'pokok'])
+            ->where([
+                ['pokok_id' => $pokok->id],
+                ['id_sv_qc' => $request->pembalut],
+            ])->get();
+
+        return response()->json($qc);
+
     }
 
 }

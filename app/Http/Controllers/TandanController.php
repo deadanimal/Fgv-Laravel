@@ -99,6 +99,9 @@ class TandanController extends Controller
     public function generateQR(Request $requests)
     {
         $bulan = now()->monthName;
+        $tahunRaw = (string) now()->year;
+        $tahun = $tahunRaw[2] . $tahunRaw[3];
+
         switch ($bulan) {
             case 'January':
                 $code = "A";
@@ -140,17 +143,16 @@ class TandanController extends Controller
 
         $bilqr = $requests->bilqr;
         for ($i = 0; $i < $bilqr; $i++) {
-            $tandan = Tandan::create([
-            ]);
+            $tandan = Tandan::create([]);
             $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
             $name = "bulktandan/tandan" . $tandan->id . ".svg";
             QrCode::size(113.38582677)->generate($url, public_path($name));
-            $temp = $code . $tandan->id;
+            $temp = $tahun . $code . $requests->induk . sprintf('%04d', $tandan->id);
             $t['no_tandan'][$tandan->id] = str_replace(' ', '', $temp);
             $t['name'][$tandan->id] = $name;
             $tandans[] = $tandan;
             $tandan->update([
-                'tempid' => str_replace(' ', '', $temp),
+                'no_daftar' => str_replace(' ', '', $temp),
             ]);
         }
 

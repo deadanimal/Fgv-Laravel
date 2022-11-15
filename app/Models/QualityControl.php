@@ -10,4 +10,13 @@ class QualityControl extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    public function pokok()
+    {
+        return $this->belongsTo(Pokok::class);
+    }
+
+    public function tandan()
+    {
+        return $this->belongsTo(Tandan::class);
+    }
 }
