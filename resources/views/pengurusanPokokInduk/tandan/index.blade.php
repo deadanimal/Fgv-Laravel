@@ -169,8 +169,8 @@
                                                     class="d-inline ms-2">
                                                     @method('delete')
                                                     @csrf
-                                                    <button class=" btn btn-sm btn-danger">
-                                                        <span class="fas fa-trash" style="width:15px;"></span>
+                                                    <button type="submit" class="btn-del btn btn-sm btn-danger">
+                                                        <span class="fas fa-trash-alt" style="width:15px;"></span>
                                                     </button>
                                                 </form>
                                             </td>
@@ -190,7 +190,6 @@
     <script>
         $("#submitManyQr").click(function() {
             location.reload();
-
         });
     </script>
 @endsection

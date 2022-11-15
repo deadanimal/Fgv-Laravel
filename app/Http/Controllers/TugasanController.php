@@ -136,7 +136,7 @@ class TugasanController extends Controller
         }
 
         activity()->event('Tugasan')->log('Tugasan Id:' . $tugasan->id . ' kepada ' . $tugasan->petugas->nama . ' telah dibuang');
-        alert()->success('Berjaya', 'Data tugasan dibuang');
+        // alert()->success('Berjaya', 'Data tugasan dibuang');
         return back();
     }
 

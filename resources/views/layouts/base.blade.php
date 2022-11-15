@@ -44,7 +44,7 @@
     <link href="/vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
     <link href="/vendors/choices/choices.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif
@@ -98,6 +98,10 @@
             margin-left: 10px;
             background-color: #fff;
             border-radius: 10px;
+        }
+
+        .swal2-styled.swal2-confirm {
+            background-color: #dc3434;
         }
     </style>
 
@@ -402,6 +406,7 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="/assets/js/flatpickr.js"></script>
     <script src="/vendors/choices/choices.min.js"></script>
+
     <script>
         $("#burger").click(function() {
             var navbar = $("#navbarVerticalCollapse").width();
@@ -462,6 +467,26 @@
             $('.datatable').DataTable();
 
             $('th').addClass('text-center');
+        });
+
+        $(".btn-del").click(function(e) {
+            e.preventDefault();
+            let form = $(this).parent('form');
+
+            Swal.fire({
+                title: 'Perhatian!',
+                text: 'Adakah anda pasti?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Kembali',
+                confirmButtonText: 'Buang',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire('Buang!', 'Berjaya buang');
+                    form.submit();
+                }
+            });
         });
     </script>
 

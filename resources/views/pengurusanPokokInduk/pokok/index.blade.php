@@ -128,8 +128,8 @@
                                                     class="d-inline-flex">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class=" btn btn-sm btn-danger">
-                                                        <span data-feather="trash-2" style="width:15px;"></span>
+                                                    <button type="submit" class="btn-del btn btn-sm btn-danger">
+                                                        <span class="fas fa-trash-alt" style="width:15px;"></span>
                                                     </button>
                                                 </form>
 

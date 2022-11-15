@@ -245,7 +245,8 @@
                                                             method="post" class="d-inline-flex">
                                                             @csrf
                                                             @method('delete')
-                                                            <button type="submit" class="btn btn-danger btn-sm"><span
+                                                            <button type="submit"
+                                                                class="btn-del btn btn-danger btn-sm"><span
                                                                     class="fas fa-trash-alt"></span></button>
                                                         </form>
                                                     @endif

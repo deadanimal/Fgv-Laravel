@@ -70,7 +70,7 @@ class TandanController extends Controller
 
     public function delete(Tandan $tandan)
     {
-        alert()->success('Berjaya Dibuang', 'Tandan ' . $tandan->no_daftar . ' telah dibuang');
+        // alert()->success('Berjaya Dibuang', 'Tandan ' . $tandan->no_daftar . ' telah dibuang');
         $tandan->delete();
 
         return back();
