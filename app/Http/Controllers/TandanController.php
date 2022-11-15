@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pokok;
+use App\Models\RunningNo;
 use App\Models\Tandan;
 use App\Models\Tugasan;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -142,19 +143,41 @@ class TandanController extends Controller
         }
 
         $bilqr = $requests->bilqr;
+
+        $RN = RunningNo::where('name', $requests->induk)->first();
+
+        if ($bulan != $RN->bulan) {
+            $RN->update([
+                'bulan' => $bulan,
+                'current_no' => 0,
+            ]);
+        }
+        $cRN = $RN->current_no;
+
         for ($i = 0; $i < $bilqr; $i++) {
             $tandan = Tandan::create([]);
             $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
             $name = "bulktandan/tandan" . $tandan->id . ".svg";
             QrCode::size(113.38582677)->generate($url, public_path($name));
-            $temp = $tahun . $code . $requests->induk . sprintf('%04d', $tandan->id);
+
+            if ($requests->induk == "F") {
+                $temp = $tahun . $code . "P" . sprintf('%04d', $cRN);
+            } else {
+                $temp = $tahun . $code . sprintf('%04d', $cRN);
+            }
+
             $t['no_tandan'][$tandan->id] = str_replace(' ', '', $temp);
             $t['name'][$tandan->id] = $name;
             $tandans[] = $tandan;
             $tandan->update([
                 'no_daftar' => str_replace(' ', '', $temp),
             ]);
+            $cRN++;
         }
+
+        $RN->update([
+            'current_no' => $cRN,
+        ]);
 
         $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
             'type' => 4,

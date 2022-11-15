@@ -71,8 +71,8 @@
                                         <div class="mb-4">
                                             <label class="col-form-label" for="induk">Induk</label>
                                             <select name="induk" class="form-select">
-                                                <option value="P">Fatherpalm</option>
-                                                <option value="D">Motherpalm</option>
+                                                <option value="F">Fatherpalm</option>
+                                                <option value="M">Motherpalm</option>
                                             </select>
                                         </div>
                                     </div>
