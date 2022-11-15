@@ -146,14 +146,14 @@ class TandanController extends Controller
 
         $RN = RunningNo::where('name', $requests->induk)->first();
 
-        if ($bulan != $RN->bulan) {
+        if ($bulan != $RN->month) {
             $RN->update([
-                'bulan' => $bulan,
+                'month' => $bulan,
                 'current_no' => 0,
             ]);
         }
-        $cRN = $RN->current_no;
 
+        $cRN = $RN->current_no;
         for ($i = 0; $i < $bilqr; $i++) {
             $tandan = Tandan::create([]);
             $url = URL::to('/pengurusan-pokok-induk/tandan/edit/' . $tandan->id);
