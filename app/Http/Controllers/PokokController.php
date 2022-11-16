@@ -15,8 +15,8 @@ class PokokController extends Controller
     {
         return view('pengurusanPokokInduk.pokok.index', [
             'pokoks' => Pokok::all(),
-            'aktif' => Pokok::where('status_pokok', 'Aktif')->count(),
-            'tidak_aktif' => Pokok::where('status_pokok', 'Tak Aktif')->count(),
+            'aktif' => Pokok::where('status_pokok', 'aktif')->count(),
+            'tidak_aktif' => Pokok::where('status_pokok', 'tak aktif')->count(),
         ]);
     }
 
@@ -93,8 +93,8 @@ class PokokController extends Controller
             'baka' => $request->baka,
             'progeny' => $request->progeny,
             'no_pokok' => $request->no_pokok,
-            // 'aktif' => Pokok::where('status_pokok', 'aktif')->count(),
-            // 'tidak_aktif' => Pokok::where('status_pokok', 'tidak_aktif')->count(),
+            'aktif' => Pokok::where('status_pokok', 'aktif')->count(),
+            'tidak_aktif' => Pokok::where('status_pokok', 'tak aktif')->count(),
         ]);
 
     }
