@@ -96,4 +96,6 @@ Route::middleware('auth.basic')->group(function () {
         Route::delete('/kerosakan/{kerosakan}', [KerosakanController::class, 'delete'])->name('k.delete');
     });
 
+    Route::get('/temp', [HomeController::class, 'temp']);
+
 });

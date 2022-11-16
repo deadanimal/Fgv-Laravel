@@ -86,7 +86,11 @@ class UserController extends Controller
             "luput_pwd" => "required|integer",
         ]);
 
-        $user->update($request->all());
+        $user->update($request->except('peranan'));
+        $role = Role::where('name', $request->peranan)->first();
+        $user->update([
+            'peranan' => $role->display_name,
+        ]);
         return redirect()->route('pp.index');
     }
 

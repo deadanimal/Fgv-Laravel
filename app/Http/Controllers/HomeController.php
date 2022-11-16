@@ -50,4 +50,9 @@ class HomeController extends Controller
         $u1->attachRole('supervisor');
 
     }
+
+    public function temp()
+    {
+        $user = User::all();
+    }
 }

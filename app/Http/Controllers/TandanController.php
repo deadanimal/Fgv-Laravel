@@ -26,8 +26,9 @@ class TandanController extends Controller
         return view('pengurusanPokokInduk.tandan.create');
     }
 
-    public function edit(Tandan $tandan)
+    public function edit($tandan)
     {
+        $tandan = Tandan::with(['bagging', 'cp', 'qc', 'harvest'])->where('id', $tandan)->first();
         $pokoks = Pokok::all();
         return view('pengurusanPokokInduk.tandan.edit', compact('tandan', 'pokoks'));
     }

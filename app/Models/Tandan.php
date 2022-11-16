@@ -15,8 +15,23 @@ class Tandan extends Model
         return $this->belongsTo(Pokok::class);
     }
 
-    public function balut()
+    public function bagging()
     {
-        return $this->hasOne(Balut::class);
+        return $this->hasOne(Bagging::class);
+    }
+
+    public function cp()
+    {
+        return $this->hasOne(ControlPollination::class);
+    }
+
+    public function qc()
+    {
+        return $this->hasOne(QualityControl::class);
+    }
+
+    public function harvest()
+    {
+        return $this->hasOne(Harvest::class);
     }
 }
