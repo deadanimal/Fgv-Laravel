@@ -34,28 +34,39 @@
                                     <label for="">Nombor Pokok</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <select name="pokok_id" class="form-select">
-                                        <option selected disabled hidden> Sila Pilih</option>
+                                    <select name="pokok_id" class="form-select js-choice" size="1"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'>
+                                        @if ($tandan->pokok_i == null)
+                                            <option value="">Pilih No Pokok...</option>
+                                        @endif
                                         @foreach ($pokoks as $pokok)
                                             <option {{ $pokok->id == $tandan->pokok_id ? 'selected' : '' }}
-                                                value="{{ $pokok->id }}">{{ $pokok->no_pokok }}</option>
+                                                value="{{ $pokok->id }}">{{ $pokok->progeny }}{{ $pokok->no_pokok }}
+                                            </option>
                                         @endforeach
                                     </select>
+
                                 </div>
 
                                 <div class="col-4 mb-3">
                                     <label for="">Tarikh Daftar</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input type="date" class="form-control" name="tarikh_daftar"
-                                        value="{{ $tandan->tarikh_daftar }}">
+                                    <div class="input-group">
+                                        <input class="form-control datetimepicker border-right-0" type="text"
+                                            placeholder="SILA PILIH" data-options='{"disableMobile":true}'
+                                            aria-describedby="date" value="{{ $tandan->tarikh_daftar }}"
+                                            name="tarikh_daftar" required />
+                                        <button type="button" class="btn border-secondary border-left-0"
+                                            id="date"><span class="far fa-calendar-alt"></button>
+                                    </div>
                                 </div>
 
                                 <div class="col-4 mb-3">
                                     <label for="">Umur Tandan</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input type="text" class="form-control" name="umur" value="{{ $tandan->umur }}">
+                                    <input type="number" class="form-control" name="umur" value="{{ $tandan->umur }}">
                                 </div>
 
                                 <div class="col-12 mt-5">
@@ -77,7 +88,7 @@
                                 </div>
                                 <div class="col-8 mb-3">
                                     <input readonly type="text" class="form-control" name="b_petugas"
-                                        value="{{ $tandan->bagging->petugas ?? '' }}">
+                                        value="{{ $nama['bagging']['petugas'] ?? '' }}">
                                 </div>
 
                                 <div class="col-4 mb-3">
@@ -85,7 +96,7 @@
                                 </div>
                                 <div class="col-8 mb-3">
                                     <input readonly type="text" class="form-control" name="b_pengesah"
-                                        value="{{ $tandan->bagging->pengesah ?? '' }}">
+                                        value="{{ $nama['bagging']['pengesah'] ?? '' }}">
                                 </div>
 
                                 <div class="col-12 mt-5">
@@ -106,7 +117,7 @@
                                 </div>
                                 <div class="col-8 mb-3">
                                     <input readonly type="text" class="form-control" name="p_petugas"
-                                        value="{{ $tandan->cp->petugas ?? '' }}">
+                                        value="{{ $nama['cp']['petugas'] ?? '' }}">
                                 </div>
 
                                 <div class="col-4 mb-3">
@@ -114,7 +125,7 @@
                                 </div>
                                 <div class="col-8 mb-3">
                                     <input readonly type="text" class="form-control" name="p_pengesah"
-                                        value="{{ $tandan->cp->pengesah ?? '' }}">
+                                        value="{{ $nama['cp']['pengesah'] ?? '' }}">
                                 </div>
 
                             </div>
@@ -143,7 +154,7 @@
                                 </div>
                                 <div class="col-8 mb-3">
                                     <input readonly type="text" class="form-control" name="k_petugas"
-                                        value="{{ $tandan->kualiti->petugas ?? '' }}">
+                                        value="{{ $nama['qc']['petugas'] ?? '' }}">
                                 </div>
 
                                 <div class="col-4 mb-3">
@@ -151,7 +162,7 @@
                                 </div>
                                 <div class="col-8 mb-3">
                                     <input readonly type="text" class="form-control" name="k_pengesah"
-                                        value="{{ $tandan->kualiti->pengesah ?? '' }}">
+                                        value="{{ $nama['qc']['pengesah'] ?? '' }}">
                                 </div>
 
                                 <div class="col-12 mt-5">
@@ -172,7 +183,7 @@
                                 </div>
                                 <div class="col-8 mb-3">
                                     <input readonly type="text" class="form-control" name="t_petugas"
-                                        value="{{ $tandan->tuai->petugas ?? '' }}">
+                                        value="{{ $nama['harvest']['petugas'] ?? '' }}">
                                 </div>
 
                                 <div class="col-4 mb-3">
@@ -180,7 +191,7 @@
                                 </div>
                                 <div class="col-8 mb-3">
                                     <input readonly type="text" class="form-control" name="t_pengesah"
-                                        value="{{ $tandan->tuai->pengesah ?? '' }}">
+                                        value="{{ $nama['harvest']['pengesah'] ?? '' }}">
                                 </div>
 
                             </div>
@@ -190,4 +201,10 @@
             </div>
         </form>
     </div>
+
+    <script>
+        $("#date").click(function() {
+            $(this).siblings("input").trigger("click");
+        });
+    </script>
 @endsection

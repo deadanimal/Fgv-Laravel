@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pokok;
 use App\Models\RunningNo;
 use App\Models\Tandan;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,25 @@ class TandanController extends Controller
     {
         $tandan = Tandan::with(['bagging', 'cp', 'qc', 'harvest'])->where('id', $tandan)->first();
         $pokoks = Pokok::all();
-        return view('pengurusanPokokInduk.tandan.edit', compact('tandan', 'pokoks'));
+
+        $nama = [];
+        if ($tandan->bagging != null) {
+            $nama['bagging']['petugas'] = User::find($tandan->bagging->id_sv_balut)->nama ?? '';
+            $nama['bagging']['pengesah'] = User::find($tandan->bagging->pengesah_id)->nama ?? '';
+        }
+        if ($tandan->cp != null) {
+            $nama['cp']['petugas'] = User::find($tandan->cp->id_sv_cp)->nama ?? '';
+            $nama['cp']['pengesah'] = User::find($tandan->cp->pengesah_id)->nama ?? '';
+        }
+        if ($tandan->qc != null) {
+            $nama['qc']['petugas'] = User::find($tandan->qc->id_sv_qc)->nama ?? '';
+            $nama['qc']['pengesah'] = User::find($tandan->qc->pengesah_id)->nama ?? '';
+        }
+        if ($tandan->harvest != null) {
+            $nama['harvest']['petugas'] = User::find($tandan->harvest->id_sv_harvest)->nama ?? '';
+            $nama['harvest']['pengesah'] = User::find($tandan->harvest->pengesah_id)->nama ?? '';
+        }
+        return view('pengurusanPokokInduk.tandan.edit', compact('tandan', 'pokoks', 'nama'));
     }
 
     public function store(Request $request)
