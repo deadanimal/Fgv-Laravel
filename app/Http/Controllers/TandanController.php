@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Pokok;
 use App\Models\RunningNo;
 use App\Models\Tandan;
-use App\Models\Tugasan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,8 +29,7 @@ class TandanController extends Controller
     public function edit(Tandan $tandan)
     {
         $pokoks = Pokok::all();
-        $tugasans = Tugasan::where('tandan_id', $tandan->id)->get();
-        return view('pengurusanPokokInduk.tandan.edit', compact('tandan', 'pokoks', 'tugasans'));
+        return view('pengurusanPokokInduk.tandan.edit', compact('tandan', 'pokoks'));
     }
 
     public function store(Request $request)

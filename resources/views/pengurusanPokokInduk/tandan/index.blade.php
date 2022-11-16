@@ -173,14 +173,14 @@
                                                     class="btn btn-sm btn-danger">
                                                     <span class="fas fa-edit" style="width:15px;"></span>
                                                 </a>
-                                                <form action="{{ route('pi.t.delete', $tandan->id) }}" method="post"
+                                                {{-- <form action="{{ route('pi.t.delete', $tandan->id) }}" method="post"
                                                     class="d-inline ms-2">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit" class="btn-del btn btn-sm btn-danger">
                                                         <span class="fas fa-trash-alt" style="width:15px;"></span>
                                                     </button>
-                                                </form>
+                                                </form> --}}
                                             </td>
                                         </tr>
                                     @endforeach

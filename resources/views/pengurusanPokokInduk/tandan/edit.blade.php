@@ -13,8 +13,7 @@
                             <label for="">No Daftar</label>
                         </div>
                         <div class="col-xl-6">
-                            <input type="text" class="form-control border-danger" value="{{ $tandan->no_daftar }}"
-                                readonly>
+                            <input type="text" class="form-control border-danger" value="{{ $tandan->no_daftar }}">
                         </div>
                         <div class="col-xl-3">
                             <button class="btn btn-danger">Kemaskini
@@ -26,160 +25,169 @@
                 </div>
 
                 <div class="col-xl-10">
-                    <div class="row mt-5 align-items-center">
-                        <div class="col-4 mb-3">
-                            <label for="">Nombor Pokok</label>
-                        </div>
-                        <div class="col-8 mb-3">
-                            <select name="pokok_id" class="form-select border-danger" required>
-                                <option selected disabled hidden> Sila Pilih</option>
-                                @foreach ($pokoks as $pokok)
-                                    <option {{ $pokok->id == $tandan->pokok_id ? 'selected' : '' }}
-                                        value="{{ $pokok->id }}">{{ $pokok->no_pokok }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-4 mb-3">
-                            <label for="">Tarikh Daftar</label>
-                        </div>
-                        <div class="col-8 mb-3">
-                            <div class="input-group">
-                                <input class="form-control datetimepicker border-danger border-right-0" type="text"
-                                    placeholder="SILA PILIH" data-options='{"disableMobile":true}' aria-describedby="date"
-                                    value="{{ $tandan->tarikh_daftar }}" name="tarikh_daftar" required />
-                                <button type="button" class="btn border-danger border-left-0" id="date"><span
-                                        class="far fa-calendar-alt text-danger"></button>
-                            </div>
-                        </div>
-
-                        <div class="col-4 mb-3">
-                            <label for="">Umur Tandan</label>
-                        </div>
-                        <div class="col-8 mb-3">
-                            <input type="number" class="form-control border-danger" name="umur"
-                                value="{{ $tandan->umur }}" required>
-                        </div>
-
-                        <h4 class="h4 text-main mt-5">Tugasan Tandan</h4>
-                        <div class="card">
-                            <div class="card-body ">
-                                <div class="table-responsive scrollbar table-striped ">
-                                    <table class="table fs--1 mb-0 text-center datatable">
-                                        <thead class=" text-900">
-                                            <tr style="border-bottom-color: #F89521">
-                                                <th class="sort" data-sort="bil">Bil</th>
-                                                <th class="sort" data-sort="kakitangan">No. Kakitangan</th>
-                                                <th class="sort" data-sort="catatan">Aktiviti</th>
-                                                <th class="sort" data-sort="status">Status</th>
-                                                <th class="sort" data-sort="tarikh">Tarikh</th>
-                                                <th>Tindakan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="list">
-                                            @foreach ($tugasans as $tugasan)
-                                                <tr style="border-bottom:#fff">
-                                                    <td class="bil">
-                                                        {{ $loop->iteration }}
-                                                    </td>
-                                                    <td class="kakitangan">
-                                                        {{ $tugasan->petugas->no_kakitangan }}
-                                                    </td>
-                                                    <td class="catatan">
-                                                        {{ $tugasan->jenis }}
-                                                    </td>
-                                                    <td class="status">
-                                                        @switch($tugasan->status)
-                                                            @case('dicipta')
-                                                                Dalam Proses
-                                                            @break
-
-                                                            @case('siap')
-                                                                Selesai Dilaksanakan
-                                                            @break
-
-                                                            @case('sah')
-                                                                Disahkan
-                                                            @break
-
-                                                            @case('rosak')
-                                                                Rosak
-                                                            @break
-
-                                                            @default
-                                                        @endswitch
-                                                    </td>
-                                                    <td class="tarikh">
-                                                        {{ $tugasan->tarikh }}
-                                                    </td>
-                                                    <td>
-                                                        <form action="{{ route('tugasan.update', $tugasan->id) }}"
-                                                            method="post" class="d-inline-flex">
-                                                            @csrf
-                                                            @method('put')
-
-                                                            @switch($tugasan->status)
-                                                                @case('dicipta')
-                                                                    <input type="hidden" name="status" value="siap">
-                                                                    <button type="submit"
-                                                                        class="btn btn-sm btn-primary">SIAP</button>
-                                                                @break
-
-                                                                @case('siap')
-                                                                    <input type="hidden" name="status" value="sah">
-                                                                    <button type="submit"
-                                                                        class="btn btn-sm btn-success">SAH</button>
-                                                                @break
-
-                                                                @default
-                                                                    <a href="{{ route('tugasan.show', $tugasan->id) }}"
-                                                                        class="btn btn-sm btn-danger">
-                                                                        <span class="fas fa-book-open"></span>
-                                                                    </a>
-                                                            @endswitch
-                                                        </form>
+                    <div class="row mt-5">
 
 
+                        <div class="col-xl-5">
+                            <div class="row align-items-center">
+                                <div class="col-4 mb-3">
+                                    <label for="">Nombor Pokok</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <select name="pokok_id" class="form-select">
+                                        <option selected disabled hidden> Sila Pilih</option>
+                                        @foreach ($pokoks as $pokok)
+                                            <option {{ $pokok->id == $tandan->pokok_id ? 'selected' : '' }}
+                                                value="{{ $pokok->id }}">{{ $pokok->no_pokok }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                                                        @if ($tugasan->status == 'dicipta' || $tugasan->status == 'siap')
-                                                            <form action="{{ route('tugasan.update', $tugasan->id) }}"
-                                                                method="post" class="d-inline-flex">
-                                                                @csrf
-                                                                @method('put')
-                                                                <input type="hidden" name="status" value="rosak">
-                                                                <button type="submit"
-                                                                    class="btn btn-warning btn-sm">ROSAK</button>
-                                                            </form>
-                                                            <form action="{{ route('tugasan.destroy', $tugasan->id) }}"
-                                                                method="post" class="d-inline-flex">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="btn btn-danger btn-sm"><span
-                                                                        class="fas fa-trash-alt"></span></button>
-                                                            </form>
-                                                        @endif
+                                <div class="col-4 mb-3">
+                                    <label for="">Tarikh Daftar</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="date" class="form-control" name="tarikh_daftar"
+                                        value="{{ $tandan->tarikh_daftar }}">
+                                </div>
 
+                                <div class="col-4 mb-3">
+                                    <label for="">Umur Tandan</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="umur" value="{{ $tandan->umur }}">
+                                </div>
 
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                <div class="col-12 mt-5">
+                                    <strong class="bg-danger p-2 text-white mb-0"
+                                        style="border-top-right-radius: 5px;">Balut</strong>
+                                    <hr class="bg-danger border-2 border-top border-danger" style="margin-top:7px">
+                                </div>
 
-                                        </tbody>
-                                    </table>
+                                <div class="col-4 mb-3">
+                                    <label for="">Tarikh Balut</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="date" class="form-control" name="b_tarikh"
+                                        value="{{ $tandan->balut->tarikh ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Petugas</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="b_petugas"
+                                        value="{{ $tandan->balut->petugas ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Pengesah</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="b_pengesah"
+                                        value="{{ $tandan->balut->pengesah ?? '' }}">
+                                </div>
+
+                                <div class="col-12 mt-5">
+                                    <strong class="bg-danger p-2 text-white mb-0"
+                                        style="border-top-right-radius: 5px;">Pendebungaan Terkawal</strong>
+                                    <hr class="bg-danger border-2 border-top border-danger" style="margin-top:7px">
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label for="">Tarikh Pendebungaan Terkawal</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="date" class="form-control" name="p_tarikh"
+                                        value="{{ $tandan->pendebungaan->tarikh ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Petugas</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="p_petugas"
+                                        value="{{ $tandan->pendebungaan->petugas ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Pengesah</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="p_pengesah"
+                                        value="{{ $tandan->pendebungaan->pengesah ?? '' }}">
                                 </div>
 
                             </div>
                         </div>
 
+                        <div class="col-xl-2"> </div>
+
+                        <div class="col-xl-5">
+                            <div class="row align-items-center">
+
+                                <div class="col-12">
+                                    <strong class="bg-danger p-2 text-white mb-0"
+                                        style="border-top-right-radius: 5px;">Kawalan Kualiti</strong>
+                                    <hr class="bg-danger border-2 border-top border-danger" style="margin-top:7px">
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label for="">Tarikh Kawalan Kualiti</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="date" class="form-control" name="k_tarikh"
+                                        value="{{ $tandan->kualiti->tarikh ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Petugas</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="k_petugas"
+                                        value="{{ $tandan->kualiti->petugas ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Pengesah</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="k_pengesah"
+                                        value="{{ $tandan->kualiti->pengesah ?? '' }}">
+                                </div>
+
+                                <div class="col-12 mt-5">
+                                    <strong class="bg-danger p-2 text-white mb-0"
+                                        style="border-top-right-radius: 5px;">Tuai</strong>
+                                    <hr class="bg-danger border-2 border-top border-danger" style="margin-top:7px">
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label for="">Tarikh Penuaian</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="date" class="form-control" name="t_tarikh"
+                                        value="{{ $tandan->tuai->tarikh ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Petugas</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="t_petugas"
+                                        value="{{ $tandan->tuai->petugas ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Pengesah</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input type="text" class="form-control" name="t_pengesah"
+                                        value="{{ $tandan->tuai->pengesah ?? '' }}">
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-
-    <script>
-        $("#date").click(function() {
-            $(this).siblings("input").trigger("click");
-        });
-    </script>
 @endsection

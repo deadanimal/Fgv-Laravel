@@ -14,4 +14,9 @@ class Tandan extends Model
     {
         return $this->belongsTo(Pokok::class);
     }
+
+    public function balut()
+    {
+        return $this->hasOne(Balut::class);
+    }
 }
