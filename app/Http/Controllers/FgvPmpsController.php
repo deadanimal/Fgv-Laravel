@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bagging;
 use App\Models\Pokok;
-use App\Models\QualityControl;
 use App\Models\Tandan;
 use App\Models\Tugasan;
 use App\Models\User;
@@ -132,10 +132,10 @@ class FgvPmpsController extends Controller
             ['progeny' => $request->progeny],
         )->first();
         if ($pokok != null) {
-            $qc = QualityControl::with(['tandan', 'pokok'])
+            $qc = Bagging::with(['tandan', 'pokok'])
                 ->where(
                     ['pokok_id' => $pokok->id],
-                    ['id_sv_qc' => $request->pembalut],
+                    ['id_sv_balut' => $request->pembalut],
                 )->get();
         }
 
