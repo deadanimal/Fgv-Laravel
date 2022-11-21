@@ -127,10 +127,9 @@ class FgvPmpsController extends Controller
 
     public function searchQC(Request $request)
     {
-        $pokok = Pokok::where(
-            ['blok' => $request->blok],
-            ['progeny' => $request->progeny],
-        )->first();
+        $pokok = Pokok::where('blok', $request->blok)
+            ->where('progeny', $request->progeny)
+            ->first();
         if ($pokok != null) {
             $qc = Bagging::with(['tandan', 'pokok'])
                 ->where(
