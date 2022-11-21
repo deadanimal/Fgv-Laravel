@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bagging;
+use App\Models\ControlPollination;
+use App\Models\Harvest;
+use App\Models\Pollen;
 use App\Models\Role;
-use App\Models\Tugasan;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 
@@ -26,19 +29,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $motherpalm['balut']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'balut'])->whereDate('created_at', Carbon::today())->count();
-        $motherpalm['balut']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'balut'])->count();
-        $motherpalm['debung']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'debung'])->whereDate('created_at', Carbon::today())->count();
-        $motherpalm['debung']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'debung'])->count();
-        $motherpalm['kawal']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'kawal'])->whereDate('created_at', Carbon::today())->count();
-        $motherpalm['kawal']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'kawal'])->count();
-        $motherpalm['tuai']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tuai'])->whereDate('created_at', Carbon::today())->count();
-        $motherpalm['tuai']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tual'])->count();
+        $motherpalm['balut']['hariini'] = Bagging::whereDate('created_at', Carbon::today())->count();
+        $motherpalm['balut']['hinggakini'] = Bagging::count();
 
-        $fatherpalm['balut']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'balut'])->whereDate('created_at', Carbon::today())->count();
-        $fatherpalm['balut']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'balut'])->count();
-        $fatherpalm['tuai']['hariini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tuai'])->whereDate('created_at', Carbon::today())->count();
-        $fatherpalm['tuai']['hinggakini'] = Tugasan::where(['status' => 'sah', 'jenis' => 'tual'])->count();
+        $motherpalm['debung']['hariini'] = Pollen::whereDate('created_at', Carbon::today())->count();
+        $motherpalm['debung']['hinggakini'] = Pollen::count();
+
+        $motherpalm['kawal']['hariini'] = ControlPollination::whereDate('created_at', Carbon::today())->count();
+        $motherpalm['kawal']['hinggakini'] = ControlPollination::count();
+
+        $motherpalm['tuai']['hariini'] = Harvest::whereDate('created_at', Carbon::today())->count();
+        $motherpalm['tuai']['hinggakini'] = Harvest::count();
+
+        $fatherpalm['balut']['hariini'] = Bagging::whereDate('created_at', Carbon::today())->count();
+        $fatherpalm['balut']['hinggakini'] = Bagging::count();
+        $fatherpalm['tuai']['hariini'] = Harvest::whereDate('created_at', Carbon::today())->count();
+        $fatherpalm['tuai']['hinggakini'] = Harvest::count();
 
         return view('dashboard', compact('motherpalm', 'fatherpalm'));
     }
