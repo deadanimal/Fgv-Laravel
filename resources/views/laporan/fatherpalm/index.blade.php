@@ -5,13 +5,12 @@
         <div class="col-xl-8">
             <div class="row">
                 <div class="col-xl-6 mb-3">
-                    <label class="col-form-label text-main">Kategori Laporan</label>
-                    <select name="kategori" class="form-select border-danger">
+                    <label class="col-form-label text-main">Laporan</label>
+                    <select name="laporan" class="form-select border-danger">
                         <option selected disabled hidden> SILA PILIH </option>
-                        <option value="Balut">Balut</option>
-                        <option value="Pendebungaan Terkawal">Pendebungaan Terkawal</option>
-                        <option value="Kawalan Kualiti">Kawalan Kualiti</option>
-                        <option value="Penuaian">Penuaian</option>
+                        <option value="1">Membalut vs Tuai Bunga Pasifera (Bulanan )</option>
+                        <option value="2">Tuai Bunga Pisifera vs Berat Pollen (Bulanan)</option>
+                        <option value="3">Penggunaan Pollen Bulanan</option>
                     </select>
                 </div>
                 <div class="col-xl-6"></div>

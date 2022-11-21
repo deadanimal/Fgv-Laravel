@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::get('/temp', [HomeController::class, 'temp']);
 
 // Route::get('/test', [Homecontroller::class, 'test']);
 
@@ -95,7 +96,5 @@ Route::middleware('auth.basic')->group(function () {
         Route::put('/kerosakan/{kerosakan}', [KerosakanController::class, 'update'])->name('k.update');
         Route::delete('/kerosakan/{kerosakan}', [KerosakanController::class, 'delete'])->name('k.delete');
     });
-
-    Route::get('/temp', [HomeController::class, 'temp']);
 
 });

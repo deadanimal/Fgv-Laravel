@@ -176,7 +176,7 @@
                             @endrole
 
                             @role(['penyelia_balut_pendebungaan', 'penyelia_kawalan_kualiti', 'penyelia_penuaian',
-                                'penyelia_penuaian', 'superadmin'])
+                                'penyelia_fatherpalm', 'pentadbir_sistem', 'superadmin'])
                                 <li class="nav-item">
                                     <a class="nav-link p-3 my-1 dropdown-indicator" href="#pengurusan-pengguna"
                                         role="button" data-bs-toggle="collapse"
@@ -306,7 +306,7 @@
 
                                 </li>
                             @endrole
-                            @role(['superadmin'])
+                            @role(['superadmin', 'pentadbir_sistem'])
                                 <li class="nav-item">
                                     <a class="nav-link p-3 my-1 dropdown-indicator " href="#konfigurasi-sistem"
                                         role="button" data-bs-toggle="collapse" aria-expanded="false"

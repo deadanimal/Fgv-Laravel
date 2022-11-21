@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\Tugasan;
 use App\Models\User;
 use Illuminate\Support\Carbon;
@@ -54,5 +55,11 @@ class HomeController extends Controller
     public function temp()
     {
         $user = User::all();
+
+        foreach ($user as $u) {
+            $peranan = Role::where('display_name', $u->peranan)->first();
+            $u->attachRole($peranan);
+        }
+
     }
 }

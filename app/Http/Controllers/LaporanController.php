@@ -18,7 +18,6 @@ class LaporanController extends Controller
     {
         $mula = date($request->tarikh_mula);
         $akhir = date($request->tarikh_akhir);
-
         $tugasans = Tugasan::where('jenis', $request->kategori)
         // ->whereBetween('tarikh', [$mula, $akhir])
             ->get();
@@ -47,8 +46,20 @@ class LaporanController extends Controller
             $date[] = $value->format('d/m/Y');
         }
 
+        switch ($request->laporan) {
+            case 1:
+                return view('laporan.motherpalm.show1', [
+                    'laporans' => $result,
+                    'dates' => $date,
+                ]);
+                break;
+
+            default:
+                # code...
+                break;
+        }
         return view('laporan.motherpalm.show', [
-            'laporans' => $result,
+            // 'laporans' => $result,
             'dates' => $date,
         ]);
 
