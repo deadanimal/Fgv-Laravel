@@ -15,3 +15,7 @@ yarn-error.log
 /.vscode
 /public/qr
 /public/bulkpokok
+/public/bulktandan
+/public/qr
+/public/storage
+/public/qrcode.svg
