@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="col-xl-1"></div>
-                <div class="col-xl-5">
+                <div class="col-xl-5 hide_tarikh">
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label text-main">Tarikh Mula</label>
                         <div class="col-sm-8">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="col-xl-1"></div>
-                <div class="col-xl-5">
+                <div class="col-xl-5 hide_tarikh">
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label text-main">Tarikh Akhir</label>
                         <div class="col-sm-8">
@@ -111,6 +111,17 @@
                     <option value="16">Maklumat Mengikut Bulan Bagging</option>
                 `);
             }
+        });
+
+
+        $('#select-laporan').change(function(e) {
+            let val = $(this).val();
+            if (val == 3) {
+                $('.hide_tarikh').addClass('d-none');
+            } else {
+                $('.hide_tarikh').removeClass('d-none');
+            }
+
         });
     </script>
 @endsection

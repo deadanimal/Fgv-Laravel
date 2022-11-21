@@ -97,4 +97,6 @@ Route::middleware('auth.basic')->group(function () {
         Route::delete('/kerosakan/{kerosakan}', [KerosakanController::class, 'delete'])->name('k.delete');
     });
 
+    Route::post('/laporan3', [LaporanController::class, 'third']);
+
 });
