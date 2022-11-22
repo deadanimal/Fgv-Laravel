@@ -26,7 +26,17 @@ class HarvestApiController extends Controller
      */
     public function store(Request $request)
     {
-        $info = Harvest::create($request->all());
+        $info = Harvest::create($request->except('url_gambar'));
+
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'harvest', 'public'
+            );
+            $info->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
         return response()->json($info);
 
     }
@@ -52,7 +62,17 @@ class HarvestApiController extends Controller
      */
     public function update(Request $request, Harvest $harvest)
     {
-        $harvest->update($request->all());
+        $harvest->update($request->except('url_gambar'));
+
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'harvest', 'public'
+            );
+            $harvest->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
         return response()->json($harvest);
 
     }
