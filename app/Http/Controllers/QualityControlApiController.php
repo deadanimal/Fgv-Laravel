@@ -61,7 +61,17 @@ class QualityControlApiController extends Controller
      */
     public function update(Request $request, QualityControl $qualityControl)
     {
-        $qualityControl->update($request->all());
+        $qualityControl->update($request->except('url_gambar'));
+
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'qc', 'public'
+            );
+            $qualityControl->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
         return response()->json($qualityControl);
 
     }
