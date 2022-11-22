@@ -139,7 +139,7 @@
                                     <select name="peranan"
                                         class="form-select border-main  @error('peranan') is-invalid @enderror">
                                         @foreach ($roles as $role)
-                                            <option @selected($user->peranan == $role->name) value="{{ $role->name }}">
+                                            <option @selected($user->peranan == $role->display_name) value="{{ $role->name }}">
                                                 {{ $role->display_name }}</option>
                                         @endforeach
                                     </select>
@@ -191,6 +191,9 @@
                         data-bs-target="#update_password"> Password
                         <span data-feather="settings"></span>
                     </button>
+                    {{-- <button class="btn btn-danger" type="button"> Set Semula Password
+                        <span data-feather="settings"></span>
+                    </button> --}}
                     <button class="btn btn-danger" type="submit">Kemaskini
                         <span data-feather="check-circle"></span>
                     </button>
@@ -206,48 +209,71 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('pp.updatePwd', $user->id) }}" method="POST" id="formpwd">
+                <form action="{{ route('pp.updatePwd', $user->id) }}" method="post" id="formpwd">
                     @csrf
                     <div class="modal-body p-0">
                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
                             <h4 class="mb-1" id="modalExampleDemoLabel">Kemaskini Password </h4>
                         </div>
                         <div class="p-4 pb-0">
-                            <div class="mb-3">
-                                <label class="col-form-label" for="p1">New Password:</label>
-                                <input class="form-control" id="p1" type="text" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="col-form-label" for="p2">New Password Confirmation:</label>
-                                <input class="form-control" name="password" id="p2" type="text" />
-                            </div>
-                            <div>
-                                <p id="err-msg-pwd" class="text-danger hide">Password dimasukkan tidak sama</p>
+                            {{-- <div class="mb-3">
+                                    <label class="col-form-label" for="p1">New Password:</label>
+                                    <input class="form-control" id="p1" type="text" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="p2">New Password Confirmation:</label>
+                                    <input class="form-control" name="password" id="p2" type="text" />
+                                </div>
+                                <div>
+                                    <p id="err-msg-pwd" class="text-danger hide">Password dimasukkan tidak sama</p>
+                                </div> --}}
+                            <div class="text-center mb-4">
+                                <button class="btn btn-danger" id="btnsubmitpwd" type="submit">Set Semula </button>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-primary" id="btnsubmitpwd" type="submit">Simpan </button>
+                        {{-- <button class="btn btn-primary" id="btnsubmitpwd" type="submit">Simpan </button> --}}
                     </div>
                 </form>
+
 
             </div>
         </div>
     </div>
+
+
     <script>
-        $('#err-msg-pwd').hide();
+        // $('#err-msg-pwd').hide();
 
-        $('#btnsubmitpwd').click(function(e) {
+        // $('#btnsubmitpwd').click(function(e) {
+        //     e.preventDefault();
+        //     if ($('#p1').val() != $('#p2').val()) {
+        //         $('#err-msg-pwd').show();
+        //     } else {
+        //         $('#err-msg-pwd').hide();
+        //         $('#formpwd').submit();
+        //     }
+        // });
+
+        $("#btnsubmitpwd").click(function(e) {
             e.preventDefault();
-            if ($('#p1').val() != $('#p2').val()) {
-                $('#err-msg-pwd').show();
-            } else {
-                $('#err-msg-pwd').hide();
-                $('#formpwd').submit();
-            }
-        });
+            let form = $(this).parent('form');
 
+            Swal.fire({
+                title: 'Perhatian!',
+                text: 'Adakah anda pasti?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Kembali',
+                confirmButtonText: 'Pasti',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#formpwd').submit();
+                }
+            });
+        });
 
         $("#custom-btn-white").mouseenter(function() {
             $(this).removeClass('btn-white');

@@ -39,9 +39,11 @@ Route::middleware('auth.basic')->group(function () {
         Route::get('/edit/{user}', [UserController::class, 'edit'])->name('pp.edit');
         Route::put('/update/{user}', [UserController::class, 'update'])->name('pp.update');
         Route::delete('/delete/{user}', [UserController::class, 'delete'])->name('pp.delete');
+
         Route::post('/kemaskini_password/{user}', [UserController::class, 'kemaskini_password'])->name('pp.updatePwd');
 
-        Route::resource('/tugasan', TugasanController::class);
+        Route::resource('/tugasan', TugasanController::class)->except('show');
+        Route::get('/tugasan/{id}/{jenis}', [TugasanController::class, 'show']);
         Route::post('/tugasan/search', [TugasanController::class, 'search'])->name('search.tugasan');
     });
 

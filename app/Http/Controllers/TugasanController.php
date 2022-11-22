@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pokok;
+use App\Models\Bagging;
+use App\Models\ControlPollination;
+use App\Models\Harvest;
+use App\Models\QualityControl;
 use App\Models\Tandan;
 use App\Models\Tugasan;
 use App\Models\User;
@@ -19,8 +22,15 @@ class TugasanController extends Controller
      */
     public function index()
     {
+        $baggings = Bagging::with('petugas')->get();
+        $cp = ControlPollination::with('petugas')->get();
+        $qc = QualityControl::with('petugas')->get();
+        $harvest = Harvest::with('petugas')->get();
+
+        $merged = $baggings->merge($qc)->merge($cp)->merge($harvest)->sortByDesc('created_at')->all();
+
         return view('tugasan.index', [
-            'tugasans' => Tugasan::with('petugas')->orderByDesc('updated_at')->get(),
+            'tugasans' => $merged,
         ]);
     }
 
@@ -59,18 +69,28 @@ class TugasanController extends Controller
      * @param  \App\Models\Tugasan  $tugasan
      * @return \Illuminate\Http\Response
      */
-    public function show(Tugasan $tugasan)
+    public function show($id, $jenis)
     {
-        $tandan = Tandan::find($tugasan->tandan_id);
-        $pokok = [];
-        if ($tandan != null) {
-            $pokok = Pokok::find($tandan->pokok_id);
+        switch ($jenis) {
+            case 'Balut':
+                $tugasan = Bagging::with(['pokok', 'tandan', 'petugas'])->where('id', $id)->first();
+                $type = 1;
+                break;
+            case 'Pendebungaan Terkawal':
+                $tugasan = ControlPollination::with(['pokok', 'tandan', 'petugas'])->where('id', $id)->first();
+                $type = 2;
+                break;
+            case 'Kawalan Kualiti':
+                $type = 3;
+                $tugasan = QualityControl::with(['pokok', 'tandan', 'petugas'])->where('id', $id)->first();
+                break;
+            case 'Penuaian':
+                $type = 4;
+                $tugasan = Harvest::with(['pokok', 'tandan', 'petugas'])->where('id', $id)->first();
+                break;
         }
 
-        $namaPetugas = User::find($tugasan->petugas_id)->nama ?? '';
-        $namaPengesah = User::find($tugasan->pengesah_id)->nama ?? '';
-
-        return view('tugasan.show', compact('tugasan', 'tandan', 'pokok', 'namaPetugas', 'namaPengesah'));
+        return view('tugasan.show', compact('tugasan', 'type'));
     }
 
     /**

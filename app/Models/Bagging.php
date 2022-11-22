@@ -20,4 +20,14 @@ class Bagging extends Model
         return $this->belongsTo(Tandan::class);
     }
 
+    public function petugas()
+    {
+        return $this->belongsTo(User::class, 'id_sv_balut');
+    }
+
+    public function pengesah()
+    {
+        return $this->belongsTo(User::class, 'pengesah_id');
+    }
+
 }

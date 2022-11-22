@@ -1,8 +1,6 @@
 @extends('layouts.base')
 @section('content')
     <x-header main="Pengurusan Pengguna" sub="Laporan Petugas" sub2="Maklumat Tugas" />
-
-
     <div class="row justify-content-center mt-4">
         <div class="col-10">
 
@@ -33,7 +31,7 @@
                             <label class="col-form-label">Aktiviti Kerja</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ ucfirst($tugasan->jenis) }}" readonly>
+                            <input type="text" class="form-control" value="{{ $tugasan->jenis }}" readonly>
                         </div>
                     </div>
 
@@ -42,7 +40,8 @@
                             <label class="col-form-label">No. Daftar</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ $tandan->no_daftar ?? '' }}" readonly>
+                            <input type="text" class="form-control" value="{{ $tugasan->tandan->no_daftar ?? '' }}"
+                                readonly>
                         </div>
                     </div>
 
@@ -51,25 +50,58 @@
                             <label class="col-form-label">No. Pokok</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ $pokok->no_pokok ?? '' }}" readonly>
+                            <input type="text" class="form-control" value="{{ $tugasan->pokok->no_pokok ?? '' }}"
+                                readonly>
                         </div>
                     </div>
 
                     <div class="row mb-3 g-3 align-items-center">
                         <div class="col-4">
-                            <label class="col-form-label">Tarikh Balut</label>
+                            <label class="col-form-label">Tarikh @switch($type)
+                                    @case(1)
+                                        Balut
+                                    @break
+
+                                    @case(2)
+                                        CP
+                                    @break
+
+                                    @case(3)
+                                        QC
+                                    @break
+
+                                    @case(4)
+                                        Tuai
+                                    @break
+
+                                    @default
+                                @endswitch
+                            </label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ $tugasan->tarikh ?? '' }}" readonly>
+                            <input type="text" class="form-control" value="{{ $tugasan->created_at->format('d/m/Y') }}"
+                                readonly>
                         </div>
                     </div>
 
                     <div class="row mb-3 g-3 align-items-center">
                         <div class="col-4">
-                            <label class="col-form-label">Nama Pembalut</label>
+                            <label class="col-form-label">Nama @switch($type)
+                                    @case(1)
+                                        Pembalut
+                                    @break
+
+                                    @case(4)
+                                        Penuai
+                                    @break
+
+                                    @default
+                                        Petugas
+                                @endswitch
+                            </label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ $namaPetugas ?? '' }}" readonly>
+                            <input type="text" class="form-control" value="{{ $tugasan->petugas->nama ?? '' }}" readonly>
                         </div>
                     </div>
 
@@ -78,7 +110,8 @@
                             <label class="col-form-label">Nama Penyelia</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ $namaPengesah ?? '' }}" readonly>
+                            <input type="text" class="form-control" value="{{ $tugasan->pengesah->nama ?? '' }}"
+                                readonly>
                         </div>
                     </div>
 
@@ -87,8 +120,8 @@
                             <label class="col-form-label">Tarikh Pengesahan</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ $tugasan->tarikh_pengesahan ?? '' }}"
-                                readonly>
+                            <input type="text" class="form-control"
+                                value="{{ $tugasan->updated_at->format('d/m/Y') ?? '' }}" readonly>
                         </div>
                     </div>
 

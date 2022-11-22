@@ -91,6 +91,11 @@ class UserController extends Controller
         $user->update([
             'peranan' => $role->display_name,
         ]);
+
+        alert()->success('Berjaya', 'Data pengguna dikemaskini');
+
+        activity()->event('Kemaskini Data')->log('Maklumat user ' . $user->nama . ' telah dikemaskini');
+
         return redirect()->route('pp.index');
     }
 
@@ -110,15 +115,15 @@ class UserController extends Controller
         return view('user.maklumat');
     }
 
-    public function kemaskini_password(Request $request, User $user)
+    public function kemaskini_password(User $user)
     {
         $user->update([
-            'password' => Hash::make($request->password),
+            'password' => Hash::make('INIT1234'),
         ]);
 
-        alert()->success('Berjaya', 'Password berjaya diubah');
+        alert()->success('Berjaya', 'Password berjaya di set semula kepada INIT1234');
 
-        activity()->event('Kemaskini Data')->log('Password ' . $user->nama . ' telah diubah');
+        activity()->event('Kemaskini Data')->log('Password ' . $user->nama . ' telah di set semula');
 
         return redirect()->route('pp.index');
     }

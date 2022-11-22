@@ -29,8 +29,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $motherpalm['balut']['hariini'] = Bagging::whereDate('created_at', Carbon::today())->count();
-        $motherpalm['balut']['hinggakini'] = Bagging::count();
+
+        $motherpalm['balut']['hariini'] = Bagging::whereDate('created_at', Carbon::today())->whereHas('pokok', function ($q) {
+            return $q->where('jantina', 'Motherpalm');
+        })->count();
+
+        $motherpalm['balut']['hinggakini'] = Bagging::whereHas('pokok', function ($q) {
+            return $q->where('jantina', 'Motherpalm');
+        })->count();
 
         $motherpalm['debung']['hariini'] = Pollen::whereDate('created_at', Carbon::today())->count();
         $motherpalm['debung']['hinggakini'] = Pollen::count();
@@ -38,13 +44,26 @@ class HomeController extends Controller
         $motherpalm['kawal']['hariini'] = ControlPollination::whereDate('created_at', Carbon::today())->count();
         $motherpalm['kawal']['hinggakini'] = ControlPollination::count();
 
-        $motherpalm['tuai']['hariini'] = Harvest::whereDate('created_at', Carbon::today())->count();
-        $motherpalm['tuai']['hinggakini'] = Harvest::count();
+        $motherpalm['tuai']['hariini'] = Harvest::whereDate('created_at', Carbon::today())->whereHas('pokok', function ($q) {
+            return $q->where('jantina', 'Motherpalm');
+        })->count();
+        $motherpalm['tuai']['hinggakini'] = Harvest::whereHas('pokok', function ($q) {
+            return $q->where('jantina', 'Motherpalm');
+        })->count();
 
-        $fatherpalm['balut']['hariini'] = Bagging::whereDate('created_at', Carbon::today())->count();
-        $fatherpalm['balut']['hinggakini'] = Bagging::count();
-        $fatherpalm['tuai']['hariini'] = Harvest::whereDate('created_at', Carbon::today())->count();
-        $fatherpalm['tuai']['hinggakini'] = Harvest::count();
+        $fatherpalm['balut']['hariini'] = Bagging::whereDate('created_at', Carbon::today())->whereHas('pokok', function ($q) {
+            return $q->where('jantina', 'Fatherpalm');
+        })->count();
+        $fatherpalm['balut']['hinggakini'] = Bagging::whereHas('pokok', function ($q) {
+            return $q->where('jantina', 'Fatherpalm');
+        })->count();
+
+        $fatherpalm['tuai']['hariini'] = Harvest::whereDate('created_at', Carbon::today())->whereHas('pokok', function ($q) {
+            return $q->where('jantina', 'Fatherpalm');
+        })->count();
+        $fatherpalm['tuai']['hinggakini'] = Harvest::whereHas('pokok', function ($q) {
+            return $q->where('jantina', 'Fatherpalm');
+        })->count();
 
         return view('dashboard', compact('motherpalm', 'fatherpalm'));
     }

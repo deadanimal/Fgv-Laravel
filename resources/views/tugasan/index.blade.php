@@ -87,7 +87,7 @@
                                     <tbody class="list" id="tablebody">
                                         @foreach ($tugasans as $tugasan)
                                             <tr style="border-bottom:#fff"
-                                                @if ($tugasan->jenis == 'balut') onclick="rowClick('{{ URL::to('/pengurusan_pengguna/tugasan/' . $tugasan->id) }}')" @endif>
+                                                onclick="rowClick('{{ URL::to('/pengurusan_pengguna/tugasan/' . $tugasan->id) . '/' . $tugasan->jenis }}')">
                                                 <td class="bil">
                                                     {{ $loop->iteration }}
                                                 </td>
@@ -119,10 +119,11 @@
                                                         @break
 
                                                         @default
+                                                            <span class="badge rounded-pill badge-soft-info"> Dalam Proses</span>
                                                     @endswitch
                                                 </td>
                                                 <td class="tarikh">
-                                                    {{ date('d/m/Y', strtotime($tugasan->tarikh)) }}
+                                                    {{ $tugasan->created_at->format('d/m/Y') }}
                                                 </td>
                                                 {{-- <td>
                                                     @switch($tugasan->status)
