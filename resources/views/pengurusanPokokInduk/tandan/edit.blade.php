@@ -128,34 +128,29 @@
                                         value="{{ $nama['cp']['pengesah'] ?? '' }}">
                                 </div>
 
-                                <div class="col-12 mt-5">
-                                    <strong class="bg-danger p-2 text-white mb-0" style="border-top-right-radius: 5px;">Sub
-                                        QC Pendebungaan</strong>
-                                    <hr class="bg-danger border-2 border-top border-danger" style="margin-top:7px">
-                                </div>
-                                <div class="col-4 mb-3">
-                                    <label for="">Tarikh</label>
-                                </div>
-                                <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control"
-                                        value="{{ $nama['cp']['tarikh'] ?? '' }}">
-                                </div>
+                                @if ($rosakCP)
+                                    <div class="col-12 mt-5">
+                                        <strong class="bg-danger p-2 text-white mb-0"
+                                            style="border-top-right-radius: 5px;">Sub
+                                            CP Pendebungaan</strong>
+                                        <hr class="bg-danger border-2 border-top border-danger" style="margin-top:7px">
+                                    </div>
+                                    <div class="col-4 mb-3">
+                                        <label for="">Tarikh</label>
+                                    </div>
+                                    <div class="col-8 mb-3">
+                                        <input readonly type="text" class="form-control"
+                                            value="{{ $rosakCP->created_at->format('d/m/Y') }}">
+                                    </div>
 
-                                <div class="col-4 mb-3">
-                                    <label for="">Nama Petugas</label>
-                                </div>
-                                <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control"
-                                        value="{{ $nama['cp']['petugas'] ?? '' }}">
-                                </div>
-
-                                <div class="col-4 mb-3">
-                                    <label for="">Nama Pengesah</label>
-                                </div>
-                                <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control"
-                                        value="{{ $nama['cp']['pengesah'] ?? '' }}">
-                                </div>
+                                    <div class="col-4 mb-3">
+                                        <label for="">Nama Petugas</label>
+                                    </div>
+                                    <div class="col-8 mb-3">
+                                        <input readonly type="text" class="form-control"
+                                            value="{{ $nama['cp']['petugas'] ?? '' }}">
+                                    </div>
+                                @endif
 
                             </div>
                         </div>
@@ -222,6 +217,28 @@
                                     <input readonly type="text" class="form-control"
                                         value="{{ $nama['harvest']['pengesah'] ?? '' }}">
                                 </div>
+
+                                @if ($rosakHarvest)
+                                    <div class="col-12 mt-5">
+                                        <strong class="bg-danger p-2 text-white mb-0"
+                                            style="border-top-right-radius: 5px;">Sub CP Penuaian</strong>
+                                        <hr class="bg-danger border-2 border-top border-danger" style="margin-top:7px">
+                                    </div>
+                                    <div class="col-4 mb-3">
+                                        <label for="">Tarikh</label>
+                                    </div>
+                                    <div class="col-8 mb-3">
+                                        <input readonly type="text" class="form-control" value="">
+                                    </div>
+
+                                    <div class="col-4 mb-3">
+                                        <label for="">Nama Petugas</label>
+                                    </div>
+                                    <div class="col-8 mb-3">
+                                        <input readonly type="text" class="form-control"
+                                            value="{{ $nama['harvest']['petugas'] ?? '' }}">
+                                    </div>
+                                @endif
 
                             </div>
                         </div>
