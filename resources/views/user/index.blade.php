@@ -142,11 +142,12 @@
 
     <script>
         $(document).ready(function() {
+            var url = window.location.href;
             $('#btnSearch').click(function() {
                 $data = $('#search').val();
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('pp.index') }}",
+                    url: url,
                     data: {
                         "search": $data
                     },
