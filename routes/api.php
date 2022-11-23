@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BaggingApiController;
 use App\Http\Controllers\ControlPollinationApiController;
+use App\Http\Controllers\DataKerosakanApiController;
 use App\Http\Controllers\FgvPmpsController;
 use App\Http\Controllers\HarvestApiController;
 use App\Http\Controllers\KerosakanApiController;
@@ -53,6 +54,7 @@ Route::apiResources([
     '/control_pollination' => ControlPollinationApiController::class,
     '/quality_control' => QualityControlApiController::class,
     '/harvest' => HarvestApiController::class,
+    '/data_kerosakan' => DataKerosakanApiController::class,
 ]);
 
 Route::get('/tandan/{id_tandan}/pollen', [TandanApiController::class, 'findPollen']);
