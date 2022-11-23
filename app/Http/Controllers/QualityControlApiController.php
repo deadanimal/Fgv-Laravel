@@ -14,7 +14,7 @@ class QualityControlApiController extends Controller
      */
     public function index()
     {
-        return response()->json(QualityControl::all());
+        return response()->json(QualityControl::with(['pokok'])->get());
         //
     }
 
@@ -46,10 +46,10 @@ class QualityControlApiController extends Controller
      * @param  \App\Models\QualityControl  $qualityControl
      * @return \Illuminate\Http\Response
      */
-    public function show(QualityControl $qualityControl)
+    public function show($qualityControl)
     {
-        return response()->json($qualityControl);
-
+        $q = QualityControl::with(['pokok'])->find($qualityControl);
+        return response()->json($q);
     }
 
     /**

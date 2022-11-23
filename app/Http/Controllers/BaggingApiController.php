@@ -14,7 +14,7 @@ class BaggingApiController extends Controller
      */
     public function index()
     {
-        return response()->json(Bagging::all());
+        return response()->json(Bagging::with(['pokok'])->get());
         //
     }
 
@@ -48,9 +48,10 @@ class BaggingApiController extends Controller
      * @param  \App\Models\Bagging  $bagging
      * @return \Illuminate\Http\Response
      */
-    public function show(Bagging $bagging)
+    public function show($bagging)
     {
-        return response()->json($bagging);
+        $b = Bagging::with(['pokok'])->find($bagging);
+        return response()->json($b);
 
     }
 

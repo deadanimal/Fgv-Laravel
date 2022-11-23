@@ -128,6 +128,35 @@
                                         value="{{ $nama['cp']['pengesah'] ?? '' }}">
                                 </div>
 
+                                <div class="col-12 mt-5">
+                                    <strong class="bg-danger p-2 text-white mb-0" style="border-top-right-radius: 5px;">Sub
+                                        QC Pendebungaan</strong>
+                                    <hr class="bg-danger border-2 border-top border-danger" style="margin-top:7px">
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label for="">Tarikh</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input readonly type="text" class="form-control"
+                                        value="{{ $nama['cp']['tarikh'] ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Petugas</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input readonly type="text" class="form-control"
+                                        value="{{ $nama['cp']['petugas'] ?? '' }}">
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="">Nama Pengesah</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <input readonly type="text" class="form-control"
+                                        value="{{ $nama['cp']['pengesah'] ?? '' }}">
+                                </div>
+
                             </div>
                         </div>
 

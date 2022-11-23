@@ -14,8 +14,7 @@ class HarvestApiController extends Controller
      */
     public function index()
     {
-        return response()->json(Harvest::all());
-        //
+        return response()->json(Harvest::with('pokok')->get());
     }
 
     /**
@@ -47,10 +46,10 @@ class HarvestApiController extends Controller
      * @param  \App\Models\Harvest  $harvest
      * @return \Illuminate\Http\Response
      */
-    public function show(Harvest $harvest)
+    public function show($harvest)
     {
-        return response()->json($harvest);
-
+        $h = Harvest::with(['pokok'])->find($harvest);
+        return response()->json($h);
     }
 
     /**

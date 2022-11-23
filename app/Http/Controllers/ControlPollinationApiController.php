@@ -14,8 +14,7 @@ class ControlPollinationApiController extends Controller
      */
     public function index()
     {
-        return response()->json(ControlPollination::all());
-        //
+        return response()->json(ControlPollination::with(['pokok'])->get());
     }
 
     /**
@@ -46,10 +45,10 @@ class ControlPollinationApiController extends Controller
      * @param  \App\Models\ControlPollination  $controlPollination
      * @return \Illuminate\Http\Response
      */
-    public function show(ControlPollination $controlPollination)
+    public function show($controlPollination)
     {
-        return response()->json($controlPollination);
-
+        $cp = ControlPollination::with(['pokok'])->find($controlPollination);
+        return response()->json($cp);
     }
 
     /**

@@ -42,11 +42,13 @@ class TandanController extends Controller
             $nama['cp']['petugas'] = User::find($tandan->cp->id_sv_cp)->nama ?? '';
             $nama['cp']['pengesah'] = User::find($tandan->cp->pengesah_id)->nama ?? '';
             $nama['cp']['tarikh'] = $tandan->cp->created_at->format('d/m/Y');
+
         }
         if ($tandan->qc != null) {
             $nama['qc']['petugas'] = User::find($tandan->qc->id_sv_qc)->nama ?? '';
             $nama['qc']['pengesah'] = User::find($tandan->qc->pengesah_id)->nama ?? '';
             $nama['qc']['tarikh'] = $tandan->qc->created_at->format('d/m/Y');
+
         }
         if ($tandan->harvest != null) {
             $nama['harvest']['petugas'] = User::find($tandan->harvest->id_sv_harvest)->nama ?? '';
