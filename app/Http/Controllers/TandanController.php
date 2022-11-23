@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataKerosakan;
+use App\Models\Kerosakan;
 use App\Models\Pokok;
 use App\Models\RunningNo;
 use App\Models\Tandan;
@@ -44,7 +44,10 @@ class TandanController extends Controller
             $nama['cp']['pengesah'] = User::find($tandan->cp->pengesah_id)->nama ?? '';
             $nama['cp']['tarikh'] = $tandan->cp->created_at->format('d/m/Y');
 
-            $rosakCP = DataKerosakan::where('tandan_id', $tandan->id)->where('jenis', 'cp')->first();
+            if ($tandan->cp->kerosakans_id != null) {
+                $rosakCP = Kerosakan::find($tandan->cp->kerosakans_id);
+                $nama['cp']['tarikh_rosak'] = $tandan->cp->updated_at->format('d/m/Y');
+            }
         }
         if ($tandan->qc != null) {
             $nama['qc']['petugas'] = User::find($tandan->qc->id_sv_qc)->nama ?? '';
@@ -56,7 +59,12 @@ class TandanController extends Controller
             $nama['harvest']['petugas'] = User::find($tandan->harvest->id_sv_harvest)->nama ?? '';
             $nama['harvest']['pengesah'] = User::find($tandan->harvest->pengesah_id)->nama ?? '';
             $nama['harvest']['tarikh'] = $tandan->harvest->created_at->format('d/m/Y');
-            $rosakHarvest = DataKerosakan::where('tandan_id', $tandan->id)->where('jenis', 'tuai')->first();
+
+            if ($tandan->harvest->kerosakans_id != null) {
+                $rosakHarvest = Kerosakan::find($tandan->harvest->kerosakans_id);
+                $nama['harvest']['tarikh_rosak'] = $tandan->harvest->updated_at->format('d/m/Y');
+
+            }
         }
 
         return view('pengurusanPokokInduk.tandan.edit', [

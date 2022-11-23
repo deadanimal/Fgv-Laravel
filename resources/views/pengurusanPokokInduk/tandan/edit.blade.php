@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="col-8 mb-3">
                                         <input readonly type="text" class="form-control"
-                                            value="{{ $rosakCP->created_at->format('d/m/Y') }}">
+                                            value="{{ $nama['cp']['tarikh_rosak'] }}">
                                     </div>
 
                                     <div class="col-4 mb-3">
@@ -149,6 +149,14 @@
                                     <div class="col-8 mb-3">
                                         <input readonly type="text" class="form-control"
                                             value="{{ $nama['cp']['petugas'] ?? '' }}">
+                                    </div>
+
+                                    <div class="col-4 mb-3">
+                                        <label for="">Rosak</label>
+                                    </div>
+                                    <div class="col-8 mb-3">
+                                        <input readonly type="text" class="form-control"
+                                            value="{{ $rosakCP->nama }}">
                                     </div>
                                 @endif
 
@@ -228,7 +236,8 @@
                                         <label for="">Tarikh</label>
                                     </div>
                                     <div class="col-8 mb-3">
-                                        <input readonly type="text" class="form-control" value="">
+                                        <input readonly type="text" class="form-control"
+                                            value="{{ $nama['harvest']['tarikh_rosak'] ?? '' }}">
                                     </div>
 
                                     <div class="col-4 mb-3">
@@ -237,6 +246,14 @@
                                     <div class="col-8 mb-3">
                                         <input readonly type="text" class="form-control"
                                             value="{{ $nama['harvest']['petugas'] ?? '' }}">
+                                    </div>
+
+                                    <div class="col-4 mb-3">
+                                        <label for="">Rosak</label>
+                                    </div>
+                                    <div class="col-8 mb-3">
+                                        <input readonly type="text" class="form-control"
+                                            value="{{ $rosakHarvest->nama }}">
                                     </div>
                                 @endif
 
