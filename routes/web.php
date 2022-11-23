@@ -98,8 +98,11 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/kerosakan', [KerosakanController::class, 'store'])->name('k.store');
         Route::put('/kerosakan/{kerosakan}', [KerosakanController::class, 'update'])->name('k.update');
         Route::delete('/kerosakan/{kerosakan}', [KerosakanController::class, 'delete'])->name('k.delete');
+        Route::post('/carian/kerosakan', [KerosakanController::class, 'carian'])->name('k.cari');
 
         Route::resource('/matlamat', MatlamatController::class);
+
+        Route::post('/carian/matlamat', [MatlamatController::class, 'carian']);
     });
 
     Route::post('/laporan3', [LaporanController::class, 'third']);

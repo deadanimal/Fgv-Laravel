@@ -2,7 +2,8 @@
 @section('content')
     <x-header main="Konfigurasi Data Rujukan" sub="Matlamat Bulanan / Tahunan" sub2="" />
 
-    <div class="row justify-content-center mt-4">
+    <form class="row justify-content-center mt-4" action="/konfigurasi/carian/matlamat" method="POST">
+        @csrf
         <div class="col-xl-10">
             <div class="col-xl-8 mb-3">
                 <div class="row g-3 align-items-center">
@@ -10,11 +11,25 @@
                         <label class="col-form-label">Tahun</label>
                     </div>
                     <div class="col-xl-4">
-                        <input type="text"class="form-control border-danger" name="blok" placeholder="SILA TAIP DI SINI"
-                            value="{{ $blok ?? '' }}">
+                        <select name="tahun" class="form-select border-danger">
+                            <option selected disabled hidden>SILA PILIH</option>
+                            @isset($sel)
+                                @foreach ($matlamat as $m => $data)
+                                    <option @selected($m == $sel) value="{{ $m }}">{{ $m }}
+                                    </option>
+                                @endforeach
+                            @else
+                                @foreach ($matlamat as $m => $data)
+                                    <option value="{{ $m }}">{{ $m }}</option>
+                                @endforeach
+                            @endisset
+
+                        </select>
+
                     </div>
                     <div class="col-xl-4">
-                        <button class="btn btn-sm btn-danger">Cari <span class="fas fa-search"></span></button>
+                        <button class="btn btn-sm btn-danger" type="submit">Cari <span
+                                class="fas fa-search"></span></button>
                         <a href="{{ route('matlamat.index') }}" class="btn btn-sm btn-link">
                             <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
                         </a>
@@ -23,7 +38,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <div class="row justify-content-center mt-4">
         <div class="col-xl-10">

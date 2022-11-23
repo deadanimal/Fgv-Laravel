@@ -2,6 +2,78 @@
 @section('content')
     <x-header main="Konfigurasi Data Rujukan" sub="Kerosakan" sub2="" />
 
+    <form action="{{ route('k.cari') }}" method="post">
+        @csrf
+        <div class="row justify-content-center mt-3">
+            <div class="col-10 ">
+                <div class="row align-items-center">
+                    <div class="col-xl-6">
+                        <div class="row align-items-center">
+                            <div class="col-xl-3">
+                                <label class="col-form-label text-main">Faktor Kerosakan</label>
+                            </div>
+                            <div class="col-xl-8">
+                                <select name="faktor" class="form-select border-danger" required>
+                                    @isset($selfaktor)
+                                        <option @selected($selfaktor == 'Alam') value="Alam">Alam</option>
+                                        <option @selected($selfaktor == 'Manusia') value="Manusia">Manusia</option>
+                                    @else
+                                        <option selected disabled hidden>PILIH FAKTOR</option>
+                                        <option value="Alam">Alam</option>
+                                        <option value="Manusia">Manusia</option>
+                                    @endisset
+
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <div class="row align-items-center">
+                            <div class="col-1"></div>
+                            <div class="col-xl-3">
+                                <label class="col-form-label text-main">Tahun</label>
+                            </div>
+                            <div class="col-xl-8">
+                                <select name="tahun" class="form-select border-danger" required>
+                                    @isset($seltahun)
+                                        @foreach ($tahuns as $t)
+                                            <option @selected($seltahun == $t) value="{{ $t }}">{{ $t }}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        <option selected disabled hidden>PILIH TAHUN</option>
+                                        @foreach ($tahuns as $t)
+                                            <option value="{{ $t }}">{{ $t }}</option>
+                                        @endforeach
+                                    @endisset
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-12 mt-3">
+                        <div class="row align-items-center">
+                            <div class="col-xl-12 text-center">
+                                <button class="btn btn-sm btn-danger" type="submit">Cari <span
+                                        class="fas fa-search"></span></button>
+                                <a href="{{ route('k.index') }}" class="btn btn-sm btn-link">
+                                    <span class="refreshbtn" style="color:grey" data-feather="refresh-ccw"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+
 
     <div class="row justify-content-center mt-4">
         <div class="col-xl-10">

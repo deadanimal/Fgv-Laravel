@@ -9,8 +9,11 @@ class KerosakanController extends Controller
 {
     public function index()
     {
+        $years = range(2021, strftime("%Y", time()));
+
         return view('kerosakan.index', [
             'kerosakans' => Kerosakan::all(),
+            'tahuns' => $years,
         ]);
     }
 
@@ -45,6 +48,27 @@ class KerosakanController extends Controller
         alert()->success('Berjaya', 'Data telah dihapus');
 
         return back();
+
+    }
+
+    public function carian(Request $request)
+    {
+        $kerosakan = Kerosakan::whereNotNull('id');
+
+        if ($request->faktor) {
+            $kerosakan->where('faktor', $request->faktor);
+        }
+        if ($request->tahun) {
+            $kerosakan->whereYear('created_at', $request->tahun);
+        }
+        $years = range(2021, strftime("%Y", time()));
+
+        return view('kerosakan.index', [
+            'kerosakans' => $kerosakan->get(),
+            'tahuns' => $years,
+            'seltahun' => $request->tahun,
+            'selfaktor' => $request->faktor,
+        ]);
 
     }
 }

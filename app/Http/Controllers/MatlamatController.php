@@ -106,4 +106,15 @@ class MatlamatController extends Controller
     {
         //
     }
+
+    public function carian(Request $request)
+    {
+        $tahun = MatlamatTahunan::where('tahun', $request->tahun)->get()->groupBy('tahun');
+
+        return view('matlamat.index', [
+            'matlamat' => $tahun,
+            'sel' => $request->tahun,
+        ]);
+
+    }
 }
