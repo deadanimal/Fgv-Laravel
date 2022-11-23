@@ -4,6 +4,7 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KerosakanController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\MatlamatController;
 use App\Http\Controllers\PokokController;
 use App\Http\Controllers\TandanController;
 use App\Http\Controllers\TugasanController;
@@ -64,6 +65,7 @@ Route::middleware('auth.basic')->group(function () {
             Route::get('downloadqrpokok/{pokok}', [PokokController::class, 'downloadqr'])->name('downloadqrpokok');
             Route::post('/pokok/search', [PokokController::class, 'search'])->name('search.pokok');
             Route::get('/bulkqr', [PokokController::class, 'bulkqr'])->name('pokok.bulkqr');
+            Route::post('/selbulkqr', [PokokController::class, 'selbulkqr'])->name('pokok.selbulkqr');
         });
 
         Route::prefix('/tandan')->group(function () {
@@ -77,7 +79,6 @@ Route::middleware('auth.basic')->group(function () {
 
             Route::get('/downloadqrtandan/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqrtandan');
             Route::post('/generateQR', [TandanController::class, 'generateQR'])->name('generateQR');
-            Route::post('/downloadmanyQR', [TandanController::class, 'downloadmanyQR'])->name('downloadmanyQR');
             Route::post('/tandan/search', [TandanController::class, 'search'])->name('search.tandan');
 
         });
@@ -97,6 +98,8 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/kerosakan', [KerosakanController::class, 'store'])->name('k.store');
         Route::put('/kerosakan/{kerosakan}', [KerosakanController::class, 'update'])->name('k.update');
         Route::delete('/kerosakan/{kerosakan}', [KerosakanController::class, 'delete'])->name('k.delete');
+
+        Route::resource('/matlamat', MatlamatController::class);
     });
 
     Route::post('/laporan3', [LaporanController::class, 'third']);

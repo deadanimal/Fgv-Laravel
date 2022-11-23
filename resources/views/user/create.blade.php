@@ -30,7 +30,7 @@
                                 <div class="col-xl-8">
                                     <input style="text-transform: uppercase" type="text" name="nama"
                                         class="form-control border-main  @error('nama') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI" value="{{ old('nama') }}">
+                                        placeholder="SILA TAIP DI SINI" value="{{ old('nama') }}">
                                 </div>
 
                             </div>
@@ -45,7 +45,7 @@
                                 <div class="col-xl-8">
                                     <input type="text" name="no_kakitangan"
                                         class="form-control border-main  @error('no_kakitangan') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI" value="{{ old('no_kakitangan') }}">
+                                        placeholder="SILA TAIP DI SINI" value="{{ old('no_kakitangan') }}">
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                                 <div class="col-xl-8">
                                     <input type="text" name="blok"
                                         class="form-control border-main  @error('blok') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI" value="{{ old('blok') }}">
+                                        placeholder="SILA TAIP DI SINI" value="{{ old('blok') }}">
                                 </div>
                             </div>
                         </div>

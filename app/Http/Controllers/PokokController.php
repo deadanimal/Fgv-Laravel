@@ -14,7 +14,7 @@ class PokokController extends Controller
     public function index()
     {
         return view('pengurusanPokokInduk.pokok.index', [
-            'pokoks' => Pokok::all(),
+            'pokoks' => Pokok::orderByDesc('created_at')->get(),
             'aktif' => Pokok::where('status_pokok', 'aktif')->count(),
             'tidak_aktif' => Pokok::where('status_pokok', 'tak aktif')->count(),
         ]);
@@ -32,7 +32,10 @@ class PokokController extends Controller
 
     public function store(Request $request)
     {
-        Pokok::create($request->all());
+        $pokok = Pokok::create($request->all());
+
+        activity()->event('CIPTA')->log('Pokok No Pokok:' . $pokok->no_pokok . ' telah dicipta');
+        alert()->success('Berjaya', 'Data telah disimpan');
 
         return redirect()->route('pi.p.index');
     }
@@ -40,6 +43,8 @@ class PokokController extends Controller
     public function update(Request $request, Pokok $pokok)
     {
         $pokok->update($request->all());
+        activity()->event('KEMASKINI')->log('Pokok No Pokok:' . $pokok->no_pokok . ' telah dikemaskini');
+        alert()->success('Berjaya', 'Data telah dikemaskini');
 
         return redirect()->route('pi.p.index');
     }
@@ -48,6 +53,9 @@ class PokokController extends Controller
     {
         Tandan::where('pokok_id', $pokok->id)->delete();
         $pokok->delete();
+
+        activity()->event('HAPUS')->log('Pokok No Pokok:' . $pokok->no_pokok . ' telah dihapus');
+        alert()->success('Berjaya', 'Data telah dihapus');
 
         return redirect()->route('pi.p.index');
     }
@@ -101,6 +109,8 @@ class PokokController extends Controller
 
     public function bulkqr()
     {
+        set_time_limit(300);
+
         $pokoks = Pokok::all();
         foreach ($pokoks as $pokok) {
             $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
@@ -117,6 +127,30 @@ class PokokController extends Controller
             'no_pokoks' => $p,
         ]);
         // return $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
+
+        return $pdf->download('qrcode.pdf');
+
+    }
+
+    public function selbulkqr(Request $request)
+    {
+        foreach ($request->pokoks as $pokok) {
+            $thispokok = Pokok::find($pokok);
+            $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $thispokok->id);
+            $name = "bulkpokok/pokok" . $thispokok->id . ".svg";
+            QrCode::size(264.56692913)->generate($url, public_path($name));
+            $temp = $thispokok->progeny . $thispokok->no_pokok;
+            $p['no_pokok'][$thispokok->id] = str_replace(' ', '', $temp);
+            $p['name'][$thispokok->id] = $name;
+            $pokoks[] = $thispokok;
+        }
+
+        $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
+            'type' => 2,
+            'pokoks' => $pokoks,
+            'no_pokoks' => $p,
+        ]);
+// return $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
 
         return $pdf->download('qrcode.pdf');
 

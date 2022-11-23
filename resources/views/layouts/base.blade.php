@@ -330,8 +330,8 @@
                                                 </div>
                                             </a>
                                         </li>
-                                        <li class="nav-item ">
-                                            <a class="nav-link" href="#">
+                                        <li class="nav-item  {{ Request::is('konfigurasi/matlamat') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('matlamat.index') }}">
                                                 <div class="d-flex align-items-center">
                                                     <span class="nav-link-icon">
                                                         <span class="fas fa-folder-open text-main"></span>
@@ -379,7 +379,7 @@
                             <hr class="text-main mb-2" style="height: 3px;">
                             <div class="text-main fw-bold text-center">
                                 FGV Agri Services Sdn Bhd (FGVAS) © 2022 | Planting Material Production System
-                                (PMPS)
+                                (PMPS) | Versi 1.0
                             </div>
                         </footer>
                     </div>
@@ -481,11 +481,11 @@
                 icon: 'warning',
                 showCancelButton: true,
                 cancelButtonText: 'Kembali',
-                confirmButtonText: 'Buang',
+                confirmButtonText: 'Hapus Data',
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
-                    Swal.fire('Buang!', 'Berjaya buang');
+                    Swal.fire('Hapus Data!', 'Berjaya dihapus');
                     form.submit();
                 }
             });

@@ -36,18 +36,22 @@ class TandanController extends Controller
         if ($tandan->bagging != null) {
             $nama['bagging']['petugas'] = User::find($tandan->bagging->id_sv_balut)->nama ?? '';
             $nama['bagging']['pengesah'] = User::find($tandan->bagging->pengesah_id)->nama ?? '';
+            $nama['bagging']['tarikh'] = $tandan->bagging->created_at->format('d/m/Y');
         }
         if ($tandan->cp != null) {
             $nama['cp']['petugas'] = User::find($tandan->cp->id_sv_cp)->nama ?? '';
             $nama['cp']['pengesah'] = User::find($tandan->cp->pengesah_id)->nama ?? '';
+            $nama['cp']['tarikh'] = $tandan->cp->created_at->format('d/m/Y');
         }
         if ($tandan->qc != null) {
             $nama['qc']['petugas'] = User::find($tandan->qc->id_sv_qc)->nama ?? '';
             $nama['qc']['pengesah'] = User::find($tandan->qc->pengesah_id)->nama ?? '';
+            $nama['qc']['tarikh'] = $tandan->qc->created_at->format('d/m/Y');
         }
         if ($tandan->harvest != null) {
             $nama['harvest']['petugas'] = User::find($tandan->harvest->id_sv_harvest)->nama ?? '';
             $nama['harvest']['pengesah'] = User::find($tandan->harvest->pengesah_id)->nama ?? '';
+            $nama['harvest']['tarikh'] = $tandan->harvest->created_at->format('d/m/Y');
         }
         return view('pengurusanPokokInduk.tandan.edit', compact('tandan', 'pokoks', 'nama'));
     }
@@ -60,7 +64,10 @@ class TandanController extends Controller
             alert()->error('Gagal', 'No daftar telah didaftar');
             return back();
         }
-        Tandan::create($request->only('no_daftar'));
+        $tandan = Tandan::create($request->only('no_daftar'));
+
+        activity()->event('CIPTA')->log('Tandan No Daftar:' . $tandan->no_daftar . ' telah dicipta');
+        alert()->success('Berjaya', 'Data telah disimpan');
 
         return redirect()->route('pi.t.index');
     }
@@ -73,6 +80,8 @@ class TandanController extends Controller
                 'tarikh_daftar' => $request->tarikh_daftar,
                 'file' => $file,
             ]);
+            activity()->event('KEMASKINI')->log('Tandan No Daftar:' . $tandan->no_daftar . ' telah dikemaskini');
+            alert()->success('Berjaya', 'Data telah dikemaskini');
             return redirect()->route('pi.t.index');
         }
 
@@ -82,14 +91,15 @@ class TandanController extends Controller
             'no_pokok' => $request->no_pokok,
             'umur' => $request->umur,
         ]);
-
-        alert()->success('Berjaya Dikemaskini', 'Data telah disimpan');
+        activity()->event('KEMASKINI')->log('Tandan No Daftar:' . $tandan->no_daftar . ' telah dikemaskini');
+        alert()->success('Berjaya', 'Data telah dikemaskini');
         return back();
     }
 
     public function delete(Tandan $tandan)
     {
-        // alert()->success('Berjaya Dibuang', 'Tandan ' . $tandan->no_daftar . ' telah dibuang');
+        activity()->event('HAPUS')->log('Tandan No Daftar:' . $tandan->no_daftar . ' telah dihapus');
+        alert()->success('Berjaya', 'Data telah dihapus');
         $tandan->delete();
 
         return back();
@@ -204,12 +214,6 @@ class TandanController extends Controller
         ]);
 
         return $pdf->download('QR.pdf');
-
-    }
-
-    public function downloadmanyQR(Request $request)
-    {
-        $pokoks = $request->pokok;
 
     }
 

@@ -18,7 +18,23 @@
                     <p class="fw-bold">Aktiviti</p>
                 </div>
                 <div class="col-8">
-                    <input type="text" name="aktiviti" class="form-control mb-3" value="{{ $aktiviti ?? '' }}">
+                    <select name="aktiviti" class="form-select mb-3">
+                        @isset($aktiviti)
+                            <option @selected($aktiviti == 'CIPTA') value="CIPTA">CIPTA</option>
+                            <option @selected($aktiviti == 'KEMASKINI') value="KEMASKINI">KEMASKINI</option>
+                            <option @selected($aktiviti == 'HAPUS') value="HAPUS">HAPUS</option>
+                            <option @selected($aktiviti == 'LOG MASUK') value="LOG MASUK">LOG MASUK</option>
+                            <option @selected($aktiviti == 'LOG KELUAR') value="LOG KELUAR">LOG KELUAR</option>
+                        @else
+                            <option value="" selected disabled hidden></option>
+                            <option value="CIPTA">CIPTA</option>
+                            <option value="KEMASKINI">KEMASKINI</option>
+                            <option value="HAPUS">HAPUS</option>
+                            <option value="LOG MASUK">LOG MASUK</option>
+                            <option value="LOG KELUAR">LOG KELUAR</option>
+                        @endisset
+                    </select>
+                    {{-- <input type="text" name="aktiviti" class="form-control mb-3" value="{{ $aktiviti ?? '' }}"> --}}
                 </div>
                 <div class="col-4">
                     <p class="fw-bold">Tarikh</p>
@@ -57,7 +73,7 @@
                                     <tr style="border-bottom-color: #F89521">
                                         <th>Bil</th>
                                         <th>No. Kakitangan</th>
-                                        <th>Tindakan</th>
+                                        <th>Aktiviti</th>
                                         <th>Keterangan</th>
                                         <th>Tarikh Tindakan</th>
                                     </tr>

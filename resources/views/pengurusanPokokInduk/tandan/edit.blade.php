@@ -79,15 +79,15 @@
                                     <label for="">Tarikh Balut</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="date" class="form-control" name="b_tarikh"
-                                        value="{{ $tandan->bagging->tarikh ?? '' }}">
+                                    <input readonly type="text" class="form-control"
+                                        value="{{ $nama['bagging']['tarikh'] ?? '' }}">
                                 </div>
 
                                 <div class="col-4 mb-3">
                                     <label for="">Nama Petugas</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control" name="b_petugas"
+                                    <input readonly type="text" class="form-control"
                                         value="{{ $nama['bagging']['petugas'] ?? '' }}">
                                 </div>
 
@@ -95,7 +95,7 @@
                                     <label for="">Nama Pengesah</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control" name="b_pengesah"
+                                    <input readonly type="text" class="form-control"
                                         value="{{ $nama['bagging']['pengesah'] ?? '' }}">
                                 </div>
 
@@ -108,15 +108,15 @@
                                     <label for="">Tarikh Pendebungaan Terkawal</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="date" class="form-control" name="p_tarikh"
-                                        value="{{ $tandan->cp->tarikh ?? '' }}">
+                                    <input readonly type="text" class="form-control"
+                                        value="{{ $nama['cp']['tarikh'] ?? '' }}">
                                 </div>
 
                                 <div class="col-4 mb-3">
                                     <label for="">Nama Petugas</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control" name="p_petugas"
+                                    <input readonly type="text" class="form-control"
                                         value="{{ $nama['cp']['petugas'] ?? '' }}">
                                 </div>
 
@@ -124,7 +124,7 @@
                                     <label for="">Nama Pengesah</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control" name="p_pengesah"
+                                    <input readonly type="text" class="form-control"
                                         value="{{ $nama['cp']['pengesah'] ?? '' }}">
                                 </div>
 
@@ -145,15 +145,15 @@
                                     <label for="">Tarikh Kawalan Kualiti</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="date" class="form-control" name="k_tarikh"
-                                        value="{{ $tandan->kualiti->tarikh ?? '' }}">
+                                    <input readonly type="text" class="form-control"
+                                        value="{{ $nama['qc']['tarikh'] ?? '' }}">
                                 </div>
 
                                 <div class="col-4 mb-3">
                                     <label for="">Nama Petugas</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control" name="k_petugas"
+                                    <input readonly type="text" class="form-control"
                                         value="{{ $nama['qc']['petugas'] ?? '' }}">
                                 </div>
 
@@ -161,7 +161,7 @@
                                     <label for="">Nama Pengesah</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control" name="k_pengesah"
+                                    <input readonly type="text" class="form-control"
                                         value="{{ $nama['qc']['pengesah'] ?? '' }}">
                                 </div>
 
@@ -174,15 +174,15 @@
                                     <label for="">Tarikh Penuaian</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="date" class="form-control" name="t_tarikh"
-                                        value="{{ $tandan->tuai->tarikh ?? '' }}">
+                                    <input readonly type="text" class="form-control"
+                                        value="{{ $nama['harvest']['tarikh'] ?? '' }}">
                                 </div>
 
                                 <div class="col-4 mb-3">
                                     <label for="">Nama Petugas</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control" name="t_petugas"
+                                    <input readonly type="text" class="form-control"
                                         value="{{ $nama['harvest']['petugas'] ?? '' }}">
                                 </div>
 
@@ -190,7 +190,7 @@
                                     <label for="">Nama Pengesah</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input readonly type="text" class="form-control" name="t_pengesah"
+                                    <input readonly type="text" class="form-control"
                                         value="{{ $nama['harvest']['pengesah'] ?? '' }}">
                                 </div>
 

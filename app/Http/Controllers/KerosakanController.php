@@ -16,13 +16,14 @@ class KerosakanController extends Controller
 
     public function store(Request $request)
     {
-        Kerosakan::create([
+        $kerosakan = Kerosakan::create([
             'faktor' => $request->faktor,
             'nama' => $request->nama,
         ]);
 
-        alert()->success('Berjaya Ditambah', 'Kerosakan Berjaya Ditambah');
-        activity()->event('Kerosakan')->log('Tambah Data Kerosakan');
+        activity()->event('CIPTA')->log('Kerosakan Faktor:' . $kerosakan->faktor . ' telah dicipta');
+        alert()->success('Berjaya', 'Data telah disimpan');
+
         return back();
     }
 
@@ -30,8 +31,9 @@ class KerosakanController extends Controller
     {
         $kerosakan->update($request->all());
 
-        alert()->success('Berjaya Dikemaskini', 'Kerosakan Berjaya Dikemaskini');
-        activity()->event('Kerosakan')->log('Kemaskini Data Kerosakan');
+        activity()->event('KEMASKINI')->log('Kerosakan Faktor:' . $kerosakan->faktor . ' telah dikemaskini');
+        alert()->success('Berjaya', 'Data telah dikemaskini');
+
         return back();
 
     }
@@ -39,8 +41,9 @@ class KerosakanController extends Controller
     {
         $kerosakan->delete($request->all());
 
-        alert()->success('Berjaya Dibuang', 'Kerosakan Berjaya Dibuang');
-        activity()->event('Kerosakan')->log('Buang Data Kerosakan');
+        activity()->event('HAPUS')->log('Kerosakan Faktor:' . $kerosakan->faktor . ' telah dihapus');
+        alert()->success('Berjaya', 'Data telah dihapus');
+
         return back();
 
     }

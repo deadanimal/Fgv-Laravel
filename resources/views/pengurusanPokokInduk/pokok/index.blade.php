@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-xl-8">
                             <input type="text"class="form-control border-danger" name="blok"
-                                placeholder="SILA TAIP DISINI" value="{{ $blok ?? '' }}">
+                                placeholder="SILA TAIP DI SINI" value="{{ $blok ?? '' }}">
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-xl-8">
                             <input type="text"class="form-control border-danger" name="progeny"
-                                placeholder="SILA TAIP DISINI" value="{{ $progeny ?? '' }}">
+                                placeholder="SILA TAIP DI SINI" value="{{ $progeny ?? '' }}">
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-xl-8">
                             <input type="text"class="form-control border-danger" name="baka"
-                                placeholder="SILA TAIP DISINI" value="{{ $baka ?? '' }}">
+                                placeholder="SILA TAIP DI SINI" value="{{ $baka ?? '' }}">
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-xl-8">
                             <input type="text"class="form-control border-danger" name="no_pokok"
-                                placeholder="SILA TAIP DISINI" value="{{ $no_pokok ?? '' }}">
+                                placeholder="SILA TAIP DI SINI" value="{{ $no_pokok ?? '' }}">
                         </div>
                     </div>
                 </div>
@@ -86,12 +86,12 @@
 
 
             <div class="text-end mb-3 mt-4">
-                {{-- <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalQRBulk">
-                    QR Download
+                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalQRBulk">
+                    Pilih QR
                     <span class="text-white" data-feather="download"></span>
-                </button> --}}
+                </button>
                 <a href="{{ route('pokok.bulkqr') }}" class="btn btn-danger">
-                    QR Download
+                    Semua QR
                     <span class="text-white" data-feather="download"></span>
                 </a>
                 <a href="{{ route('pi.p.create') }}" class="btn btn-danger">Daftar
@@ -178,14 +178,14 @@
 
 
 
-    {{-- <div class="modal fade" id="modalQRBulk" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modalQRBulk" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 45%">
             <div class="modal-content position-relative">
                 <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('pokok.bulkqr') }}" method="POST">
+                <form action="{{ route('pokok.selbulkqr') }}" method="POST">
                     @csrf
                     <div class="modal-body px-4">
                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
@@ -213,7 +213,7 @@
                 </form>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">

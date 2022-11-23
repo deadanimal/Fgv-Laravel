@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="col-xl-8">
                                     <input type="text" name="blok" class="form-control border-main"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DI SINI" required>
                                 </div>
                             </div>
                         </div>
@@ -33,8 +33,8 @@
                                     <label class="col-form-label text-main">No. Pokok</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <input type="number" name="no_pokok" class="form-control border-main"
-                                        placeholder="SILA TAIP DISINI">
+                                    <input type="text" name="no_pokok" class="form-control border-main"
+                                        placeholder="SILA TAIP DI SINI" required>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-xl-8">
                                     <input type="text" name="baka" class="form-control border-main"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DI SINI" required>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                     <label class="col-form-label text-main">Induk</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <select name="jantina" class="form-select border-main">
+                                    <select name="jantina" class="form-select border-main" required>
                                         <option selected disabled hidden> SILA PILIH </option>
                                         <option value="Motherpalm">Motherpalm</option>
                                         <option value="Fatherpalm">Fatherpalm</option>
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="col-xl-8">
                                     <input type="text" name="progeny" class="form-control border-main"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DI SINI" required>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="col-xl-8">
                                     <input type="text" name="trial" class="form-control border-main"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DI SINI" required>
                                 </div>
                             </div>
                         </div>

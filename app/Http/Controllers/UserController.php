@@ -56,7 +56,9 @@ class UserController extends Controller
 
         $user->attachRole($request->peranan);
 
-        alert()->success('Pendaftaran Berjaya');
+        activity()->event('CIPTA')->log('User No Kakitangan:' . $user->no_kakitangan . ' telah dicipta');
+        alert()->success('Berjaya', 'Pendaftaran Berjaya');
+
         return redirect()->route('pp.index');
 
     }
@@ -92,16 +94,18 @@ class UserController extends Controller
             'peranan' => $role->display_name,
         ]);
 
-        alert()->success('Berjaya', 'Data pengguna dikemaskini');
-
-        activity()->event('Kemaskini Data')->log('Maklumat user ' . $user->nama . ' telah dikemaskini');
+        activity()->event('KEMASKINI')->log('User No Kakitangan:' . $user->no_kakitangan . ' telah dikemaskini');
+        alert()->success('Berjaya', 'Data Telah dikemaskini');
 
         return redirect()->route('pp.index');
     }
 
     public function delete(User $user)
     {
+        activity()->event('HAPUS')->log('User No Kakitangan:' . $user->no_kakitangan . ' telah dihapus');
+        alert()->success('Berjaya', 'Data Telah dihapuskan');
         $user->delete();
+
         return redirect()->route('pp.index');
     }
 
@@ -118,13 +122,11 @@ class UserController extends Controller
     public function kemaskini_password(User $user)
     {
         $user->update([
-            'password' => Hash::make('INIT1234'),
+            'password' => Hash::make('INIT123'),
         ]);
 
-        alert()->success('Berjaya', 'Password berjaya di set semula kepada INIT1234');
-
-        activity()->event('Kemaskini Data')->log('Password ' . $user->nama . ' telah di set semula');
-
+        alert()->success('Berjaya', 'Password berjaya di set semula kepada INIT123');
+        activity()->event('KEMASKINI')->log('Password User No Kakitangan:' . $user->no_kakitangan . ' telah di set semula');
         return redirect()->route('pp.index');
     }
 }

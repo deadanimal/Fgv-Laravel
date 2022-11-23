@@ -115,7 +115,8 @@
                                     <label class="col-form-label text-main">Catatan</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <input type="text" name="catatan" class="form-control border-main">
+                                    <input type="text" name="catatan" class="form-control border-main"
+                                        value="{{ $pokok->catatan }}">
                                 </div>
                             </div>
                         </div>

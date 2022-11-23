@@ -66,7 +66,7 @@
                                 <div class="col-xl-8">
                                     <input type="text" name="catatan"
                                         class="form-control border-main  @error('catatan') is-invalid @enderror"
-                                        placeholder="SILA TAIP DISINI">
+                                        placeholder="SILA TAIP DI SINI">
                                 </div>
 
                             </div>

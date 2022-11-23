@@ -6,9 +6,9 @@ use App\Models\Bagging;
 use App\Models\ControlPollination;
 use App\Models\Harvest;
 use App\Models\Pollen;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -82,8 +82,9 @@ class HomeController extends Controller
         $user = User::all();
 
         foreach ($user as $u) {
-            $peranan = Role::where('display_name', $u->peranan)->first();
-            $u->attachRole($peranan);
+            $u->update([
+                'password' => Hash::make('INIT123'),
+            ]);
         }
 
     }

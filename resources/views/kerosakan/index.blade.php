@@ -67,10 +67,15 @@
                                                                             <label class="col-form-label text-main"
                                                                                 for="faktor-name">Faktor
                                                                                 Kerosakan:</label>
-                                                                            <input class="form-control border-danger"
-                                                                                name="faktor" id="faktor-name"
-                                                                                type="text"
-                                                                                value="{{ $kerosakan->faktor }}" />
+                                                                            <select name="faktor" id="faktor-name"
+                                                                                class="form-select border-danger">
+                                                                                <option @selected($kerosakan->faktor == 'Manusia')
+                                                                                    value="Manusia">Manusia</option>
+                                                                                <option @selected($kerosakan->faktor == 'Alam')
+                                                                                    value="Alam">Alam
+                                                                                </option>
+                                                                            </select>
+
                                                                         </div>
                                                                         <div class="mb-5">
                                                                             <label class="col-form-label text-main"
@@ -95,7 +100,7 @@
                                                     class="d-inline-flex">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                    <button type="submit" class="btn btn-del btn-sm btn-danger">
                                                         <span class="fas fa-trash-alt" style="width:15px;"></span>
                                                     </button>
                                                 </form>
@@ -128,8 +133,12 @@
                                     <div class="mb-3">
                                         <label class="col-form-label text-main" for="faktor-name">Faktor
                                             Kerosakan:</label>
-                                        <input class="form-control border-danger" name="faktor" id="faktor-name"
-                                            type="text" />
+                                        <select name="faktor" id="faktor-name" class="form-select border-danger">
+                                            <option selected disabled hidden>Sila Pilih</option>
+                                            <option value="Manusia">Manusia</option>
+                                            <option value="Alam">Alam</option>
+                                        </select>
+
                                     </div>
                                     <div class="mb-5">
                                         <label class="col-form-label text-main" for="nama-name">Nama Kerosakan:</label>
@@ -150,4 +159,5 @@
 
 
         </div>
-    @endsection
+    </div>
+@endsection
