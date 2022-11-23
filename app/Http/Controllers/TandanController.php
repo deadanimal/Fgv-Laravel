@@ -33,6 +33,7 @@ class TandanController extends Controller
         $tandan = Tandan::with(['bagging', 'cp', 'qc', 'harvest'])->where('id', $tandan)->first();
         $pokoks = Pokok::all();
 
+        $kerosakan = Kerosakan::find($tandan->kerosakans_id);
         $nama = [];
         if ($tandan->bagging != null) {
             $nama['bagging']['petugas'] = User::find($tandan->bagging->id_sv_balut)->nama ?? '';
@@ -44,10 +45,10 @@ class TandanController extends Controller
             $nama['cp']['pengesah'] = User::find($tandan->cp->pengesah_id)->nama ?? '';
             $nama['cp']['tarikh'] = $tandan->cp->created_at->format('d/m/Y');
 
-            if ($tandan->cp->kerosakans_id != null) {
-                $rosakCP = Kerosakan::find($tandan->cp->kerosakans_id);
-                $nama['cp']['tarikh_rosak'] = $tandan->cp->updated_at->format('d/m/Y');
-            }
+            // if ($tandan->cp->kerosakans_id != null) {
+            //     $rosakCP = Kerosakan::find($tandan->cp->kerosakans_id);
+            //     $nama['cp']['tarikh_rosak'] = $tandan->cp->updated_at->format('d/m/Y');
+            // }
         }
         if ($tandan->qc != null) {
             $nama['qc']['petugas'] = User::find($tandan->qc->id_sv_qc)->nama ?? '';
@@ -60,19 +61,20 @@ class TandanController extends Controller
             $nama['harvest']['pengesah'] = User::find($tandan->harvest->pengesah_id)->nama ?? '';
             $nama['harvest']['tarikh'] = $tandan->harvest->created_at->format('d/m/Y');
 
-            if ($tandan->harvest->kerosakans_id != null) {
-                $rosakHarvest = Kerosakan::find($tandan->harvest->kerosakans_id);
-                $nama['harvest']['tarikh_rosak'] = $tandan->harvest->updated_at->format('d/m/Y');
+            // if ($tandan->harvest->kerosakans_id != null) {
+            //     $rosakHarvest = Kerosakan::find($tandan->harvest->kerosakans_id);
+            //     $nama['harvest']['tarikh_rosak'] = $tandan->harvest->updated_at->format('d/m/Y');
 
-            }
+            // }
         }
 
         return view('pengurusanPokokInduk.tandan.edit', [
             'tandan' => $tandan,
             'pokoks' => $pokoks,
             'nama' => $nama,
-            'rosakCP' => $rosakCP ?? '',
-            'rosakHarvest' => $rosakHarvest ?? '',
+            'kerosakan' => $kerosakan,
+            // 'rosakCP' => $rosakCP ?? '',
+            // 'rosakHarvest' => $rosakHarvest ?? '',
         ]);
     }
 

@@ -69,6 +69,22 @@
                                     <input type="number" class="form-control" name="umur" value="{{ $tandan->umur }}">
                                 </div>
 
+                                @if ($tandan->kerosakans_id)
+                                    <div class="col-4 mb-3">
+                                        <label for="">Kerosakan</label>
+                                    </div>
+                                    <div class="col-8 mb-3">
+                                        <input type="text" class="form-control" value="{{ $kerosakan->nama }}" readonly>
+                                    </div>
+
+                                    <div class="col-4 mb-3">
+                                        <label for="">Status Tandan</label>
+                                    </div>
+                                    <div class="col-8 mb-3">
+                                        <input type="text" class="form-control" value="Gagal" readonly>
+                                    </div>
+                                @endif
+
                                 <div class="col-12 mt-5">
                                     <strong class="bg-danger p-2 text-white mb-0"
                                         style="border-top-right-radius: 5px;">Balut</strong>
@@ -128,7 +144,7 @@
                                         value="{{ $nama['cp']['pengesah'] ?? '' }}">
                                 </div>
 
-                                @if ($rosakCP)
+                                {{-- @if ($rosakCP)
                                     <div class="col-12 mt-5">
                                         <strong class="bg-danger p-2 text-white mb-0"
                                             style="border-top-right-radius: 5px;">Sub
@@ -158,7 +174,7 @@
                                         <input readonly type="text" class="form-control"
                                             value="{{ $rosakCP->nama }}">
                                     </div>
-                                @endif
+                                @endif --}}
 
                             </div>
                         </div>
@@ -226,7 +242,7 @@
                                         value="{{ $nama['harvest']['pengesah'] ?? '' }}">
                                 </div>
 
-                                @if ($rosakHarvest)
+                                {{-- @if ($rosakHarvest)
                                     <div class="col-12 mt-5">
                                         <strong class="bg-danger p-2 text-white mb-0"
                                             style="border-top-right-radius: 5px;">Sub CP Penuaian</strong>
@@ -255,7 +271,7 @@
                                         <input readonly type="text" class="form-control"
                                             value="{{ $rosakHarvest->nama }}">
                                     </div>
-                                @endif
+                                @endif --}}
 
                             </div>
                         </div>
