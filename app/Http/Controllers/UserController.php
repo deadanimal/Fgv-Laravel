@@ -51,7 +51,7 @@ class UserController extends Controller
         $role = Role::where('name', $request->peranan)->first();
 
         $validated['peranan'] = $role->display_name;
-        $validated['password'] = Hash::make('123');
+        $validated['password'] = Hash::make('INIT123');
         $user = User::create($validated);
 
         $user->attachRole($request->peranan);

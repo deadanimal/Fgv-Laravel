@@ -25,19 +25,19 @@
                             <div class="card-img-overlay text-white text-center">
                                 <h4 class="text-white">BALUT</h4>
 
-                                <div class="d-flex align-items-center mt-2">
+                                <div class="d-flex align-items-center mt-3">
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">{{ $motherpalm['balut']['hariini'] }}</span>
+                                        <span class="text-white h4 fw-bolder">{{ $motherpalm['balut']['hariini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HARI INI</span>
                                     </div>
-                                    <div class="d-flex" style="height: 5rem;">
+                                    <div class="d-flex" style="height: 4rem;">
                                         <div class="vr" style="width: 3px;color:red; opacity:inherit;"></div>
                                     </div>
 
                                     <div class="col-6">
                                         <span
-                                            class="text-white h3 fw-bolder">{{ $motherpalm['balut']['hinggakini'] }}</span>
+                                            class="text-white h4 fw-bolder">{{ $motherpalm['balut']['hinggakini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>
@@ -49,21 +49,21 @@
                         <div class="card">
                             <img class="card-img" src="/main-image/card-bg.png">
                             <div class="card-img-overlay text-white text-center">
-                                <h3 class="text-white">PENDEBUNGAAN TERKAWAL</h3>
+                                <h5 class="text-white">PENDEBUNGAAN TERKAWAL</h5>
 
-                                <div class="d-flex align-items-center mt-2">
+                                <div class="d-flex align-items-center mt-3">
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">{{ $motherpalm['debung']['hariini'] }}</span>
+                                        <span class="text-white h4 fw-bolder">{{ $motherpalm['debung']['hariini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HARI INI</span>
                                     </div>
-                                    <div class="d-flex" style="height: 5rem;">
+                                    <div class="d-flex" style="height: 4rem;">
                                         <div class="vr" style="width: 3px;color:red; opacity:inherit;"></div>
                                     </div>
 
                                     <div class="col-6">
                                         <span
-                                            class="text-white h3 fw-bolder">{{ $motherpalm['debung']['hinggakini'] }}</span>
+                                            class="text-white h4 fw-bolder">{{ $motherpalm['debung']['hinggakini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>
@@ -75,21 +75,21 @@
                         <div class="card">
                             <img class="card-img" src="/main-image/card-bg.png">
                             <div class="card-img-overlay text-white text-center">
-                                <h3 class="text-white">KAWALAN KUALITI</h3>
+                                <h4 class="text-white">KAWALAN KUALITI</h4>
 
-                                <div class="d-flex align-items-center mt-2">
+                                <div class="d-flex align-items-center mt-3">
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">{{ $motherpalm['kawal']['hariini'] }}</span>
+                                        <span class="text-white h4 fw-bolder">{{ $motherpalm['kawal']['hariini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HARI INI</span>
                                     </div>
-                                    <div id="linemerah" class="d-flex" style="height: 5rem;">
+                                    <div id="linemerah" class="d-flex" style="height: 4rem;">
                                         <div class="vr" style="width: 3px;color:red; opacity:inherit;"></div>
                                     </div>
 
                                     <div class="col-6">
                                         <span
-                                            class="text-white h3 fw-bolder">{{ $motherpalm['kawal']['hinggakini'] }}</span>
+                                            class="text-white h4 fw-bolder">{{ $motherpalm['kawal']['hinggakini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>
@@ -101,20 +101,20 @@
                         <div class="card">
                             <img class="card-img" src="/main-image/card-bg.png">
                             <div class="card-img-overlay text-white text-center">
-                                <h3 class="text-white">PENUAIAN</h3>
+                                <h4 class="text-white">PENUAIAN</h4>
 
-                                <div class="d-flex align-items-center mt-2">
+                                <div class="d-flex align-items-center mt-3">
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">{{ $motherpalm['tuai']['hariini'] }}</span>
+                                        <span class="text-white h4 fw-bolder">{{ $motherpalm['tuai']['hariini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HARI INI</span>
                                     </div>
-                                    <div class="d-flex" style="height: 5rem;">
+                                    <div class="d-flex" style="height: 4rem;">
                                         <div class="vr" style="width: 3px;color:red; opacity:inherit;"></div>
                                     </div>
 
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">{{ $motherpalm['tuai']['hinggakini'] }}</span>
+                                        <span class="text-white h4 fw-bolder">{{ $motherpalm['tuai']['hinggakini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>
@@ -132,21 +132,21 @@
                         <div class="card">
                             <img class="card-img" src="/main-image/card-bg.png">
                             <div class="card-img-overlay text-white text-center">
-                                <h3 class="text-white">BALUT</h3>
+                                <h4 class="text-white">BALUT</h4>
 
-                                <div class="d-flex align-items-center mt-2">
+                                <div class="d-flex align-items-center mt-3">
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">{{ $fatherpalm['balut']['hariini'] }}</span>
+                                        <span class="text-white h4 fw-bolder">{{ $fatherpalm['balut']['hariini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HARI INI</span>
                                     </div>
-                                    <div class="d-flex" style="height: 5rem;">
+                                    <div class="d-flex" style="height: 4rem;">
                                         <div class="vr" style="width: 3px;color:red; opacity:inherit;"></div>
                                     </div>
 
                                     <div class="col-6">
                                         <span
-                                            class="text-white h3 fw-bolder">{{ $fatherpalm['balut']['hinggakini'] }}</span>
+                                            class="text-white h4 fw-bolder">{{ $fatherpalm['balut']['hinggakini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>
@@ -158,21 +158,21 @@
                         <div class="card">
                             <img class="card-img" src="/main-image/card-bg.png">
                             <div class="card-img-overlay text-white text-center">
-                                <h3 class="text-white">PENUAIAN</h3>
+                                <h4 class="text-white">PENUAIAN</h4>
 
-                                <div class="d-flex align-items-center mt-2">
+                                <div class="d-flex align-items-center mt-3">
                                     <div class="col-6">
-                                        <span class="text-white h3 fw-bolder">{{ $fatherpalm['tuai']['hariini'] }}</span>
+                                        <span class="text-white h4 fw-bolder">{{ $fatherpalm['tuai']['hariini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HARI INI</span>
                                     </div>
-                                    <div class="d-flex" style="height: 5rem;">
+                                    <div class="d-flex" style="height: 4rem;">
                                         <div class="vr" style="width: 3px;color:red; opacity:inherit;"></div>
                                     </div>
 
                                     <div class="col-6">
                                         <span
-                                            class="text-white h3 fw-bolder">{{ $fatherpalm['tuai']['hinggakini'] }}</span>
+                                            class="text-white h4 fw-bolder">{{ $fatherpalm['tuai']['hinggakini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>

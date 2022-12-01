@@ -35,16 +35,6 @@
             switch (val) {
                 case '1':
                     document.getElementById('downloadpdf').click();
-                    // $.ajax({
-                    //     type: "get",
-                    //     url: "/laporan3",
-                    //     data: {
-                    //         'jenis': 'pdf',
-                    //     },
-                    //     success: function(response) {
-
-                    //     }
-                    // });
                     break;
                 case '2':
 

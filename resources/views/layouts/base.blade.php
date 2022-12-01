@@ -416,6 +416,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+
         $("#burger").click(function() {
             var navbar = $("#navbarVerticalCollapse").width();
             if (navbar == 304) {
@@ -496,6 +498,13 @@
                 }
             });
         });
+
+        // $(document).ready(function() {
+        //     flatpickr(".datetimepicker", {
+        //         dateFormat: "d/m/Y",
+        //     });
+
+        // });
     </script>
 
 </body>

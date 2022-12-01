@@ -9,7 +9,7 @@
             <div class="row justify-content-center mt-4">
                 <div class="col-10 px-0">
                     <h3 class="fw-bold text-uppercase text-main">Maklumat Pokok</h3>
-                    <h5 class="text-main">Sila isikan maklumat pekerja berikut dengan betul.</h5>
+                    <h5 class="text-main">Sila isikan maklumat pokok berikut dengan betul.</h5>
 
 
                     <div class="row align-items-center mt-5">
@@ -87,25 +87,11 @@
                                 </div>
                                 <div class="col-xl-8">
                                     <input type="text" name="trial" class="form-control border-main"
-                                        placeholder="SILA TAIP DI SINI" required>
+                                        placeholder="SILA TAIP DI SINI">
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="col-xl-6 mb-3">
-                            <div class="row align-items-center">
-                                <div class="col-xl-3">
-                                    <label class="col-form-label text-main">Status</label>
-                                </div>
-                                <div class="col-xl-8">
-                                    <select name="status_pokok" class="form-select border-main">
-                                        <option selected value="aktif">Aktif</option>
-                                        <option value="tidak_aktif">Tidak Aktif</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <input type="hidden" name="status" value="aktif">
+                        <input type="hidden" name="status_pokok" value="Aktif">
                     </div>
                 </div>
             </div>

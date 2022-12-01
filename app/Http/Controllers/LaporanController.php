@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bagging;
+use App\Models\ControlPollination;
+use App\Models\Harvest;
 use App\Models\Pokok;
+use App\Models\QualityControl;
 use App\Models\Tugasan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use DateInterval;
@@ -21,15 +25,62 @@ class LaporanController extends Controller
         switch ($request->laporan) {
 
             case 1:
-                $this->first($request);
-                break;
 
+                // $edit_mula = explode('/', $request->tarikh_mula);
+                // $edit_akhir = explode('/', $request->tarikh_akhir);
+                // $new_mula = $edit_mula[2] . '-' . $edit_mula[1] . '-' . $edit_mula[0];
+                // $new_akhir = $edit_akhir[2] . '-' . $edit_akhir[1] . '-' . $edit_akhir[0];
+
+                // $mula = date('Y-m-d', strtotime($new_mula));
+                // $akhir = date('Y-m-d', strtotime($new_akhir));
+                $mula = $request->tarikh_mula;
+                $akhir = $request->tarikh_akhir;
+
+                switch ($request->kategori) {
+                    case 'balut':
+                        $tugasan = Bagging::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
+                        break;
+                    case 'debung':
+                        $tugasan = ControlPollination::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
+                        break;
+                    case 'tuai':
+                        $tugasan = Harvest::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
+                        break;
+                    case 'kawal':
+                        $tugasan = QualityControl::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
+                        break;
+                    default:
+                        return 'kategori salah';
+                        break;
+                }
+
+                if ($tugasan == null) {
+                    alert()->error('Gagal', 'Tiada Tugasan');
+                    return back();
+                }
+
+                $period = new DatePeriod(
+                    new DateTime($mula),
+                    new DateInterval('P1D'),
+                    new DateTime(date('Y-m-d', strtotime($akhir . ' +1 day')))
+                );
+                foreach ($period as $value) {
+                    $date[] = $value->format('d/m/Y');
+                }
+
+                return view('laporan.motherpalm.show1', [
+                    'laporans' => $tugasan,
+                    'dates' => $date,
+                ]);
+
+                break;
             case 3:
                 $result = $this->third($request);
                 return view('laporan.motherpalm.show3', compact('result'));
 
             default:
-                # code...
+                alert()->error('Gagal', 'Belum Mula');
+                return back();
                 break;
         }
 
@@ -79,6 +130,7 @@ class LaporanController extends Controller
         $list = Pokok::select('blok', 'baka')->distinct()->get();
         foreach ($list as $key => $l) {
             $pokoks = Pokok::with('tandan')->where('blok', $l->blok)->where('baka', $l->baka)->where('jantina', 'Motherpalm')->get();
+
             $temp = 0;
             $result[$key]['jan'] = 0;
             $result[$key]['feb'] = 0;
@@ -136,12 +188,17 @@ class LaporanController extends Controller
                 }
             }
 
-            $result[$key]['j_motherpalm'] = count($pokoks);
+            if (count($pokoks) == 0) {
+                $result[$key]['j_motherpalm'] = 0;
+                $result[$key]['average'] = 0;
+            } else {
+                $result[$key]['j_motherpalm'] = count($pokoks);
+                $result[$key]['average'] = $temp / count($pokoks);
+            }
 
             $result[$key]['blok'] = $l->blok;
             $result[$key]['baka'] = $l->baka;
             $result[$key]['j_bunga'] = $temp;
-            $result[$key]['average'] = $temp / count($pokoks);
 
         }
         if ($request->pdf == 1) {

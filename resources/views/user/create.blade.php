@@ -43,7 +43,7 @@
                                     <label class="col-form-label text-main">No. Kakitangan</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <input type="text" name="no_kakitangan"
+                                    <input type="text" name="no_kakitangan" id="inputNoKakitangan"
                                         class="form-control border-main  @error('no_kakitangan') is-invalid @enderror"
                                         placeholder="SILA TAIP DI SINI" value="{{ old('no_kakitangan') }}">
                                 </div>
@@ -220,6 +220,15 @@
 
         $('#custom-btn-white').click(function() {
             location.reload();
+        });
+
+        $("#inputNoKakitangan").keyup(function(e) {
+            var val = $(this).val();
+            var trim = $.trim(val);
+
+            $(this).val(trim);
+
+
         });
     </script>
 @endsection

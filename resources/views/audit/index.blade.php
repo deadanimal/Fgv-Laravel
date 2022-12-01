@@ -75,7 +75,7 @@
                                         <th>No. Kakitangan</th>
                                         <th>Aktiviti</th>
                                         <th>Keterangan</th>
-                                        <th>Tarikh Tindakan</th>
+                                        <th>Tarikh Aktiviti</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
