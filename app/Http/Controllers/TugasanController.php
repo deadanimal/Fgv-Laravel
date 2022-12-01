@@ -9,6 +9,7 @@ use App\Models\QualityControl;
 use App\Models\Tandan;
 use App\Models\Tugasan;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -183,33 +184,41 @@ class TugasanController extends Controller
             return back();
         }
 
-        $tugasans = Tugasan::with('petugas')->where('petugas_id', $petugas->id)->orderByDesc('updated_at')->get();
+        // $mula = date('Y-m-d', strtotime($request->tarikh_mula));
+        // $akhir = date('Y-m-d', strtotime($request->tarikh_tamat));
 
-        $mula = date($request->tarikh_mula);
-        $akhir = date($request->tarikh_tamat);
+        $mula = Carbon::createFromFormat('Y-m-d', $request->tarikh_mula);
+        $akhir = Carbon::createFromFormat('Y-m-d', $request->tarikh_tamat);
 
-        $result = null;
-        foreach ($tugasans as $tugasan) {
-            $str = explode('/', $tugasan->tarikh);
-            $new_tarikh = $str[2] . "-" . $str[1] . "-" . $str[0];
-            $f_tarikh = date('Y-m-d', strtotime($new_tarikh));
+        $baggings = Bagging::whereBetween('created_at', [$mula, $akhir])->where('id_sv_balut', $petugas->id)->get();
+        $cp = ControlPollination::whereBetween('created_at', [$mula, $akhir])->where('id_sv_cp', $petugas->id)->get();
+        $qc = QualityControl::whereBetween('created_at', [$mula, $akhir])->where('id_sv_qc', $petugas->id)->get();
+        $harvest = Harvest::whereBetween('created_at', [$mula, $akhir])->where('id_sv_harvest', $petugas->id)->get();
 
-            if (($f_tarikh >= $mula) && ($f_tarikh <= $akhir)) {
-                $result[] = $tugasan;
-            }
-        }
+        // dd($baggings, $cp, $qc, $harvest, $mula, $akhir, $petugas->id);
+        $merged = $baggings->merge($qc)->merge($cp)->merge($harvest)->sortByDesc('created_at')->all();
 
-        if ($result == null) {
+        if ($merged == null) {
             alert()->warning('Gagal', 'Tiada laporan dalam jangka tersebut');
             return back();
         }
 
         return view('tugasan.index', [
-            'tugasans' => $result,
+            'tugasans' => $merged,
             'no_kakitangan' => $request->no_kakitangan,
             'tarikh_mula' => $request->tarikh_mula,
             'tarikh_tamat' => $request->tarikh_tamat,
         ]);
+
+        // foreach ($tugasans as $tugasan) {
+        //     $str = explode('/', $tugasan->tarikh);
+        //     $new_tarikh = $str[2] . "-" . $str[1] . "-" . $str[0];
+        //     $f_tarikh = date('Y-m-d', strtotime($new_tarikh));
+
+        //     if (($f_tarikh >= $mula) && ($f_tarikh <= $akhir)) {
+        //         $result[] = $tugasan;
+        //     }
+        // }
 
     }
 

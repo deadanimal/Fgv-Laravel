@@ -9,6 +9,7 @@ use App\Models\Pokok;
 use App\Models\QualityControl;
 use App\Models\Tugasan;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use DateInterval;
 use DatePeriod;
 use DateTime;
@@ -33,8 +34,10 @@ class LaporanController extends Controller
 
                 // $mula = date('Y-m-d', strtotime($new_mula));
                 // $akhir = date('Y-m-d', strtotime($new_akhir));
-                $mula = $request->tarikh_mula;
-                $akhir = $request->tarikh_akhir;
+                // $mula = $request->tarikh_mula;
+                // $akhir = $request->tarikh_akhir;
+                $mula = Carbon::createFromFormat('Y-m-d', $request->tarikh_mula);
+                $akhir = Carbon::createFromFormat('Y-m-d', $request->tarikh_akhir);
 
                 switch ($request->kategori) {
                     case 'balut':
