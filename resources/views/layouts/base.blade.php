@@ -316,7 +316,7 @@
                                             <span class="nav-link-icon">
                                                 <img src="/icons/setting.ico" width="100%">
                                             </span>
-                                            <span class="nav-link-text ps-3 text-main">Konfigurasi Sistem</span>
+                                            <span class="nav-link-text ps-3 text-main">Konfigurasi Data Rujukan</span>
                                         </div>
                                     </a>
                                     <ul class="nav collapse {{ Request::is('konfigurasi/*') ? 'show' : 'false' }} ps-4"

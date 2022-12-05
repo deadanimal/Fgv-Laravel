@@ -29,11 +29,14 @@ class MatlamatController extends Controller
      */
     public function create()
     {
+
         $years = range(strftime("%Y", time()), 2050);
+
+        $myTahun = MatlamatTahunan::all()->groupBy('tahun');
 
         return view('matlamat.create', [
             'tahuns' => $years,
-            'tahun' => MatlamatTahunan::all(),
+            'myTahun' => $myTahun,
         ]);
     }
 

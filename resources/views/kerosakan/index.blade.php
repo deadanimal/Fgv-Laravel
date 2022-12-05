@@ -33,19 +33,19 @@
                         <div class="row align-items-center">
                             <div class="col-1"></div>
                             <div class="col-xl-3">
-                                <label class="col-form-label text-main">Tahun</label>
+                                <label class="col-form-label text-main">Nama Kerosakan</label>
                             </div>
                             <div class="col-xl-8">
-                                <select name="tahun" class="form-select border-danger" required>
-                                    @isset($seltahun)
-                                        @foreach ($tahuns as $t)
-                                            <option @selected($seltahun == $t) value="{{ $t }}">{{ $t }}
-                                            </option>
+                                <select name="nama" class="form-select border-danger" required>
+                                    @isset($selnama)
+                                        @foreach ($c_kerosakan as $k)
+                                            <option {{ $k->nama == $selnama ? 'selected' : '' }} value="{{ $k->nama }}">
+                                                {{ $k->nama }}</option>
                                         @endforeach
                                     @else
-                                        <option selected disabled hidden>PILIH TAHUN</option>
-                                        @foreach ($tahuns as $t)
-                                            <option value="{{ $t }}">{{ $t }}</option>
+                                        <option selected disabled hidden>PILIH NAMA KEROSAKAN</option>
+                                        @foreach ($c_kerosakan as $k)
+                                            <option value="{{ $k->nama }}">{{ $k->nama }}</option>
                                         @endforeach
                                     @endisset
 
@@ -131,8 +131,8 @@
                                                                 @csrf
                                                                 <div class="modal-body p-0">
                                                                     <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                                        <h4 class="mb-1" id="modalExampleDemoLabel">Daftar
-                                                                            Kerosakan</h4>
+                                                                        <h4 class="mb-1" id="modalExampleDemoLabel">
+                                                                            Kemaskini Kerosakan</h4>
                                                                     </div>
                                                                     <div class="p-4 pb-0">
                                                                         <div class="mb-3">

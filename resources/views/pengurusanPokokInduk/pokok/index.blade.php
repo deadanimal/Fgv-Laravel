@@ -192,7 +192,7 @@
                             <h4 class="mb-1">QR Download</h4>
                         </div>
                         <div class="p-4 ">
-                            <label for="">No Pokok untuk di muat naik</label>
+                            <label for="">No Pokok untuk di muat turun</label>
                             <select class="form-select js-choice" id="organizerMultiple" multiple="multiple"
                                 size="1" name="pokoks[]"
                                 data-options='{"removeItemButton":true,"placeholder":true}'>
@@ -208,7 +208,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Kembali</button>
-                        <button class="btn btn-danger" type="submit">Muat Naik</button>
+                        <button class="btn btn-danger" type="submit">Muat Turun</button>
                     </div>
                 </form>
             </div>

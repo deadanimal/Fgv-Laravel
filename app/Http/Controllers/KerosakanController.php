@@ -9,11 +9,12 @@ class KerosakanController extends Controller
 {
     public function index()
     {
-        $years = range(2021, strftime("%Y", time()));
+        // $years = range(2021, strftime("%Y", time()));
 
         return view('kerosakan.index', [
+            'c_kerosakan' => Kerosakan::all(),
             'kerosakans' => Kerosakan::all(),
-            'tahuns' => $years,
+            // 'tahuns' => $years,
         ]);
     }
 
@@ -58,16 +59,16 @@ class KerosakanController extends Controller
         if ($request->faktor) {
             $kerosakan->where('faktor', $request->faktor);
         }
-        if ($request->tahun) {
-            $kerosakan->whereYear('created_at', $request->tahun);
+
+        if ($request->nama) {
+            $kerosakan->where('nama', $request->nama);
         }
-        $years = range(2021, strftime("%Y", time()));
 
         return view('kerosakan.index', [
+            'c_kerosakan' => Kerosakan::all(),
             'kerosakans' => $kerosakan->get(),
-            'tahuns' => $years,
-            'seltahun' => $request->tahun,
             'selfaktor' => $request->faktor,
+            'selnama' => $request->nama,
         ]);
 
     }

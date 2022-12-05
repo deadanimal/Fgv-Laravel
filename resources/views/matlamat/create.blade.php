@@ -119,10 +119,9 @@
                                 <div class="col-xl-8">
                                     <select name="matlamat_tahunan_id" class="form-select border-danger" required>
                                         <option selected disabled hidden>PILIH TAHUN</option>
-                                        @foreach ($tahuns as $tahun)
-                                            <option value="{{ $tahun }}">{{ $tahun }}</option>
+                                        @foreach ($myTahun as $key => $tah)
+                                            <option value="{{ $tah[0]->id }}">{{ $key }}</option>
                                         @endforeach
-
                                     </select>
 
                                 </div>

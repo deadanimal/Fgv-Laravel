@@ -25,7 +25,7 @@
                 </div>
 
                 {{-- <div class="text-end mt-5">
-                    <button type="submit" class="btn btn-danger">Jana Documen
+                    <button type="submit" class="btn btn-danger">Jana Dokumen
                         <span data-feather="file-plus"></span>
                     </button>
                 </div> --}}
