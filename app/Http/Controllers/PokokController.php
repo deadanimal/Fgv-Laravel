@@ -111,11 +111,15 @@ class PokokController extends Controller
     {
         set_time_limit(300);
 
-        $pokoks = Pokok::all();
+        $pokoks = Pokok::all(['id', 'progeny', 'no_pokok']);
         foreach ($pokoks as $pokok) {
             $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
             $name = "bulkpokok/pokok" . $pokok->id . ".svg";
-            QrCode::size(264.56692913)->generate($url, public_path($name));
+
+            $file = public_path($name);
+            if (!file_exists($file)) {
+                QrCode::size(264)->generate($url, public_path($name));
+            }
             $temp = $pokok->progeny . $pokok->no_pokok;
             $p['no_pokok'][$pokok->id] = str_replace(' ', '', $temp);
             $p['name'][$pokok->id] = $name;
