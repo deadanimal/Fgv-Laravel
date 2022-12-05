@@ -90,10 +90,14 @@
                     Pilih QR
                     <span class="text-white" data-feather="download"></span>
                 </button>
-                <a href="{{ route('pokok.bulkqr') }}" class="btn btn-danger">
+                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalQRAll">
                     Semua QR
                     <span class="text-white" data-feather="download"></span>
-                </a>
+                </button>
+                {{-- <a href="{{ route('pokok.bulkqr') }}" class="btn btn-danger">
+                    Semua QR
+                    <span class="text-white" data-feather="download"></span>
+                </a> --}}
                 <a href="{{ route('pi.p.create') }}" class="btn btn-danger">Daftar
                     <span class="text-white" data-feather="plus-circle"></span>
                 </a>
@@ -175,7 +179,31 @@
 
     </div>
 
+    <div class="modal fade" id="modalQRAll" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+            <div class="modal-content position-relative">
+                <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                        <h4 class="mb-1">QR CODE</h4>
+                    </div>
+                    <div class="p-4 text-center ms-2">
+                        <a href="{{ route('pokok.bulkqr') }}" class="btn btn-danger">Jana Qr Terkini <span
+                                class="fas fa-cog"></span></a>
+                        <a href="{{ route('pokok.dbulkqr') }}" class="btn btn-danger">Download <span
+                                class="fas fa-download"></span></a>
+                    </div>
 
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="modal fade" id="modalQRBulk" tabindex="-1" role="dialog" aria-hidden="true">

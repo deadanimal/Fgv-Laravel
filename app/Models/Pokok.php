@@ -19,4 +19,5 @@ class Pokok extends Model
     {
         return $this->hasMany(Tandan::class);
     }
+
 }

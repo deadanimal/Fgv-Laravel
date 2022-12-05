@@ -65,6 +65,7 @@ Route::middleware('auth.basic')->group(function () {
             Route::get('downloadqrpokok/{pokok}', [PokokController::class, 'downloadqr'])->name('downloadqrpokok');
             Route::post('/pokok/search', [PokokController::class, 'search'])->name('search.pokok');
             Route::get('/bulkqr', [PokokController::class, 'bulkqr'])->name('pokok.bulkqr');
+            Route::get('/dbulkqr', [PokokController::class, 'dbulkqr'])->name('pokok.dbulkqr');
             Route::post('/selbulkqr', [PokokController::class, 'selbulkqr'])->name('pokok.selbulkqr');
         });
 

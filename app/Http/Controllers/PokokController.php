@@ -6,6 +6,7 @@ use App\Models\Pokok;
 use App\Models\Tandan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -110,6 +111,14 @@ class PokokController extends Controller
     public function bulkqr()
     {
         set_time_limit(300);
+        // $pokoks = Pokok::all();
+        // foreach ($pokoks as $key => $value) {
+        //     $new = str_replace(' ', '', $value->progeny);
+        //     $value->update([
+        //         'progeny' => $new,
+        //     ]);
+        // }
+        // dd('end');
 
         // $pokoks = Pokok::all(['id', 'progeny', 'no_pokok']);
         // foreach ($pokoks as $pokok) {
@@ -120,23 +129,40 @@ class PokokController extends Controller
         //     $p['no_pokok'][$pokok->id] = str_replace(' ', '', $temp);
         //     $p['name'][$pokok->id] = $name;
         // }
-        $pokoks = Pokok::all(['id', 'progeny', 'no_pokok']);
+
+        // $pokoks = Pokok::all();
+
+        $pokoks = DB::table('pokoks')->select(DB::raw("id,CONCAT(progeny,no_pokok) AS Name"))->get();
+
         foreach ($pokoks as $pokok) {
-            $pokok['url'] = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
-            $name = "bulkpokok/pokok" . $pokok->id . ".svg";
-            $qrcode = base64_encode(QrCode::format('svg')->size(264.56692913)->errorCorrection('H')->generate('string'));
-            $temp = $pokok->progeny . $pokok->no_pokok;
-            $p['no_pokok'][$pokok->id] = str_replace(' ', '', $temp);
-            $p['name'][$pokok->id] = $name;
-            $p['qr'][$pokok->id] = $qrcode;
+            $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
+            // $qrcode = base64_encode(QrCode::size(264)->generate($url));
+            QrCode::size(264)->generate($url, public_path('bulkpokok/pokok' . $pokok->id . ".svg"));
+
+            // $pokok->qr = $qrcode;
         }
+        alert()->success('QR CODE', 'Semua pokok QR berjaya dijana');
+        return back();
+        // $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
+        //     'type' => 2,
+        //     'pokoks' => $pokoks,
+        // ]);
+        // return $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
+
+        // return $pdf->download('qrcode.pdf');
+
+    }
+
+    public function dbulkqr()
+    {
+        set_time_limit(300);
+
+        $pokoks = DB::table('pokoks')->select(DB::raw("id,CONCAT(progeny,no_pokok) AS name"))->get();
 
         $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
             'type' => 2,
             'pokoks' => $pokoks,
-            'no_pokoks' => $p,
         ]);
-        // return $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
 
         return $pdf->download('qrcode.pdf');
 

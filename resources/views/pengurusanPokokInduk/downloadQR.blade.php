@@ -21,14 +21,18 @@
 
         @case(2)
             @foreach ($pokoks as $p)
-                <div style="width: 7cm;" class="d-inline-flex" style="margin-left: 9%">
-                    <img src="data:image/png;base64, {!! $no_pokoks['qr'][$p->id] !!}">
-                    <h5 class="mt-2 mb-4 text-center"> {{ $no_pokoks['no_pokok'][$p->id] }}</h5>
-                </div>
+                {{-- <div style="width: 7cm;" class="d-inline-flex" style="margin-left: 9%">
+                    <img src="data:image/png;base64, {!! $p->qr !!}">
+                    <h5 class="mt-2 mb-4 text-center">aa</h5>
+                </div> --}}
                 {{-- <div style="width: 7cm;" class="d-inline-flex ms-5">
                     <img src="{{ url($no_pokoks['name'][$p->id]) }}" style="width: 7cm; height:7cm;" alt="">
                     <h5 class="mt-2 mb-4 text-center"> {{ $no_pokoks['no_pokok'][$p->id] }}</h5>
                 </div> --}}
+                <div style="width: 7cm;" class="d-inline-flex ms-5">
+                    <img src="{{ 'bulkpokok/pokok' . $p->id . '.svg' }}" style="width: 7cm; height:7cm;" alt="">
+                    <h5 class="mt-2 mb-4 text-center"> {{ $p->name }}</h5>
+                </div>
             @endforeach
         @break
 
