@@ -111,18 +111,24 @@ class PokokController extends Controller
     {
         set_time_limit(300);
 
+        // $pokoks = Pokok::all(['id', 'progeny', 'no_pokok']);
+        // foreach ($pokoks as $pokok) {
+        //     $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
+        //     $name = "bulkpokok/pokok" . $pokok->id . ".svg";
+        //     // QrCode::size(264.56692913)->generate($url, public_path($name));
+        //     $temp = $pokok->progeny . $pokok->no_pokok;
+        //     $p['no_pokok'][$pokok->id] = str_replace(' ', '', $temp);
+        //     $p['name'][$pokok->id] = $name;
+        // }
         $pokoks = Pokok::all(['id', 'progeny', 'no_pokok']);
         foreach ($pokoks as $pokok) {
-            $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
+            $pokok['url'] = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
             $name = "bulkpokok/pokok" . $pokok->id . ".svg";
-
-            $file = public_path($name);
-            if (!file_exists($file)) {
-                QrCode::size(264)->generate($url, public_path($name));
-            }
+            $qrcode = base64_encode(QrCode::format('svg')->size(264.56692913)->errorCorrection('H')->generate('string'));
             $temp = $pokok->progeny . $pokok->no_pokok;
             $p['no_pokok'][$pokok->id] = str_replace(' ', '', $temp);
             $p['name'][$pokok->id] = $name;
+            $p['qr'][$pokok->id] = $qrcode;
         }
 
         $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
@@ -138,15 +144,17 @@ class PokokController extends Controller
 
     public function selbulkqr(Request $request)
     {
-        foreach ($request->pokoks as $pokok) {
-            $thispokok = Pokok::find($pokok);
-            $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $thispokok->id);
-            $name = "bulkpokok/pokok" . $thispokok->id . ".svg";
-            QrCode::size(264.56692913)->generate($url, public_path($name));
-            $temp = $thispokok->progeny . $thispokok->no_pokok;
-            $p['no_pokok'][$thispokok->id] = str_replace(' ', '', $temp);
-            $p['name'][$thispokok->id] = $name;
-            $pokoks[] = $thispokok;
+        foreach ($request->pokoks as $pokok_id) {
+            $pokok = Pokok::find($pokok_id);
+            $pokok['url'] = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
+            $name = "bulkpokok/pokok" . $pokok->id . ".svg";
+            $qrcode = base64_encode(QrCode::format('svg')->size(264.56692913)->errorCorrection('H')->generate('string'));
+            $temp = $pokok->progeny . $pokok->no_pokok;
+            $p['no_pokok'][$pokok->id] = str_replace(' ', '', $temp);
+            $p['name'][$pokok->id] = $name;
+            $p['qr'][$pokok->id] = $qrcode;
+
+            $pokoks[] = $pokok;
         }
 
         $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
