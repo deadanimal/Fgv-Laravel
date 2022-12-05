@@ -137,7 +137,11 @@ class PokokController extends Controller
         foreach ($pokoks as $pokok) {
             $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
             // $qrcode = base64_encode(QrCode::size(264)->generate($url));
-            QrCode::size(264)->generate($url, public_path('bulkpokok/pokok' . $pokok->id . ".svg"));
+            $file = public_path('bulkpokok/pokok' . $pokok->id . '.svg');
+
+            if (!file_exists($file)) {
+                QrCode::size(264)->generate($url, public_path('bulkpokok/pokok' . $pokok->id . ".svg"));
+            }
 
             // $pokok->qr = $qrcode;
         }
