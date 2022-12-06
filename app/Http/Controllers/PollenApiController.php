@@ -40,7 +40,7 @@ class PollenApiController extends Controller
                 'pollen', 'public'
             );
             $info->update([
-                'url_gambar' => $url,
+                'url_gambar2' => $url,
             ]);
         }
 
@@ -84,7 +84,7 @@ class PollenApiController extends Controller
                 'pollen', 'public'
             );
             $pollen->update([
-                'url_gambar' => $url,
+                'url_gambar2' => $url,
             ]);
         }
 
