@@ -23,6 +23,20 @@ class LaporanController extends Controller
     }
     public function motherpalmStore(Request $request)
     {
+        if ($request->kategori == "balut") {
+            switch ($request->laporan) {
+                case '3':
+                    $result = $this->satuPsatuF($request);
+                    return view('laporan.motherpalm.show3', compact('result'));
+                    break;
+
+                default:
+                    alert()->error('Gagal', 'Belum Mula');
+                    return back();
+                    break;
+            }
+        }
+
         switch ($request->laporan) {
 
             case 1:
@@ -128,7 +142,7 @@ class LaporanController extends Controller
 
     }
 
-    public function third(Request $request)
+    public function satuPsatuF(Request $request)
     {
         $list = Pokok::select('blok', 'baka')->distinct()->get();
         foreach ($list as $key => $l) {

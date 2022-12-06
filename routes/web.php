@@ -106,6 +106,6 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/carian/matlamat', [MatlamatController::class, 'carian']);
     });
 
-    Route::post('/laporan3', [LaporanController::class, 'third']);
+    Route::post('/laporan3', [LaporanController::class, 'satuPsatuF']);
 
 });

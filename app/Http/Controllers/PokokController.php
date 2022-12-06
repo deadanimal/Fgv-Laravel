@@ -124,7 +124,7 @@ class PokokController extends Controller
         // foreach ($pokoks as $pokok) {
         //     $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
         //     $name = "bulkpokok/pokok" . $pokok->id . ".svg";
-        //     // QrCode::size(264.56692913)->generate($url, public_path($name));
+        // QrCode::size(264.56692913)->generate($url, public_path($name));
         //     $temp = $pokok->progeny . $pokok->no_pokok;
         //     $p['no_pokok'][$pokok->id] = str_replace(' ', '', $temp);
         //     $p['name'][$pokok->id] = $name;
@@ -192,8 +192,6 @@ class PokokController extends Controller
             'pokoks' => $pokoks,
             'no_pokoks' => $p,
         ]);
-// return $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
-
         return $pdf->download('qrcode.pdf');
 
     }
