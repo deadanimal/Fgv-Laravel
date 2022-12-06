@@ -25,6 +25,8 @@ class LaporanController extends Controller
     {
         if ($request->kategori == "balut") {
             switch ($request->laporan) {
+                // case '1':
+                //     $result = $this->laporanHarianBalut($request);
                 case '3':
                     $result = $this->PF($request);
                     return view('laporan.motherpalm.show3', compact('result'));
@@ -39,6 +41,25 @@ class LaporanController extends Controller
 
         alert()->error('Gagal', 'Belum Mula');
         return back();
+
+    }
+
+    public function laporanHarianBalut(Request $request)
+    {
+        $mula = Carbon::createFromFormat('Y-m-d', $request->tarikh_mula);
+        $akhir = Carbon::createFromFormat('Y-m-d', $request->tarikh_akhir);
+
+        $period = new DatePeriod(
+            new DateTime($mula),
+            new DateInterval('P1D'),
+            new DateTime(date('Y-m-d', strtotime($akhir . ' +1 day')))
+        );
+
+        foreach ($period as $value) {
+            $date[] = $value->format('d/m/Y');
+        }
+
+        dd($date);
 
     }
 

@@ -26,6 +26,24 @@ class PollenApiController extends Controller
     public function store(Request $request)
     {
         $info = Pollen::create($request->all());
+
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'pollen', 'public'
+            );
+            $info->update([
+                'url_gambar' => $url,
+            ]);
+        }
+        if ($request->hasFile('url_gambar2')) {
+            $url = $request->file('url_gambar2')->store(
+                'pollen', 'public'
+            );
+            $info->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
         return response()->json($info);
 
     }
@@ -52,6 +70,24 @@ class PollenApiController extends Controller
     public function update(Request $request, Pollen $pollen)
     {
         $pollen->update($request->all());
+
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'pollen', 'public'
+            );
+            $pollen->update([
+                'url_gambar' => $url,
+            ]);
+        }
+        if ($request->hasFile('url_gambar2')) {
+            $url = $request->file('url_gambar2')->store(
+                'pollen', 'public'
+            );
+            $pollen->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
         return response()->json($pollen);
 
     }
