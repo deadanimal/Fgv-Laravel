@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pollen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class PollenApiController extends Controller
 {
@@ -25,7 +26,7 @@ class PollenApiController extends Controller
      */
     public function store(Request $request)
     {
-        $info = Pollen::create($request->all());
+        $info = Pollen::create($request->except(['url_gambar', 'url_gambar2']));
 
         if ($request->hasFile('url_gambar')) {
             $url = $request->file('url_gambar')->store(
@@ -69,7 +70,7 @@ class PollenApiController extends Controller
      */
     public function update(Request $request, Pollen $pollen)
     {
-        $pollen->update($request->all());
+        $pollen->update($request->except(['url_gambar', 'url_gambar2']));
 
         if ($request->hasFile('url_gambar')) {
             $url = $request->file('url_gambar')->store(
@@ -100,6 +101,15 @@ class PollenApiController extends Controller
      */
     public function destroy(Pollen $pollen)
     {
+        $image_path = $pollen->url_gambar;
+        if (File::exists($image_path)) {
+            File::delete($image_path);
+        }
+        $image_path2 = $pollen->url_gambar2;
+        if (File::exists($image_path2)) {
+            File::delete($image_path2);
+        }
+
         $pollen->delete();
         return [
             'Delete' => 'Successful',

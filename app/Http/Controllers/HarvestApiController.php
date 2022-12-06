@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Harvest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class HarvestApiController extends Controller
 {
@@ -84,6 +85,11 @@ class HarvestApiController extends Controller
      */
     public function destroy(Harvest $harvest)
     {
+        $image_path = $harvest->url_gambar;
+        if (File::exists($image_path)) {
+            File::delete($image_path);
+        }
+
         $harvest->delete();
         return [
             'Delete' => 'Successful',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ControlPollination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ControlPollinationApiController extends Controller
 {
@@ -73,6 +74,11 @@ class ControlPollinationApiController extends Controller
      */
     public function destroy(ControlPollination $controlPollination)
     {
+        $image_path = $controlPollination->url_gambar;
+        if (File::exists($image_path)) {
+            File::delete($image_path);
+        }
+
         $controlPollination->delete();
         return [
             'Delete' => 'Successful',

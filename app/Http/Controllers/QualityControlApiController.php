@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\QualityControl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class QualityControlApiController extends Controller
 {
@@ -84,6 +85,11 @@ class QualityControlApiController extends Controller
      */
     public function destroy(QualityControl $qualityControl)
     {
+        $image_path = $qualityControl->url_gambar;
+        if (File::exists($image_path)) {
+            File::delete($image_path);
+        }
+
         $qualityControl->delete();
         return [
             'Delete' => 'Successful',
