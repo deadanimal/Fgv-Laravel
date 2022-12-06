@@ -26,7 +26,7 @@ class LaporanController extends Controller
         if ($request->kategori == "balut") {
             switch ($request->laporan) {
                 case '3':
-                    $result = $this->satuPsatuF($request);
+                    $result = $this->PF($request);
                     return view('laporan.motherpalm.show3', compact('result'));
                     break;
 
@@ -37,69 +37,52 @@ class LaporanController extends Controller
             }
         }
 
-        switch ($request->laporan) {
+        alert()->error('Gagal', 'Belum Mula');
+        return back();
 
-            case 1:
+    }
 
-                // $edit_mula = explode('/', $request->tarikh_mula);
-                // $edit_akhir = explode('/', $request->tarikh_akhir);
-                // $new_mula = $edit_mula[2] . '-' . $edit_mula[1] . '-' . $edit_mula[0];
-                // $new_akhir = $edit_akhir[2] . '-' . $edit_akhir[1] . '-' . $edit_akhir[0];
+    public function temp(Request $request)
+    {
 
-                // $mula = date('Y-m-d', strtotime($new_mula));
-                // $akhir = date('Y-m-d', strtotime($new_akhir));
-                // $mula = $request->tarikh_mula;
-                // $akhir = $request->tarikh_akhir;
-                $mula = Carbon::createFromFormat('Y-m-d', $request->tarikh_mula);
-                $akhir = Carbon::createFromFormat('Y-m-d', $request->tarikh_akhir);
+        $mula = Carbon::createFromFormat('Y-m-d', $request->tarikh_mula);
+        $akhir = Carbon::createFromFormat('Y-m-d', $request->tarikh_akhir);
 
-                switch ($request->kategori) {
-                    case 'balut':
-                        $tugasan = Bagging::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
-                        break;
-                    case 'debung':
-                        $tugasan = ControlPollination::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
-                        break;
-                    case 'tuai':
-                        $tugasan = Harvest::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
-                        break;
-                    case 'kawal':
-                        $tugasan = QualityControl::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
-                        break;
-                    default:
-                        return 'kategori salah';
-                        break;
-                }
-
-                if ($tugasan == null) {
-                    alert()->error('Gagal', 'Tiada Tugasan');
-                    return back();
-                }
-
-                $period = new DatePeriod(
-                    new DateTime($mula),
-                    new DateInterval('P1D'),
-                    new DateTime(date('Y-m-d', strtotime($akhir . ' +1 day')))
-                );
-                foreach ($period as $value) {
-                    $date[] = $value->format('d/m/Y');
-                }
-
-                return view('laporan.motherpalm.show1', [
-                    'laporans' => $tugasan,
-                    'dates' => $date,
-                ]);
-
+        switch ($request->kategori) {
+            case 'balut':
+                $tugasan = Bagging::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
                 break;
-            case 3:
-                $result = $this->third($request);
-                return view('laporan.motherpalm.show3', compact('result'));
-
+            case 'debung':
+                $tugasan = ControlPollination::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
+                break;
+            case 'tuai':
+                $tugasan = Harvest::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
+                break;
+            case 'kawal':
+                $tugasan = QualityControl::with('tandan')->whereBetween('created_at', [$mula, $akhir])->get();
+                break;
             default:
-                alert()->error('Gagal', 'Belum Mula');
-                return back();
                 break;
         }
+
+        if ($tugasan == null) {
+            alert()->error('Gagal', 'Tiada Tugasan');
+            return back();
+        }
+
+        $period = new DatePeriod(
+            new DateTime($mula),
+            new DateInterval('P1D'),
+            new DateTime(date('Y-m-d', strtotime($akhir . ' +1 day')))
+        );
+        foreach ($period as $value) {
+            $date[] = $value->format('d/m/Y');
+        }
+
+        return view('laporan.motherpalm.show1', [
+            'laporans' => $tugasan,
+            'dates' => $date,
+        ]);
 
     }
 
@@ -142,7 +125,7 @@ class LaporanController extends Controller
 
     }
 
-    public function satuPsatuF(Request $request)
+    public function PF(Request $request)
     {
         $list = Pokok::select('blok', 'baka')->distinct()->get();
         foreach ($list as $key => $l) {
@@ -228,7 +211,6 @@ class LaporanController extends Controller
         }
 
         return $result;
-
     }
 
     public function fatherpalm()

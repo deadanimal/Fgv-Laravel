@@ -189,6 +189,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -216,6 +217,7 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
 ];

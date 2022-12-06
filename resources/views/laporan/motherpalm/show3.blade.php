@@ -17,9 +17,11 @@
         <form style="display: none" action="/laporan3" method="post">
             @csrf
             <input type="hidden" name="pdf" value="1">
-            <button type="submit" id="downloadpdf" style="display: none">Download</button>
+            <button type="submit" id="downloadpdf" style="display: none"></button>
         </form>
-        <a id="downloadexcel" style="display: none" href="excel-kehadiran-peserta" download="kehadiran-peserta">Download</a>
+        <a href="{{ route('laporanExcelPF', 'excel') }}" id="downloadexcel" style="display: none"></a>
+
+        <a href="{{ route('laporanExcelPF', 'csv') }}" id="downloadcsv" style="display: none"></a>
 
 
 
@@ -37,10 +39,10 @@
                     document.getElementById('downloadpdf').click();
                     break;
                 case '2':
-
+                    document.getElementById('downloadexcel').click();
                     break;
                 case '3':
-
+                    document.getElementById('downloadcsv').click();
                     break;
 
                 default:

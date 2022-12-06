@@ -4,6 +4,7 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KerosakanController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LaporanDownloadController;
 use App\Http\Controllers\MatlamatController;
 use App\Http\Controllers\PokokController;
 use App\Http\Controllers\TandanController;
@@ -107,5 +108,6 @@ Route::middleware('auth.basic')->group(function () {
     });
 
     Route::post('/laporan3', [LaporanController::class, 'satuPsatuF']);
+    Route::get('laporan/excel/pf/{type}', [LaporanDownloadController::class, 'PF'])->name('laporanExcelPF');
 
 });
