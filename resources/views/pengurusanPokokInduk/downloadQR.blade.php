@@ -14,8 +14,8 @@
     @switch($type)
         @case(1)
             <div class="text-center mt-5">
-                <img src="{{ url('qr/qrcode_pokok.svg') }}" style="width: 7cm; height:7cm;" alt="">
-                <h5 class="mt-3"><?php $temp = $pokok->progeny . $pokok->no_pokok; ?> {{ str_replace(' ', '', $temp) }}</h5>
+                <img src="{{ 'bulkpokok/pokok' . $pokok->id . '.svg' }}" style="width: 7cm; height:7cm;" alt="">
+                <h5 class="mt-2 mb-4 text-center"> {{ $pokok->name }}</h5>
             </div>
         @break
 
@@ -55,8 +55,8 @@
         @case(5)
             @foreach ($pokoks as $p)
                 <div style="width: 7cm;" class="d-inline-flex ms-5">
-                    <img src="{{ url($no_pokoks['name'][$p->id]) }}" style="width: 7cm; height:7cm;" alt="">
-                    <h5 class="mt-2 mb-4 text-center"> {{ $no_pokoks['no_pokok'][$p->id] }}</h5>
+                    <img src="{{ 'bulkpokok/pokok' . $p->id . '.svg' }}" style="width: 7cm; height:7cm;" alt="">
+                    <h5 class="mt-2 mb-4 text-center"> {{ $p->name }}</h5>
                 </div>
             @endforeach
         @break
