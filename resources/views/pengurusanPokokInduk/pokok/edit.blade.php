@@ -33,7 +33,7 @@
                                     <label class="col-form-label text-main">No. Pokok</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <input type="number" name="no_pokok" class="form-control border-main"
+                                    <input type="text" name="no_pokok" class="form-control border-main"
                                         value="{{ $pokok->no_pokok }}">
                                 </div>
                             </div>

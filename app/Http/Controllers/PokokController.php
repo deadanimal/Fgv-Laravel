@@ -188,7 +188,7 @@ class PokokController extends Controller
         }
 
         $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
-            'type' => 2,
+            'type' => 5,
             'pokoks' => $pokoks,
             'no_pokoks' => $p,
         ]);
