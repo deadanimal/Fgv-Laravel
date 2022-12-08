@@ -6,13 +6,11 @@ use App\Http\Controllers\DataKerosakanApiController;
 use App\Http\Controllers\FgvPmpsController;
 use App\Http\Controllers\HarvestApiController;
 use App\Http\Controllers\KerosakanApiController;
-use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PokokApiController;
 use App\Http\Controllers\PollenApiController;
 use App\Http\Controllers\QualityControlApiController;
 use App\Http\Controllers\StokPollenApiController;
 use App\Http\Controllers\TandanApiController;
-use App\Http\Controllers\TugasanApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,7 +45,7 @@ Route::post('/tugasan/{id}/rosak', [FgvPmpsController::class, 'rosak']);
 Route::apiResources([
     '/pokok' => PokokApiController::class,
     '/tandan' => TandanApiController::class,
-    '/tugasan' => TugasanApiController::class,
+    // '/tugasan' => TugasanApiController::class,
     '/kerosakan' => KerosakanApiController::class,
     '/pollen' => PollenApiController::class,
     '/stok_pollen' => StokPollenApiController::class,
@@ -66,5 +64,3 @@ Route::get('/tandan/{id_tandan}/harvest', [TandanApiController::class, 'findHarv
 
 Route::get('/users/peranan/{peranan}', [FgvPmpsController::class, 'userByPeranan']);
 Route::post('/search/qc', [FgvPmpsController::class, 'searchQC']);
-
-Route::post('/temp', [LaporanController::class, 'motherpalmStore']);

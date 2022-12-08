@@ -3,7 +3,8 @@
     <x-header main="Laporan" sub="Fatherpalm" sub2="" />
     <div class="row justify-content-center mt-5">
         <div class="col-xl-8">
-            <div class="row">
+            <form class="row" action="{{ route('laporan.fatherpalmStore') }}" method="POST">
+                @csrf
                 <div class="col-xl-6 mb-3">
                     <label class="col-form-label text-main">Laporan</label>
                     <select name="laporan" class="form-select border-danger">
@@ -24,12 +25,12 @@
                     <x-custom-date-input name="tarikh_akhir" />
                 </div>
 
-                {{-- <div class="text-end mt-5">
+                <div class="text-end mt-5">
                     <button type="submit" class="btn btn-danger">Jana Dokumen
                         <span data-feather="file-plus"></span>
                     </button>
-                </div> --}}
-            </div>
+                </div>
+            </form>
 
         </div>
 

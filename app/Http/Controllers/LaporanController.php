@@ -236,4 +236,10 @@ class LaporanController extends Controller
         return view('laporan.fatherpalm.index');
     }
 
+    public function fatherpalmStore(Request $request)
+    {
+        alert('Gagal', 'Belum Sedia', 'error');
+        return back();
+    }
+
 }

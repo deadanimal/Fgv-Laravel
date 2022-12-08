@@ -9,7 +9,7 @@
             <div class="row justify-content-center mt-4">
                 <div class="col-10 px-0">
                     <h3 class="fw-bold text-uppercase text-main">Maklumat Pokok</h3>
-                    <h5 class="text-main">Sila isikan maklumat pekerja berikut dengan betul.</h5>
+                    <h5 class="text-main">Sila isikan maklumat pokok berikut dengan betul.</h5>
 
 
                     <div class="row align-items-center mt-5">

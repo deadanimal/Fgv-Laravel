@@ -48,8 +48,6 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/tugasan/search', [TugasanController::class, 'search'])->name('search.tugasan');
     });
 
-    Route::get('/tugasan', [TugasanController::class, 'tugasan_user'])->name('tu');
-
     Route::get('/audit', [AuditController::class, 'index'])->name('audit');
     Route::post('/search/audit', [AuditController::class, 'search'])->name('search.audit');
 
@@ -93,6 +91,12 @@ Route::middleware('auth.basic')->group(function () {
         Route::get('/fatherpalm/index', [LaporanController::class, 'fatherpalm'])->name('fatherpalm');
         Route::post('/fatherpalm/store', [LaporanController::class, 'fatherpalmStore'])->name('fatherpalmStore');
     });
+    Route::prefix('/download/laporan')->group(function () {
+        Route::prefix('/balut')->group(function () {
+            Route::get('/pf/{type}', [LaporanDownloadController::class, 'PF'])->name('laporanPF');
+            Route::get('/harian/{type}/{bulan}', [LaporanDownloadController::class, 'harianBalut'])->name('laporanHarianBalut');
+        });
+    });
 
     Route::prefix('/konfigurasi')->group(function () {
         Route::get('/kerosakan', [KerosakanController::class, 'index'])->name('k.index');
@@ -104,13 +108,6 @@ Route::middleware('auth.basic')->group(function () {
         Route::resource('/matlamat', MatlamatController::class);
 
         Route::post('/carian/matlamat', [MatlamatController::class, 'carian']);
-    });
-
-    Route::prefix('/download/laporan')->group(function () {
-        Route::prefix('/balut')->group(function () {
-            Route::get('/pf/{type}', [LaporanDownloadController::class, 'PF'])->name('laporanPF');
-            Route::get('/harian/{type}/{bulan}', [LaporanDownloadController::class, 'harianBalut'])->name('laporanHarianBalut');
-        });
     });
 
 });
