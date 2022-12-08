@@ -64,9 +64,9 @@ class PokokController extends Controller
     public function downloadqr(Pokok $pokok)
     {
 
-        $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
         $file = public_path('bulkpokok/pokok' . $pokok->id . '.svg');
         if (!file_exists($file)) {
+            $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
             QrCode::size(264)->generate($url, public_path('bulkpokok/pokok' . $pokok->id . ".svg"));
         }
 
@@ -139,11 +139,11 @@ class PokokController extends Controller
         $pokoks = DB::table('pokoks')->select(DB::raw("id,CONCAT(progeny,no_pokok) AS Name"))->get();
 
         foreach ($pokoks as $pokok) {
-            $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
             // $qrcode = base64_encode(QrCode::size(264)->generate($url));
             $file = public_path('bulkpokok/pokok' . $pokok->id . '.svg');
 
             if (!file_exists($file)) {
+                $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok->id);
                 QrCode::size(264)->generate($url, public_path('bulkpokok/pokok' . $pokok->id . ".svg"));
             }
 
@@ -190,9 +190,9 @@ class PokokController extends Controller
 
             // $pokoks[] = $pokok;
 
-            $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok_id);
             $file = public_path('bulkpokok/pokok' . $pokok_id . '.svg');
             if (!file_exists($file)) {
+                $url = URL::to('/pengurusan-pokok-induk/pokok/edit/' . $pokok_id);
                 QrCode::size(264)->generate($url, public_path('bulkpokok/pokok' . $pokok_id . ".svg"));
             }
 
@@ -203,7 +203,7 @@ class PokokController extends Controller
         }
 
         $pdf = Pdf::loadView('pengurusanPokokInduk.downloadQR', [
-            'type' => 5,
+            'type' => 2,
             'pokoks' => $pokoks,
         ]);
         return $pdf->download('qrcode.pdf');

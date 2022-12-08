@@ -52,15 +52,6 @@
             @endforeach
         @break
 
-        @case(5)
-            @foreach ($pokoks as $p)
-                <div style="width: 7cm;" class="d-inline-flex ms-5">
-                    <img src="{{ 'bulkpokok/pokok' . $p->id . '.svg' }}" style="width: 7cm; height:7cm;" alt="">
-                    <h5 class="mt-2 mb-4 text-center"> {{ $p->name }}</h5>
-                </div>
-            @endforeach
-        @break
-
         @default
     @endswitch
 
