@@ -85,7 +85,7 @@ class PFExport implements FromView
 
         }
 
-        return view('laporan.motherpalm.table.table3', [
+        return view('laporan.motherpalm.table.pf', [
             'result' => $result,
             'pdf' => 1,
         ]);

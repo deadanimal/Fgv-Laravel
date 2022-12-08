@@ -106,7 +106,11 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/carian/matlamat', [MatlamatController::class, 'carian']);
     });
 
-    Route::post('/laporan3', [LaporanController::class, 'satuPsatuF']);
-    Route::get('laporan/excel/pf/{type}', [LaporanDownloadController::class, 'PF'])->name('laporanExcelPF');
+    Route::prefix('/download/laporan')->group(function () {
+        Route::prefix('/balut')->group(function () {
+            Route::get('/pf/{type}', [LaporanDownloadController::class, 'PF'])->name('laporanPF');
+            Route::get('/harian/{type}/{bulan}', [LaporanDownloadController::class, 'harianBalut'])->name('laporanHarianBalut');
+        });
+    });
 
 });

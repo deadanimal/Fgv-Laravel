@@ -19,7 +19,15 @@
       td {
           text-align: center;
       }
+
+      .text-center {
+          text-align: center;
+      }
   </style>
+  <div class="col-xl-12 text-center">
+      <h4 class="mt-5">Ladang Benih Pusat Pertanian Perkhidmatan Tun Razak</h4>
+      <h6 class="mt-2">Rumusan Pencapaian Penuaian Harian Tandan Ladang Benih</h6>
+  </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
           <table class="table table-hover table-bordered overflow-hidden" width="100%">

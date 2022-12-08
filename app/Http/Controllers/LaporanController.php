@@ -7,8 +7,6 @@ use App\Models\ControlPollination;
 use App\Models\Harvest;
 use App\Models\Pokok;
 use App\Models\QualityControl;
-use App\Models\Tugasan;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use DateInterval;
 use DatePeriod;
@@ -25,14 +23,11 @@ class LaporanController extends Controller
     {
 
         if ($request->kategori == "balut") {
-
             switch ($request->laporan) {
                 case '1':
+                    $this->harian($request);
                     $baluts = Bagging::with(['pengesah', 'pokok'])->whereHas('pengesah')->whereMonth('created_at', '=', $request->bulan)->get()->groupBy(['pengesah.nama', 'pokok.blok', 'pokok.baka']);
                     $days = cal_days_in_month(CAL_GREGORIAN, $request->bulan, now()->year);
-
-                    $pokoks = Pokok::with(['bagging.pengesah'])->whereHas('bagging')->get();
-
                     $row = 0;
                     foreach ($baluts as $k => $balut) {
                         foreach ($balut as $key => $value) {
@@ -53,19 +48,12 @@ class LaporanController extends Controller
 
                             }
                         }
-
                     }
-
-                    // for ($i = 1; $i < $days; $i++) {
-                    //     $day[$i][$k][$key][$key2] = Bagging::with(['pengesah'])->whereHas('pengesah')->whereMonth('created_at', '=', $request->bulan)->whereDay('created_at', $i)->count();
-                    // }
-
-                    // dd($nama, $blok, $baka);
-
-                    return view('laporan.motherpalm.laporanHarian', compact('baluts', 'days', 'day', 'row', 'total'));
+                    $bulan = $request->bulan;
+                    return view('laporan.motherpalm.harian', compact('baluts', 'days', 'day', 'row', 'total', 'bulan'));
                 case '3':
-                    $result = $this->PF($request);
-                    return view('laporan.motherpalm.show3', compact('result'));
+                    $result = $this->PF();
+                    return view('laporan.motherpalm.pf', compact('result'));
                     break;
 
                 default:
@@ -124,46 +112,46 @@ class LaporanController extends Controller
 
     }
 
-    public function first($request)
-    {
-        $mula = date($request->tarikh_mula);
-        $akhir = date($request->tarikh_akhir);
-        $tugasans = Tugasan::where('jenis', $request->kategori)
-        // ->whereBetween('tarikh', [$mula, $akhir])
-            ->get();
-        $result = null;
-        foreach ($tugasans as $tugasan) {
-            $str = explode('/', $tugasan->tarikh);
-            $new_tarikh = $str[2] . "-" . $str[1] . "-" . $str[0];
-            $f_tarikh = date('Y-m-d', strtotime($new_tarikh));
+    // public function first($request)
+    // {
+    //     $mula = date($request->tarikh_mula);
+    //     $akhir = date($request->tarikh_akhir);
+    //     $tugasans = Tugasan::where('jenis', $request->kategori)
+    //     // ->whereBetween('tarikh', [$mula, $akhir])
+    //         ->get();
+    //     $result = null;
+    //     foreach ($tugasans as $tugasan) {
+    //         $str = explode('/', $tugasan->tarikh);
+    //         $new_tarikh = $str[2] . "-" . $str[1] . "-" . $str[0];
+    //         $f_tarikh = date('Y-m-d', strtotime($new_tarikh));
 
-            if (($f_tarikh >= $mula) && ($f_tarikh <= $akhir)) {
-                $result[] = $tugasan;
-            }
-        }
+    //         if (($f_tarikh >= $mula) && ($f_tarikh <= $akhir)) {
+    //             $result[] = $tugasan;
+    //         }
+    //     }
 
-        if ($result == null) {
-            alert()->error('Gagal', 'Tiada Tugasan');
-            return back();
-        }
+    //     if ($result == null) {
+    //         alert()->error('Gagal', 'Tiada Tugasan');
+    //         return back();
+    //     }
 
-        $period = new DatePeriod(
-            new DateTime($mula),
-            new DateInterval('P1D'),
-            new DateTime(date('Y-m-d', strtotime($akhir . ' +1 day')))
-        );
-        foreach ($period as $value) {
-            $date[] = $value->format('d/m/Y');
-        }
+    //     $period = new DatePeriod(
+    //         new DateTime($mula),
+    //         new DateInterval('P1D'),
+    //         new DateTime(date('Y-m-d', strtotime($akhir . ' +1 day')))
+    //     );
+    //     foreach ($period as $value) {
+    //         $date[] = $value->format('d/m/Y');
+    //     }
 
-        return view('laporan.motherpalm.show1', [
-            'laporans' => $result,
-            'dates' => $date,
-        ]);
+    //     return view('laporan.motherpalm.show1', [
+    //         'laporans' => $result,
+    //         'dates' => $date,
+    //     ]);
 
-    }
+    // }
 
-    public function PF(Request $request)
+    public function PF()
     {
         $list = Pokok::select('blok', 'baka')->distinct()->get();
         foreach ($list as $key => $l) {
@@ -238,14 +226,6 @@ class LaporanController extends Controller
             $result[$key]['baka'] = $l->baka;
             $result[$key]['j_bunga'] = $temp;
 
-        }
-        if ($request->pdf == 1) {
-
-            $pdf = Pdf::loadView('laporan.motherpalm.table.table3', [
-                'result' => $result,
-                'pdf' => 1,
-            ]);
-            return $pdf->download('1P1F Motherpalm.pdf');
         }
 
         return $result;

@@ -19,7 +19,14 @@
       td {
           text-align: center;
       }
+
+      .text-center {
+          text-align: center;
+      }
   </style>
+  <div class="col-xl-12 text-center">
+      <h4>LAPORAN HARIAN BALUT (BAGGING)</h4>
+  </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
           <table class="table table-hover table-bordered overflow-hidden" width="100%">
