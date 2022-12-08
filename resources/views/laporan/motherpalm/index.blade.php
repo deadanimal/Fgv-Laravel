@@ -20,6 +20,18 @@
                     </div>
                 </div>
                 <div class="col-xl-1"></div>
+                <div class="col-xl-5 d-none mt-2" id="divBulan">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-main">Bulan</label>
+                        <div class="col-sm-8">
+                            <select name="bulan" class="form-select">
+                                @for ($i = 1; $i < 13; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xl-5 hide_tarikh">
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label text-main">Tarikh Mula</label>
@@ -121,11 +133,23 @@
         $('#select-laporan').change(function(e) {
             let k = $('#select-kategori').val();
             let l = $(this).val();
-            if (k == "balut" && l == 3) {
-                $('.hide_tarikh').addClass('d-none');
-            } else {
-                $('.hide_tarikh').removeClass('d-none');
-            }
+            if (k == "balut") {
+                switch (l) {
+                    case '1':
+                        $('#divBulan').removeClass('d-none');
+                        $('.hide_tarikh').addClass('d-none');
+                        break;
+                    case '3':
+                        $('.hide_tarikh').addClass('d-none');
+                        break;
+
+                    default:
+                        $('.hide_tarikh').removeClass('d-none');
+                        $('#divBulan').addClass('d-none');
+
+                        break;
+                }
+            } else {}
         });
     </script>
 @endsection

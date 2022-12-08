@@ -20,4 +20,9 @@ class Pokok extends Model
         return $this->hasMany(Tandan::class);
     }
 
+    public function bagging()
+    {
+        return $this->hasMany(Bagging::class);
+    }
+
 }
