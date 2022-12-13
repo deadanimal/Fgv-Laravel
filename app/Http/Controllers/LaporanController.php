@@ -25,7 +25,7 @@ class LaporanController extends Controller
         if ($request->kategori == "balut") {
             switch ($request->laporan) {
                 case '1':
-                    $this->harian($request);
+                    // $this->harian($request);
                     $baluts = Bagging::with(['pengesah', 'pokok'])->whereHas('pengesah')->whereMonth('created_at', '=', $request->bulan)->get()->groupBy(['pengesah.nama', 'pokok.blok', 'pokok.baka']);
                     $days = cal_days_in_month(CAL_GREGORIAN, $request->bulan, now()->year);
                     $row = 0;

@@ -68,7 +68,6 @@
                       <tr>
                           <td></td>
                           <td>JUMLAH</td>
-                          <td></td>
                           @for ($i = 1; $i <= $days; $i++)
                               <td>
                                   {{ $total[$i] }}
