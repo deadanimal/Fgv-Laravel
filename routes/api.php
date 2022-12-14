@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
 Route::post('/login', [FgvPmpsController::class, 'login']);
 Route::get('/profil/{user}', [FgvPmpsController::class, 'profil']);
 
@@ -62,4 +63,4 @@ Route::get('/tandan/{id_tandan}/qc', [TandanApiController::class, 'findQc']);
 Route::get('/tandan/{id_tandan}/harvest', [TandanApiController::class, 'findHarvest']);
 
 Route::get('/users/peranan/{peranan}', [FgvPmpsController::class, 'userByPeranan']);
-Route::get('/test', [FgvPmpsController::class, 'searchQC']);
+Route::post('/search/qc', [FgvPmpsController::class, 'searchQC']);
