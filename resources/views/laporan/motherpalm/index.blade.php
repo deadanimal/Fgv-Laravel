@@ -133,11 +133,18 @@
         $('#select-laporan').change(function(e) {
             let k = $('#select-kategori').val();
             let l = $(this).val();
+
+            if (l == '1') {
+                $('#divBulan').removeClass('d-none');
+                $('.hide_tarikh').addClass('d-none');
+            } else {
+                $('.hide_tarikh').removeClass('d-none');
+                $('#divBulan').addClass('d-none');
+            }
+
             if (k == "balut") {
                 switch (l) {
                     case '1':
-                        $('#divBulan').removeClass('d-none');
-                        $('.hide_tarikh').addClass('d-none');
                         break;
                     case '3':
                         $('.hide_tarikh').addClass('d-none');
@@ -146,10 +153,10 @@
                     default:
                         $('.hide_tarikh').removeClass('d-none');
                         $('#divBulan').addClass('d-none');
-
                         break;
                 }
-            } else {}
+            }
+
         });
     </script>
 @endsection

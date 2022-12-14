@@ -25,7 +25,20 @@
       }
   </style>
   <div class="col-xl-12 text-center">
-      <h4>LAPORAN HARIAN BALUT (BAGGING)</h4>
+      <h4>LAPORAN HARIAN
+          @switch($type)
+              @case('balut')
+                  BALUT (BAGGING)
+              @break
+
+              @case('debung')
+                  PENDEBUNGAAN TERKAWAL (CONTROL POLLINATION)
+              @break
+
+              @default
+          @endswitch
+
+      </h4>
   </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
@@ -44,8 +57,8 @@
               <tbody>
                   <?php $temp = ''; ?>
 
-                  @foreach ($baluts as $key1 => $balut)
-                      @foreach ($balut as $key2 => $b)
+                  @foreach ($results as $key1 => $result)
+                      @foreach ($result as $key2 => $b)
                           @foreach ($b as $key3 => $a)
                               <tr>
                                   @if ($temp != $key1)
@@ -60,7 +73,7 @@
                                       </td>
                                       <?php $total[$i] += $day[$i][$key1][$key2][$key3]; ?>
                                   @endfor
-                                  <td>{{ $baluts[$key1][$key2][$key3]->count() }}</td>
+                                  <td>{{ $results[$key1][$key2][$key3]->count() }}</td>
                               </tr>
                           @endforeach
                       @endforeach

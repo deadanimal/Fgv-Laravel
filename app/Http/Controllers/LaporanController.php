@@ -21,16 +21,15 @@ class LaporanController extends Controller
     }
     public function motherpalmStore(Request $request)
     {
-
-        if ($request->kategori == "balut") {
+        $type = $request->kategori;
+        if ($type == "balut") {
             switch ($request->laporan) {
                 case '1':
-                    // $this->harian($request);
-                    $baluts = Bagging::with(['pengesah', 'pokok'])->whereHas('pengesah')->whereMonth('created_at', '=', $request->bulan)->get()->groupBy(['pengesah.nama', 'pokok.blok', 'pokok.baka']);
+                    $results = Bagging::with(['pengesah', 'pokok'])->whereHas('pengesah')->whereMonth('created_at', '=', $request->bulan)->get()->groupBy(['pengesah.nama', 'pokok.blok', 'pokok.baka']);
                     $days = cal_days_in_month(CAL_GREGORIAN, $request->bulan, now()->year);
                     $row = 0;
-                    foreach ($baluts as $k => $balut) {
-                        foreach ($balut as $key => $value) {
+                    foreach ($results as $k => $result) {
+                        foreach ($result as $key => $value) {
                             foreach ($value as $key2 => $value2) {
                                 $row++;
                                 for ($i = 1; $i <= $days; $i++) {
@@ -38,9 +37,9 @@ class LaporanController extends Controller
                                     $total[$i] = 0;
 
                                 }
-                                foreach ($value2 as $theBalut) {
+                                foreach ($value2 as $theresult) {
                                     for ($i = 1; $i <= $days; $i++) {
-                                        if ($theBalut->created_at->format('d') == $i) {
+                                        if ($theresult->created_at->format('d') == $i) {
                                             $day[$i][$k][$key][$key2]++;
                                         }
                                     }
@@ -50,7 +49,7 @@ class LaporanController extends Controller
                         }
                     }
                     $bulan = $request->bulan;
-                    return view('laporan.motherpalm.harian', compact('baluts', 'days', 'day', 'row', 'total', 'bulan'));
+                    return view('laporan.motherpalm.harian', compact('results', 'type', 'days', 'day', 'row', 'total', 'bulan'));
                 case '3':
                     $result = $this->PF();
                     return view('laporan.motherpalm.pf', compact('result'));
@@ -61,6 +60,42 @@ class LaporanController extends Controller
                     return back();
                     break;
             }
+            if ($type == "debung") {
+                switch ($request->laporan) {
+                    case '1':
+                        $results = ControlPollination::with(['pengesah', 'pokok'])->whereHas('pengesah')->whereMonth('created_at', '=', $request->bulan)->get()->groupBy(['pengesah.nama', 'pokok.blok', 'pokok.baka']);
+                        $days = cal_days_in_month(CAL_GREGORIAN, $request->bulan, now()->year);
+                        $row = 0;
+                        foreach ($results as $k => $result) {
+                            foreach ($result as $key => $value) {
+                                foreach ($value as $key2 => $value2) {
+                                    $row++;
+                                    for ($i = 1; $i <= $days; $i++) {
+                                        $day[$i][$k][$key][$key2] = 0;
+                                        $total[$i] = 0;
+
+                                    }
+                                    foreach ($value2 as $theresult) {
+                                        for ($i = 1; $i <= $days; $i++) {
+                                            if ($theresult->created_at->format('d') == $i) {
+                                                $day[$i][$k][$key][$key2]++;
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                        $bulan = $request->bulan;
+                        return view('laporan.motherpalm.harian', compact('results', 'type', 'days', 'day', 'row', 'total', 'bulan'));
+
+                    default:
+                        alert()->error('Gagal', 'Belum Mula');
+                        return back();
+                        break;
+                }
+            }
+
         }
 
         alert()->error('Gagal', 'Belum Mula');

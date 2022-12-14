@@ -132,10 +132,9 @@ class FgvPmpsController extends Controller
             ->first();
         if ($pokok != null) {
             $qc = Bagging::with(['tandan', 'pokok'])
-                ->where(
-                    ['pokok_id' => $pokok->id],
-                    ['id_sv_balut' => $request->pembalut],
-                )->get();
+                ->where('pokok_id', $pokok->id)
+                ->where('id_sv_balut', $request->pembalut)
+                ->get();
         }
 
         return response()->json($qc);
