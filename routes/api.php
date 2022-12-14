@@ -62,4 +62,4 @@ Route::get('/tandan/{id_tandan}/qc', [TandanApiController::class, 'findQc']);
 Route::get('/tandan/{id_tandan}/harvest', [TandanApiController::class, 'findHarvest']);
 
 Route::get('/users/peranan/{peranan}', [FgvPmpsController::class, 'userByPeranan']);
-Route::post('/search/qc', [FgvPmpsController::class, 'searchQC']);
+Route::get('/test', [FgvPmpsController::class, 'searchQC']);
