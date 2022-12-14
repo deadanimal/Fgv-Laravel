@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bagging;
 use App\Models\Pokok;
 use App\Models\Tandan;
 use App\Models\Tugasan;
@@ -127,17 +126,19 @@ class FgvPmpsController extends Controller
 
     public function searchQC(Request $request)
     {
-        $pokok = Pokok::where('blok', $request->blok)
+        $pokoks = Pokok::with(['bagging.tandan'])->has('bagging')->where('blok', $request->blok)
             ->where('progeny', $request->progeny)
-            ->first();
-        if ($pokok != null) {
-            $qc = Bagging::with(['tandan', 'pokok'])
-                ->where('pokok_id', $pokok->id)
-                ->where('id_sv_balut', $request->pembalut)
-                ->get();
-        }
+            ->get();
 
-        return response()->json($qc);
+        // if ($pokoks != null) {
+        //     foreach ($pokoks as $pokok) {
+        //         $qc = Bagging::with(['tandan', 'pokok'])
+        //             ->where('pokok_id', $pokok->id)
+        //             ->where('id_sv_balut', $request->pembalut)
+        //             ->get();
+        //     }
+        // }
+        return response()->json($pokoks);
 
     }
 
