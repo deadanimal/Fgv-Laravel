@@ -164,7 +164,7 @@
 
                             @role(['pekerja_balut_pendebungaan', 'pekerja_kawalan_kualiti', 'pekerja_penuaian',
                                 'pekerja_makmal'])
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link p-3 my-1 {{ Request::is('tugasan') ? 'active' : '' }}"
                                         href="/tugasan" role="button">
                                         <div class="d-flex align-items-center">
@@ -173,7 +173,7 @@
                                             <span class="nav-link-text ps-3 text-main">Tugasan</span>
                                         </div>
                                     </a>
-                                </li>
+                                </li> --}}
                             @endrole
 
                             @role(['penyelia_balut_pendebungaan', 'penyelia_kawalan_kualiti', 'penyelia_penuaian',

@@ -43,6 +43,8 @@ Route::middleware('auth.basic')->group(function () {
 
         Route::post('/kemaskini_password/{user}', [UserController::class, 'kemaskini_password'])->name('pp.updatePwd');
 
+        Route::post('/password_baru/{user}', [UserController::class, 'password_baru'])->name('pp.newPwd');
+
         Route::resource('/tugasan', TugasanController::class)->except('show');
         Route::get('/tugasan/{id}/{jenis}', [TugasanController::class, 'show']);
         Route::post('/tugasan/search', [TugasanController::class, 'search'])->name('search.tugasan');

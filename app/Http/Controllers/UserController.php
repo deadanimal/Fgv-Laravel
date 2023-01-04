@@ -129,4 +129,16 @@ class UserController extends Controller
         activity()->event('KEMASKINI')->log('Password User No Kakitangan:' . $user->no_kakitangan . ' telah di set semula');
         return redirect()->route('pp.index');
     }
+
+    public function password_baru(User $user, Request $request)
+    {
+        $user->update([
+            'password' => Hash::make($request->password1),
+            'first_login' => false,
+        ]);
+
+        alert()->success('Berjaya', 'Password berjaya diubah');
+        activity()->event('KEMASKINI')->log('Password User No Kakitangan:' . $user->no_kakitangan . ' telah di diubah');
+        return redirect()->route('pp.index');
+    }
 }

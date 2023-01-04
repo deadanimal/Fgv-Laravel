@@ -1,6 +1,44 @@
 @extends('layouts.base')
 
 @section('content')
+    {{-- <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Launch static
+        backdrop modal</button> --}}
+    @if (auth()->user()->first_login)
+        <div class="modal fade" id="setNewPassword" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+            aria-labelledby="setNewPasswordLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md mt-6" role="document">
+                <div class="modal-content border-0">
+                    <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                            <h4 class="mb-1" id="setNewPasswordLabel">Sila Kemaskini Kata Laluan Anda</h4>
+                        </div>
+                        <div class="p-4">
+                            <form class="row" action="{{ route('pp.newPwd', auth()->id()) }}" method="POST">
+                                @csrf
+                                <div class="col-lg-12">
+                                    <label class="mb-3 fw-bold" for="">Kata Laluan Baru</label>
+                                    <input type="password" id="pwd1" name="password1" class="form-control mb-3">
+                                    <input type="password" id="pwd2" name="password2" class="form-control mb-3">
+
+                                    <label class="text-danger" id="takSepadan">*Kata Laluan Tidak Sepadan</label>
+                                    <div class="text-end">
+                                        <button class="btn btn-sm btn btn-success" type="submit"
+                                            id="btnTukarPwd">Simpan</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -114,7 +152,8 @@
                                     </div>
 
                                     <div class="col-6">
-                                        <span class="text-white h4 fw-bolder">{{ $motherpalm['tuai']['hinggakini'] }}</span>
+                                        <span
+                                            class="text-white h4 fw-bolder">{{ $motherpalm['tuai']['hinggakini'] }}</span>
                                         <br>
                                         <span class="text-white h7">HINGGA KINI</span>
                                     </div>
@@ -193,6 +232,11 @@
         $(document).ready(function() {
             $("#divmotherpalm").show();
             $("#divfatherpalm").hide();
+            $("#takSepadan").hide();
+
+            $("#setNewPassword").modal('show');
+
+
         });
 
         $("#fatherpalm").click(function() {
@@ -206,6 +250,18 @@
             $("#fatherpalm").addClass('opacity-50');
             $("#divmotherpalm").show();
             $("#divfatherpalm").hide();
+        });
+
+        $('#btnTukarPwd').click(function(e) {
+            e.preventDefault();
+
+            if ($('#pwd1').val() == $('#pwd2').val()) {
+                $("#takSepadan").hide();
+                $(this).closest('form').submit();
+            } else {
+                $("#takSepadan").show();
+            }
+
         });
     </script>
 @endsection
