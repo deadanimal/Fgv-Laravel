@@ -39,7 +39,7 @@
         @case(3)
             <div class="text-center mt-5">
                 <img src="{{ url('qr/qrcode_tandan.svg') }}" style="width: 3cm; height:3cm;" alt="">
-                <h5 class="mt-3">No Daftar : {{ $tandan->no_daftar }}</h5>
+                <h5 class="mt-3">No : {{ $tandan->no_daftar }}</h5>
             </div>
         @break
 

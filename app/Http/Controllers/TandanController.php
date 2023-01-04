@@ -111,7 +111,7 @@ class TandanController extends Controller
             'pokok_id' => $request->pokok_id,
             'tarikh_daftar' => $request->tarikh_daftar,
             'no_pokok' => $request->no_pokok,
-            'umur' => $request->umur,
+            // 'umur' => $request->umur,
         ]);
         activity()->event('KEMASKINI')->log('Tandan No Daftar:' . $tandan->no_daftar . ' telah dikemaskini');
         alert()->success('Berjaya', 'Data telah dikemaskini');

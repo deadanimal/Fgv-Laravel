@@ -63,10 +63,11 @@
                                 </div>
 
                                 <div class="col-4 mb-3">
-                                    <label for="">Umur Tandan</label>
+                                    <label for="">Umur Tandan (Hari)</label>
                                 </div>
                                 <div class="col-8 mb-3">
-                                    <input type="number" class="form-control" name="umur" value="{{ $tandan->umur }}">
+                                    <input type="number" class="form-control" name="umur" value="{{ $tandan->umur }}"
+                                        readonly>
                                 </div>
 
                                 @if ($tandan->kerosakans_id)
