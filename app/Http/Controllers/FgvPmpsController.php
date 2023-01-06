@@ -126,8 +126,9 @@ class FgvPmpsController extends Controller
 
     public function searchQC(Request $request)
     {
-        $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')->where('blok', '5BRP3TR')
-            ->where('progeny', 'HPD')
+
+        $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')->where('blok', $request->blok)
+            ->where('progeny', $request->progeny)
             ->get()->pluck('bagging')->flatten();
         return response()->json($pokoks);
 
