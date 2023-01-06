@@ -61,7 +61,18 @@ class ControlPollinationApiController extends Controller
      */
     public function update(Request $request, ControlPollination $controlPollination)
     {
-        $controlPollination->update($request->all());
+
+        $controlPollination->update($request->except('url_gambar'));
+
+        if ($request->hasFile('url_gambar')) {
+            $url = $request->file('url_gambar')->store(
+                'cp', 'public'
+            );
+            $controlPollination->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
         return response()->json($controlPollination);
 
     }
