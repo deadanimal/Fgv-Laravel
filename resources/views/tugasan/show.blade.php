@@ -114,7 +114,7 @@
                             @foreach ($tugasan->gambar as $g)
                                 <div class="mySlides">
                                     <div class="numbertext">{{ $loop->iteration }} / {{ count($tugasan->gambar) }}</div>
-                                    <img src="{{ url($g) }}" style="width:100%" class="img-fluid">
+                                    <img src="{{ url('/storage/' . $g) }}" style="width:100%" class="img-fluid">
                                 </div>
                             @endforeach
 
