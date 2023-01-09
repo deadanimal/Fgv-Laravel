@@ -80,6 +80,7 @@ class TugasanController extends Controller
             case 'Pendebungaan Terkawal':
                 $tugasan = ControlPollination::with(['pokok', 'tandan', 'petugas'])->where('id', $id)->first();
                 $type = 2;
+                $tugasan['gambar'] = explode(',', $tugasan->url_gambar);
                 break;
             case 'Kawalan Kualiti':
                 $type = 3;

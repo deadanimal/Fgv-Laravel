@@ -26,11 +26,19 @@ class ControlPollinationApiController extends Controller
      */
     public function store(Request $request)
     {
-        $info = ControlPollination::create($request->all());
+        $info = ControlPollination::create($request->except('url_gambar'));
+        $url = $info->url_gambar;
         if ($request->hasFile('url_gambar')) {
-            $url = $request->file('url_gambar')->store(
-                'cp', 'public'
-            );
+            foreach ($request->url_gambar as $g) {
+                $urlnew = $g->store(
+                    'cp', 'public'
+                );
+                if ($url == null) {
+                    $url = $urlnew;
+                } else {
+                    $url = $url . ',' . $urlnew;
+                }
+            }
             $info->update([
                 'url_gambar' => $url,
             ]);
@@ -64,10 +72,18 @@ class ControlPollinationApiController extends Controller
 
         $controlPollination->update($request->except('url_gambar'));
 
+        $url = $controlPollination->url_gambar;
         if ($request->hasFile('url_gambar')) {
-            $url = $request->file('url_gambar')->store(
-                'cp', 'public'
-            );
+            foreach ($request->url_gambar as $g) {
+                $urlnew = $g->store(
+                    'cp', 'public'
+                );
+                if ($url == null) {
+                    $url = $urlnew;
+                } else {
+                    $url = $url . ',' . $urlnew;
+                }
+            }
             $controlPollination->update([
                 'url_gambar' => $url,
             ]);
