@@ -111,6 +111,7 @@
                         $('#tablebody').html('');
                         response[0].forEach(element => {
                             let i = 1;
+                            console.log(element.id);
                             $('#tablebody').append(`
                                 <tr style="border-bottom:#fff">
                                     <td class="bil">
@@ -123,7 +124,7 @@
                                          ` + element.nama + `
                                     </td>
                                     <td>
-                                        <form action="/pengurusan_pengguna/delete/{` + element.id + `} " method="post"
+                                        <form action="/pengurusan_pengguna/delete/` + element.id + ` " method="post"
                                             class="d-inline-flex">
                                             @csrf
                                             @method('delete')
@@ -131,7 +132,7 @@
                                                 <span class="fas fa-trash-alt" style="width:15px;"></span>
                                             </button>
                                         </form>
-                                        <a href="/pengurusan_pengguna/edit/{` + element.id + `}"
+                                        <a href="/pengurusan_pengguna/edit/` + element.id + `"
                                             class="ms-2 btn btn-sm btn-danger">
                                             <span class="fas fa-edit" style="width:15px;"></span>
                                         </a>

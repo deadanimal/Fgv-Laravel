@@ -56,7 +56,7 @@
                                     <label class="col-form-label text-main">No. Kad Pengenalan</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <input type="number" name="no_kad_pengenalan"
+                                    <input type="text" name="no_kad_pengenalan"
                                         class="form-control border-main  @error('no_kad_pengenalan') is-invalid @enderror"
                                         placeholder="000000000000" value="{{ $user->no_kad_pengenalan }}">
                                 </div>
