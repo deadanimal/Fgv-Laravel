@@ -15,7 +15,7 @@ class PokokController extends Controller
     public function index()
     {
         return view('pengurusanPokokInduk.pokok.index', [
-            'pokoks' => Pokok::orderByDesc('created_at')->get(),
+            'pokoks' => Pokok::orderByDesc('created_at')->get(['id', 'blok', 'baka', 'progeny', 'no_pokok']),
             'aktif' => Pokok::where('status_pokok', 'aktif')->count(),
             'tidak_aktif' => Pokok::where('status_pokok', 'tak aktif')->count(),
         ]);
