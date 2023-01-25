@@ -119,7 +119,7 @@ class FgvPmpsController extends Controller
 
     public function userByPeranan($peranan)
     {
-        $users = User::with('qualityControl')->where('peranan', $peranan)->get();
+        $users = User::with(['qualityControl', 'harvest'])->where('peranan', $peranan)->get();
         return response()->json($users);
 
     }

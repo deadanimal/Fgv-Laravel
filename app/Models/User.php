@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(QualityControl::class, 'id_sv_qc', 'id');
     }
+
+    public function harvest()
+    {
+        return $this->hasMany(Harvest::class, 'id_sv_harvest', 'id');
+    }
 }
