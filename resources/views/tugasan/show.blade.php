@@ -176,7 +176,8 @@
                             <label class="col-form-label">No. Pokok</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ $tugasan->pokok->no_pokok ?? '' }}"
+                            <input type="text" class="form-control"
+                                value=" {{ $tugasan->pokok->progeny ?? '' }} {{ $tugasan->pokok->no_pokok ?? '' }} "
                                 readonly>
                         </div>
                     </div>
@@ -227,7 +228,8 @@
                             </label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" value="{{ $tugasan->petugas->nama ?? '' }}" readonly>
+                            <input type="text" class="form-control" value="{{ $tugasan->petugas->nama ?? '' }}"
+                                readonly>
                         </div>
                     </div>
 
