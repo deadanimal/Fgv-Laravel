@@ -112,9 +112,13 @@ class UserController extends Controller
         $user->update($request->except(['peranan', 'blok']));
         $role = Role::where('name', $request->peranan)->first();
 
-        $newB = $user->blok;
+        $newB = 'first';
         foreach ($request->blok as $blok) {
-            $newB = $newB . ',' . $blok;
+            if ($newB == 'first') {
+                $newB = $blok;
+            } else {
+                $newB = $newB . ',' . $blok;
+            }
         }
 
         $user->update([
