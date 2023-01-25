@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blok;
 use App\Models\KategoriPetugas;
 use App\Models\Role;
 use App\Models\Stesen;
@@ -21,6 +22,7 @@ class UserController extends Controller
 
         return view('user.index', [
             'users' => User::orderByDesc('updated_at')->get(),
+
         ]);
     }
 
@@ -30,6 +32,7 @@ class UserController extends Controller
             'roles' => Role::all(),
             'stesens' => Stesen::all(),
             'kategoris' => KategoriPetugas::all(),
+            'bloks' => Blok::orderBy('nama', 'asc')->get(),
         ]);
     }
 
@@ -45,14 +48,29 @@ class UserController extends Controller
             "email" => "required|string",
             "stesen" => "required|string",
             "kategori_petugas" => "required|string",
-            "blok" => "required|string",
             "luput_pwd" => "required|integer",
+            'blok' => "required",
         ]);
+
         $role = Role::where('name', $request->peranan)->first();
 
         $validated['peranan'] = $role->display_name;
         $validated['password'] = Hash::make('INIT123');
-        $user = User::create($validated);
+
+        $user = User::create($request->except('blok'));
+
+        $newB = 'first';
+        foreach ($request->blok as $blok) {
+            if ($newB == 'first') {
+                $newB = $blok;
+            } else {
+                $newB = $newB . ',' . $blok;
+            }
+        }
+
+        $user->update([
+            'blok' => $newB,
+        ]);
 
         $user->attachRole($request->peranan);
 
@@ -65,11 +83,14 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        $userBlok = explode(',', $user->blok);
         return view('user.edit', [
             'user' => $user,
             'roles' => Role::all(),
             'stesens' => Stesen::all(),
             'kategoris' => KategoriPetugas::all(),
+            'bloks' => Blok::orderBy('nama', 'asc')->get(),
+            'userBlok' => $userBlok,
         ]);
     }
 
@@ -84,14 +105,21 @@ class UserController extends Controller
             "email" => "required|string",
             "stesen" => "required|string",
             "kategori_petugas" => "required|string",
-            "blok" => "required|string",
+            "blok" => "required",
             "luput_pwd" => "required|integer",
         ]);
 
-        $user->update($request->except('peranan'));
+        $user->update($request->except(['peranan', 'blok']));
         $role = Role::where('name', $request->peranan)->first();
+
+        $newB = $user->blok;
+        foreach ($request->blok as $blok) {
+            $newB = $newB . ',' . $blok;
+        }
+
         $user->update([
             'peranan' => $role->display_name,
+            'blok' => $newB,
         ]);
 
         activity()->event('KEMASKINI')->log('User No Kakitangan:' . $user->no_kakitangan . ' telah dikemaskini');

@@ -156,9 +156,21 @@
                                     <label class="col-form-label text-main">Blok</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <input type="text" name="blok"
-                                        class="form-control border-main  @error('blok') is-invalid @enderror"
-                                        placeholder="SILA TAIP DI SINI" value="{{ $user->blok }}">
+                                    <select class="form-select js-choice" id="organizerMultiple" multiple="multiple"
+                                        size="1" name="blok[]"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'>
+                                        <option value="">Sila Pilih...</option>
+
+                                        @foreach ($bloks as $blok)
+                                            <option @if (in_array($blok->nama, $userBlok)) selected @endif
+                                                value="{{ $blok->nama }}">
+                                                {{ $blok->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('blok')
+                                        <p class="text-sm text-danger">*SILA PILIH BLOK*</p>
+                                    @enderror
+
                                 </div>
                             </div>
                         </div>
