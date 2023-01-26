@@ -156,11 +156,9 @@
                                     <label class="col-form-label text-main">Blok</label>
                                 </div>
                                 <div class="col-xl-8">
-                                    <select class="form-select js-choice" id="organizerMultiple" multiple="multiple"
-                                        size="1" name="blok[]"
+                                    <select class="form-select js-choice" multiple="multiple" size="1" name="blok[]"
                                         data-options='{"removeItemButton":true,"placeholder":true}'>
                                         <option value="">Sila Pilih...</option>
-
                                         @foreach ($bloks as $blok)
                                             <option @if (in_array($blok->nama, $userBlok)) selected @endif
                                                 value="{{ $blok->nama }}">
