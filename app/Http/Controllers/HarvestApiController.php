@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Harvest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -95,5 +96,10 @@ class HarvestApiController extends Controller
             'Delete' => 'Successful',
         ];
 
+    }
+
+    public function jumlahTuaiSetiapUser()
+    {
+        return User::withCount('harvest')->get();
     }
 }

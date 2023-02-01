@@ -64,3 +64,5 @@ Route::get('/tandan/{id_tandan}/harvest', [TandanApiController::class, 'findHarv
 
 Route::get('/users/peranan/{peranan}', [FgvPmpsController::class, 'userByPeranan']);
 Route::post('/search/qc', [FgvPmpsController::class, 'searchQC']);
+
+Route::get('/jumlah-tuai-setiap-user', [HarvestApiController::class, 'jumlahTuaiSetiapUser']);
