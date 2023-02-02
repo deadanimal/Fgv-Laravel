@@ -14,4 +14,9 @@ class Pollen extends Model
     {
         return $this->belongsTo(User::class, 'id_sv_pollen');
     }
+
+    public function pokok()
+    {
+        return $this->belongsTo(Pokok::class);
+    }
 }

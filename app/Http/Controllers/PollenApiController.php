@@ -15,7 +15,7 @@ class PollenApiController extends Controller
      */
     public function index()
     {
-        return response()->json(Pollen::all());
+        return response()->json(Pollen::with('pokok')->get());
     }
 
     /**
