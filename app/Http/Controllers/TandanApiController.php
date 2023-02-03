@@ -79,27 +79,27 @@ class TandanApiController extends Controller
 
     public function findPollen($id_tandan)
     {
-        $pollens = Pollen::where('tandan_id', $id_tandan)->get();
+        $pollens = Pollen::with('pokok')->where('tandan_id', $id_tandan)->get();
         return response()->json($pollens);
     }
     public function findBagging($id_tandan)
     {
-        $bagging = Bagging::where('tandan_id', $id_tandan)->get();
+        $bagging = Bagging::with('pokok')->where('tandan_id', $id_tandan)->get();
         return response()->json($bagging);
     }
     public function findQc($id_tandan)
     {
-        $qc = QualityControl::where('tandan_id', $id_tandan)->get();
+        $qc = QualityControl::with('pokok')->where('tandan_id', $id_tandan)->get();
         return response()->json($qc);
     }
     public function findCp($id_tandan)
     {
-        $cp = ControlPollination::where('tandan_id', $id_tandan)->get();
+        $cp = ControlPollination::with('pokok')->where('tandan_id', $id_tandan)->get();
         return response()->json($cp);
     }
     public function findHarvest($id_tandan)
     {
-        $harvest = Harvest::where('tandan_id', $id_tandan)->get();
+        $harvest = Harvest::with('pokok')->where('tandan_id', $id_tandan)->get();
         return response()->json($harvest);
     }
 }
