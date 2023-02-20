@@ -10,4 +10,9 @@ class StokPollen extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    public function pollen()
+    {
+        return $this->belongsTo(Pollen::class);
+    }
+
 }

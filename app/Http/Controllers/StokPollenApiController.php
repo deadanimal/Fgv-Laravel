@@ -14,7 +14,8 @@ class StokPollenApiController extends Controller
      */
     public function index()
     {
-        return response()->json(StokPollen::all());
+        $stokPollen = StokPollen::with(['pollen.pokok', 'pollen.tandan'])->get();
+        return response()->json($stokPollen);
         //
     }
 
@@ -37,8 +38,9 @@ class StokPollenApiController extends Controller
      * @param  \App\Models\StokPollen  $stokPollen
      * @return \Illuminate\Http\Response
      */
-    public function show(StokPollen $stokPollen)
+    public function show($stokPollen)
     {
+        $stokPollen = StokPollen::with(['pollen.pokok', 'pollen.tandan'])->find($stokPollen);
         return response()->json($stokPollen);
 
     }

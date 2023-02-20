@@ -19,4 +19,9 @@ class Pollen extends Model
     {
         return $this->belongsTo(Pokok::class);
     }
+
+    public function tandan()
+    {
+        return $this->belongsTo(Tandan::class);
+    }
 }
