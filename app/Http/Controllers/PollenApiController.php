@@ -15,7 +15,7 @@ class PollenApiController extends Controller
      */
     public function index()
     {
-        return response()->json(Pollen::with('pokok')->get());
+        return response()->json(Pollen::with(['pokok', 'tandan'])->get());
     }
 
     /**
@@ -55,9 +55,10 @@ class PollenApiController extends Controller
      * @param  \App\Models\Pollen  $pollen
      * @return \Illuminate\Http\Response
      */
-    public function show(Pollen $pollen)
+    public function show($pollen)
     {
-        return response()->json($pollen);
+        $Pollen = Pollen::with(['pokok', 'tandan'])->find($pollen);
+        return response()->json($Pollen);
 
     }
 
