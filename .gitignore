@@ -18,3 +18,4 @@ yarn-error.log
 /public/qr
 /public/storage
 /public/qrcode.svg
+resources/views/pengurusanPokokInduk/downloadQR.blade.php

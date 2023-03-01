@@ -46,7 +46,8 @@
         @case(4)
             @foreach ($tandans as $t)
                 <div style="width: 3cm;" class="d-inline-flex ms-5">
-                    <img src="{{ url($no_tandans['name'][$t->id]) }}" style="width: 3cm; height:3cm;" alt="">
+                    <img src="https://fgv.prototype.com.my/{{ $no_tandans['name'][$t->id] }}" style="width: 3cm; height:3cm;"
+                        alt="">
                     <h5 class="mt-2 mb-4 text-center"> {{ $no_tandans['no_tandan'][$t->id] }}</h5>
                 </div>
             @endforeach
