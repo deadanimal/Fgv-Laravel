@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bagging;
+use App\Models\ControlPollination;
+use App\Models\Kerosakan;
 use App\Models\Pokok;
+use App\Models\Pollen;
 use App\Models\Tandan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -89,6 +92,12 @@ class BaggingApiController extends Controller
 
     public function multipleBagging(Request $request)
     {
+        if (!$request->user_id) {
+            return [
+                'code' => 404,
+                'message' => 'Sila masukkan data user_id',
+            ];
+        }
 
         foreach ($request->pokok_id as $key => $value) {
 
@@ -125,11 +134,31 @@ class BaggingApiController extends Controller
             ]);
         }
 
+        $tandanIdInCp = ControlPollination::pluck('tandan_id')->toArray();
+        $newCP = Bagging::where('id_sv_balut', $request->user_id)
+            ->where('status', 'sah')
+            ->whereNotIn('tandan_id', $tandanIdInCp)
+            ->get();
+
+        $posponedCP = ControlPollination::where('id_sv_cp', $request->user_id)
+            ->whereIn('status', ['anjak', 'tolak'])
+            ->get();
+
+        $kerosakan = Kerosakan::all();
+
+        $pollen = Pollen::where('status', 'sah')
+            ->where('kerosakan_id', null)
+            ->get();
+
         return response()->json([
             'bagging' => $info,
             'tandan' => Tandan::all(),
             'pokok' => Pokok::all(),
             'user' => User::where('peranan', "Penyelia Balut & Pendebungaan Terkawal")->get(),
+            'newCP' => $newCP,
+            'posponedCP' => $posponedCP,
+            'kerosakan' => $kerosakan,
+            'pollen' => $pollen,
         ]);
 
     }
