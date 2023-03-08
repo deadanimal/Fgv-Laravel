@@ -98,40 +98,38 @@ class BaggingApiController extends Controller
                 'message' => 'Sila masukkan data user_id',
             ];
         }
+        if ($request->pokok_id) {
+            foreach ($request->pokok_id as $key => $value) {
 
-        foreach ($request->pokok_id as $key => $value) {
+                $info[$key] = Bagging::create([
+                    "no_bagging" => $request->noBagging[$key] ?? null,
+                    "pokok_id" => $request->pokok_id[$key],
+                    "tandan_id" => $request->tandan_id[$key],
+                    "id_sv_balut" => $request->id_sv_balut[$key] ?? null,
+                    "catatan" => $request->catatan[$key] ?? null,
+                    "pengesah_id" => $request->pengesah_id[$key] ?? null,
+                    "catatan_pengesah" => $request->catatan_pengesah[$key] ?? null,
+                    "status" => $request->status[$key] ?? null,
+                ]);
 
-            $info[$key] = Bagging::create([
-                "no_bagging" => $request->noBagging[$key] ?? null,
-                "pokok_id" => $request->pokok_id[$key],
-                "tandan_id" => $request->tandan_id[$key],
-                "id_sv_balut" => $request->id_sv_balut[$key] ?? null,
-                "catatan" => $request->catatan[$key] ?? null,
-                "pengesah_id" => $request->pengesah_id[$key] ?? null,
-                "catatan_pengesah" => $request->catatan_pengesah[$key] ?? null,
-                "status" => $request->status[$key] ?? null,
-            ]);
-
-            $tandan[$key] = Tandan::find($request->tandan_id[$key])->update([
-                'kitaran' => 'balut',
-                'pokok_id' => $request->pokok_id[$key],
-                'tarikh_daftar' => now(),
-            ]);
-
-            // $info[$key]['tandan'] = $tandan[$key];
-
-        }
-
-        if ($request->hasFile('url_gambar')) {
-            foreach ($request->file('url_gambar') as $key => $value) {
-                $url = $value->store(
-                    'bagging', 'public'
-                );
+                $tandan[$key] = Tandan::find($request->tandan_id[$key])->update([
+                    'kitaran' => 'balut',
+                    'pokok_id' => $request->pokok_id[$key],
+                    'tarikh_daftar' => now(),
+                ]);
             }
 
-            $info[$key]->update([
-                'url_gambar' => $url,
-            ]);
+            if ($request->hasFile('url_gambar')) {
+                foreach ($request->file('url_gambar') as $key => $value) {
+                    $url = $value->store(
+                        'bagging', 'public'
+                    );
+                }
+
+                $info[$key]->update([
+                    'url_gambar' => $url,
+                ]);
+            }
         }
 
         $tandanIdInCp = ControlPollination::pluck('tandan_id')->toArray();
@@ -151,7 +149,7 @@ class BaggingApiController extends Controller
             ->get();
 
         return response()->json([
-            'bagging' => $info,
+            'bagging' => $info ?? 'tiada',
             'tandan' => Tandan::all(),
             'pokok' => Pokok::all(),
             'user' => User::where('peranan', "Penyelia Balut & Pendebungaan Terkawal")->get(),
