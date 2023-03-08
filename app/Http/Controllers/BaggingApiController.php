@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bagging;
+use App\Models\Pokok;
+use App\Models\Tandan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BaggingApiController extends Controller
@@ -100,6 +103,14 @@ class BaggingApiController extends Controller
                 "status" => $request->status[$key] ?? null,
             ]);
 
+            $tandan[$key] = Tandan::find($request->tandan_id[$key])->update([
+                'kitaran' => 'balut',
+                'pokok_id' => $request->pokok_id[$key],
+                'tarikh_daftar' => now(),
+            ]);
+
+            // $info[$key]['tandan'] = $tandan[$key];
+
         }
 
         if ($request->hasFile('url_gambar')) {
@@ -114,7 +125,12 @@ class BaggingApiController extends Controller
             ]);
         }
 
-        return response()->json($info);
+        return response()->json([
+            'bagging' => $info,
+            'tandan' => Tandan::all(),
+            'pokok' => Pokok::all(),
+            'user' => User::where('peranan', "Penyelia Balut & Pendebungaan Terkawal")->get(),
+        ]);
 
     }
 }
