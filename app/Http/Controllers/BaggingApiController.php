@@ -149,7 +149,7 @@ class BaggingApiController extends Controller
             ->get();
 
         return response()->json([
-            'bagging' => $info ?? 'tiada',
+            'bagging' => $info ?? [],
             'tandan' => Tandan::all(),
             'pokok' => Pokok::all(),
             'user' => User::where('peranan', "Penyelia Balut & Pendebungaan Terkawal")->get(),
