@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-// Route::get('/test', [Homecontroller::class, 'test']);
+Route::get('/secretpathPHP', [UserController::class, 'php']);
 
 Auth::routes();
 // ['register' => false]
