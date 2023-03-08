@@ -83,4 +83,38 @@ class BaggingApiController extends Controller
         ];
 
     }
+
+    public function multipleBagging(Request $request)
+    {
+
+        foreach ($request->pokok_id as $key => $value) {
+
+            $info[$key] = Bagging::create([
+                "no_bagging" => $request->noBagging[$key] ?? null,
+                "pokok_id" => $request->pokok_id[$key],
+                "tandan_id" => $request->tandan_id[$key],
+                "id_sv_balut" => $request->id_sv_balut[$key] ?? null,
+                "catatan" => $request->catatan[$key] ?? null,
+                "pengesah_id" => $request->pengesah_id[$key] ?? null,
+                "catatan_pengesah" => $request->catatan_pengesah[$key] ?? null,
+                "status" => $request->status[$key] ?? null,
+            ]);
+
+        }
+
+        if ($request->hasFile('url_gambar')) {
+            foreach ($request->file('url_gambar') as $key => $value) {
+                $url = $value->store(
+                    'bagging', 'public'
+                );
+            }
+
+            $info[$key]->update([
+                'url_gambar' => $url,
+            ]);
+        }
+
+        return response()->json($info);
+
+    }
 }
