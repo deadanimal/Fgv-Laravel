@@ -124,11 +124,13 @@ class BaggingApiController extends Controller
                     $url = $value->store(
                         'bagging', 'public'
                     );
+
+                    $info[$key]->update([
+                        'url_gambar' => $url,
+                    ]);
+
                 }
 
-                $info[$key]->update([
-                    'url_gambar' => $url,
-                ]);
             }
         }
 
