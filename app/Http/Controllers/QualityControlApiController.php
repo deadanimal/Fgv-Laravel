@@ -112,39 +112,43 @@ class QualityControlApiController extends Controller
             ];
         }
         foreach ($request->pokok_id as $key => $pokok_id) {
+            try {
+                $request->id[$key];
+                $adaId = true;
+            } catch (\Throwable$th) {
+                $adaId = false;
+            }
 
-            if ($request->id) {
-                if ($request->id[$key]) {
-                    $qc[$key] = QualityControl::find($request->id[$key]);
-                    if (!$qc[$key]) {
-                        return [
-                            'code' => 404,
-                            'message' => "Id QC " . $qc[$key] . " not found",
-                        ];
-                    }
-                    $qc[$key]->update([
-                        "pokok_id" => $pokok_id,
-                        "tandan_id" => $request->tandan_id[$key] ?? $qc[$key]->tandan_id,
-                        "no_qc" => $request->no_qc[$key] ?? $qc[$key]->no_qc,
-                        "kerosakan_id" => $request->kerosakan_id[$key] ?? $qc[$key]->kerosakan_id,
-                        "status_bunga" => $request->status_bunga[$key] ?? $qc[$key]->status_bunga,
-                        "status_qc" => $request->status_qc[$key] ?? $qc[$key]->status_qc,
-                        "id_sv_qc" => $request->id_sv_qc[$key] ?? $qc[$key]->id_sv_qc,
-                        "catatan" => $request->catatan[$key] ?? $qc[$key]->catatan,
-                        "jum_bagging" => $request->jum_bagging[$key] ?? $qc[$key]->jum_bagging,
-                        "jum_bagging_lulus" => $request->jum_bagging_lulus[$key] ?? $qc[$key]->jum_bagging_lulus,
-                        "jum_bagging_rosak" => $request->jum_bagging_rosak[$key] ?? $qc[$key]->jum_bagging_rosak,
-                        "peratus_rosak" => $request->peratus_rosak[$key] ?? $qc[$key]->peratus_rosak,
-                        "pengesah_id" => $request->pengesah_id[$key] ?? $qc[$key]->pengesah_id,
-                        "catatan_pengesah" => $request->catatan_pengesah[$key] ?? $qc[$key]->catatan_pengesah,
-                        "status" => $request->status[$key] ?? $qc[$key]->status,
-                    ]);
-
+            if ($adaId) {
+                $qc[$key] = QualityControl::find($request->id[$key]);
+                if (!$qc[$key]) {
+                    return [
+                        'code' => 404,
+                        'message' => "Id QC " . $qc[$key] . " not found",
+                    ];
                 }
+                $qc[$key]->update([
+                    "pokok_id" => $pokok_id,
+                    "tandan_id" => $request->tandan_id[$key] ?? $qc[$key]->tandan_id,
+                    "no_qc" => $request->no_qc[$key] ?? $qc[$key]->no_qc,
+                    "kerosakan_id" => $request->kerosakan_id[$key] ?? $qc[$key]->kerosakan_id,
+                    "status_bunga" => $request->status_bunga[$key] ?? $qc[$key]->status_bunga,
+                    "status_qc" => $request->status_qc[$key] ?? $qc[$key]->status_qc,
+                    "id_sv_qc" => $request->id_sv_qc[$key] ?? $qc[$key]->id_sv_qc,
+                    "catatan" => $request->catatan[$key] ?? $qc[$key]->catatan,
+                    "jum_bagging" => $request->jum_bagging[$key] ?? $qc[$key]->jum_bagging,
+                    "jum_bagging_lulus" => $request->jum_bagging_lulus[$key] ?? $qc[$key]->jum_bagging_lulus,
+                    "jum_bagging_rosak" => $request->jum_bagging_rosak[$key] ?? $qc[$key]->jum_bagging_rosak,
+                    "peratus_rosak" => $request->peratus_rosak[$key] ?? $qc[$key]->peratus_rosak,
+                    "pengesah_id" => $request->pengesah_id[$key] ?? $qc[$key]->pengesah_id,
+                    "catatan_pengesah" => $request->catatan_pengesah[$key] ?? $qc[$key]->catatan_pengesah,
+                    "status" => $request->status[$key] ?? $qc[$key]->status,
+                ]);
+
             } else {
                 $qc[$key] = QualityControl::create([
                     "pokok_id" => $pokok_id,
-                    "tandan_id" => $request->tandan_id[$key],
+                    "tandan_id" => $request->tandan_id[$key] ?? null,
                     "no_qc" => $request->no_qc[$key] ?? null,
                     "kerosakan_id" => $request->kerosakan_id[$key] ?? null,
                     "status_bunga" => $request->status_bunga[$key] ?? null,

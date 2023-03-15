@@ -100,7 +100,6 @@ class BaggingApiController extends Controller
         }
         if ($request->pokok_id) {
             foreach ($request->pokok_id as $key => $value) {
-
                 $info[$key] = Bagging::create([
                     "no_bagging" => $request->noBagging[$key] ?? null,
                     "pokok_id" => $request->pokok_id[$key],

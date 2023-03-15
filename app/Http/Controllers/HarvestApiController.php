@@ -116,33 +116,38 @@ class HarvestApiController extends Controller
             ];
         }
         foreach ($request->pokok_id as $key => $pokok_id) {
-            if ($request->id) {
-                if ($request->id[$key]) {
-                    $harvest[$key] = Harvest::find($request->id[$key]);
-                    if (!$harvest[$key]) {
-                        return [
-                            'code' => 404,
-                            'message' => "Id Harvest " . $harvest[$key] . " not found",
-                        ];
-                    }
-                    $harvest[$key]->update([
-                        "pokok_id" => $pokok_id,
-                        "tandan_id" => $request->tandan_id[$key] ?? $harvest[$key]->tandan_id,
-                        "no_harvest" => $request->no_harvest[$key] ?? $harvest[$key]->no_harvest,
-                        "kerosakan_id" => $request->kerosakan_id[$key] ?? $harvest[$key]->kerosakan_id,
-                        "berat_tandan" => $request->berat_tandan[$key] ?? $harvest[$key]->berat_tandan,
-                        "catatan" => $request->catatan[$key] ?? $harvest[$key]->catatan,
-                        "pengesah_id" => $request->pengesah_id[$key] ?? $harvest[$key]->pengesah_id,
-                        "catatan_pengesah" => $request->catatan_pengesah[$key] ?? $harvest[$key]->catatan_pengesah,
-                        "jumlah_tandan" => $request->jumlah_tandan[$key] ?? $harvest[$key]->jumlah_tandan,
-                        "status" => $request->status[$key] ?? $harvest[$key]->status,
-                        "number_of_postponed_field" => $request->number_of_postponed_field[$key] ?? $harvest[$key]->number_of_postponed_field,
-                        "tambah_hari" => $request->tambah_hari[$key] ?? $harvest[$key]->tambah_hari,
-                        "status_bunga" => $request->status_bunga[$key] ?? $harvest[$key]->status_bunga,
-                        "status_bunga" => $request->status_bunga[$key] ?? $harvest[$key]->status_bunga,
+            try {
+                $request->id[$key];
+                $adaId = true;
+            } catch (\Throwable$th) {
+                $adaId = false;
+            }
 
-                    ]);
+            if ($adaId) {
+                $harvest[$key] = Harvest::find($request->id[$key]);
+                if (!$harvest[$key]) {
+                    return [
+                        'code' => 404,
+                        'message' => "Id Harvest " . $harvest[$key] . " not found",
+                    ];
                 }
+                $harvest[$key]->update([
+                    "pokok_id" => $pokok_id,
+                    "tandan_id" => $request->tandan_id[$key] ?? $harvest[$key]->tandan_id,
+                    "no_harvest" => $request->no_harvest[$key] ?? $harvest[$key]->no_harvest,
+                    "kerosakan_id" => $request->kerosakan_id[$key] ?? $harvest[$key]->kerosakan_id,
+                    "berat_tandan" => $request->berat_tandan[$key] ?? $harvest[$key]->berat_tandan,
+                    "catatan" => $request->catatan[$key] ?? $harvest[$key]->catatan,
+                    "pengesah_id" => $request->pengesah_id[$key] ?? $harvest[$key]->pengesah_id,
+                    "catatan_pengesah" => $request->catatan_pengesah[$key] ?? $harvest[$key]->catatan_pengesah,
+                    "jumlah_tandan" => $request->jumlah_tandan[$key] ?? $harvest[$key]->jumlah_tandan,
+                    "status" => $request->status[$key] ?? $harvest[$key]->status,
+                    "number_of_postponed_field" => $request->number_of_postponed_field[$key] ?? $harvest[$key]->number_of_postponed_field,
+                    "tambah_hari" => $request->tambah_hari[$key] ?? $harvest[$key]->tambah_hari,
+                    "status_bunga" => $request->status_bunga[$key] ?? $harvest[$key]->status_bunga,
+                    "status_bunga" => $request->status_bunga[$key] ?? $harvest[$key]->status_bunga,
+
+                ]);
             } else {
                 $harvest[$key] = Harvest::create([
                     "pokok_id" => $pokok_id,
