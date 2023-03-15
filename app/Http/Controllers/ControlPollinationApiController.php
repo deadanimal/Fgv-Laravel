@@ -112,4 +112,79 @@ class ControlPollinationApiController extends Controller
         ];
 
     }
+
+    public function multipleCP(Request $request)
+    {
+
+        foreach ($request->pokok_id as $key => $pokok_id) {
+
+            if ($request->id) {
+                if ($request->id[$key]) {
+                    $cp[$key] = ControlPollination::find($request->id[$key]);
+                    if (!$cp[$key]) {
+                        return [
+                            'code' => 404,
+                            'message' => "Id CP " . $cp[$key] . " not found",
+                        ];
+                    }
+                    $cp[$key]->update([
+                        "pokok_id" => $pokok_id,
+                        "tandan_id" => $request->tandan_id[$key] ?? $cp[$key]->tandan_id,
+                        "no_cp" => $request->no_cp[$key] ?? $cp[$key]->no_cp,
+                        "kerosakan_id" => $request->kerosakan_id[$key] ?? $cp[$key]->kerosakan_id,
+                        "bil_pemeriksaan" => $request->bil_pemeriksaan[$key] ?? $cp[$key]->bil_pemeriksaan,
+                        "tambahan_hari" => $request->tambahan_hari[$key] ?? $cp[$key]->tambahan_hari,
+                        "no_pollen" => $request->no_pollen[$key] ?? $cp[$key]->no_pollen,
+                        "peratus_pollen" => $request->peratus_pollen[$key] ?? $cp[$key]->peratus_pollen,
+                        "id_sv_cp" => $request->id_sv_cp[$key] ?? $cp[$key]->id_sv_cp,
+                        "catatan" => $request->catatan[$key] ?? $cp[$key]->catatan,
+                        "pengesah_id" => $request->pengesah_id[$key] ?? $cp[$key]->pengesah_id,
+                        "catatan_pengesah" => $request->catatan_pengesah[$key] ?? $cp[$key]->catatan_pengesah,
+                        "status" => $request->status[$key] ?? $cp[$key]->status,
+                    ]);
+                }
+            } else {
+                $cp[$key] = ControlPollination::create([
+                    "pokok_id" => $pokok_id,
+                    "tandan_id" => $request->tandan_id[$key],
+                    "no_cp" => $request->no_cp[$key] ?? null,
+                    "kerosakan_id" => $request->kerosakan_id[$key] ?? null,
+                    "bil_pemeriksaan" => $request->bil_pemeriksaan[$key] ?? null,
+                    "tambahan_hari" => $request->tambahan_hari[$key] ?? null,
+                    "no_pollen" => $request->no_pollen[$key] ?? null,
+                    "peratus_pollen" => $request->peratus_pollen[$key] ?? null,
+                    "id_sv_cp" => $request->id_sv_cp[$key] ?? null,
+                    "catatan" => $request->catatan[$key] ?? null,
+                    "pengesah_id" => $request->pengesah_id[$key] ?? null,
+                    "catatan_pengesah" => $request->catatan_pengesah[$key] ?? null,
+                    "status" => $request->status[$key] ?? null,
+                ]);
+            }
+
+        }
+
+        if ($request->hasFile('url_gambar')) {
+            foreach ($request->file('url_gambar') as $key => $value) {
+
+                $urlnew = $value->store(
+                    'cp', 'public'
+                );
+
+                $url = $cp[$key]->url_gambar;
+                if ($url == null) {
+                    $url = $urlnew;
+                } else {
+                    $url = $url . ',' . $urlnew;
+                }
+
+                $cp[$key]->update([
+                    'url_gambar' => $url,
+                ]);
+
+            }
+
+        }
+
+        return $cp;
+    }
 }

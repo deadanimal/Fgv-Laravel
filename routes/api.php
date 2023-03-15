@@ -68,3 +68,6 @@ Route::post('/search/qc', [FgvPmpsController::class, 'searchQC']);
 Route::get('/jumlah-tuai-setiap-user', [HarvestApiController::class, 'jumlahTuaiSetiapUser']);
 
 Route::post('/multiple-bagging', [BaggingApiController::class, 'multipleBagging']);
+Route::post('/multiple-cp', [ControlPollinationApiController::class, 'multipleCP']);
+Route::post('/multiple-qc', [QualityControlApiController::class, 'multipleQC']);
+Route::post('/multiple-harvest', [HarvestApiController::class, 'multipleHarvest']);
