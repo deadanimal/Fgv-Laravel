@@ -135,12 +135,12 @@ class BaggingApiController extends Controller
         }
 
         $tandanIdInCp = ControlPollination::pluck('tandan_id')->toArray();
-        $newCP = Bagging::where('id_sv_balut', $request->user_id)
+        $newCP = Bagging::with(['pokok'])->where('id_sv_balut', $request->user_id)
             ->where('status', 'sah')
             ->whereNotIn('tandan_id', $tandanIdInCp)
             ->get();
 
-        $posponedCP = ControlPollination::where('id_sv_cp', $request->user_id)
+        $posponedCP = ControlPollination::with(['pokok'])->where('id_sv_cp', $request->user_id)
             ->whereIn('status', ['anjak', 'tolak'])
             ->get();
 
