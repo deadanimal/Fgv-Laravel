@@ -168,6 +168,7 @@ class HarvestApiController extends Controller
                         "status_bunga" => $request->status_bunga[$key] ?? null,
                     ]);
                 }
+                $harvest[$key] = Harvest::with(['pokok'])->where('id',$harvest[$key]->id)->first();
     
             }
     
@@ -197,7 +198,7 @@ class HarvestApiController extends Controller
             "tandans" => Tandan::all(),
             "korosakans" => Kerosakan::all(),
             "penyeliakk" => User::where('peranan', "Penyelia Tuai")->get(),
-            "newHarvest" => Harvest::where('id_sv_harvest', $request->user_id)->whereIn('status', ["dicipta", "tolak"])->get(),
+            "newHarvest" => Harvest::with(['pokok'])->where('id_sv_harvest', $request->user_id)->whereIn('status', ["dicipta", "tolak"])->get(),
         ];
 
     }

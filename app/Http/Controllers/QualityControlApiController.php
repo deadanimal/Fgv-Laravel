@@ -145,6 +145,7 @@ class QualityControlApiController extends Controller
                         "catatan_pengesah" => $request->catatan_pengesah[$key] ?? $qc[$key]->catatan_pengesah,
                         "status" => $request->status[$key] ?? $qc[$key]->status,
                     ]);
+
     
                 } else {
                     $qc[$key] = QualityControl::create([
@@ -164,7 +165,11 @@ class QualityControlApiController extends Controller
                         "catatan_pengesah" => $request->catatan_pengesah[$key] ?? null,
                         "status" => $request->status[$key] ?? null,
                     ]);
+
                 }
+
+                $qc[$key] = QualityControl::with(['pokok'])->where('id',$qc[$key]->id)->first();
+
     
             }
     
@@ -195,7 +200,7 @@ class QualityControlApiController extends Controller
             "tandans" => Tandan::all(),
             "korosakans" => Kerosakan::all(),
             "penyeliakk" => User::where('peranan', "Penyelia Kawalan Kualiti")->get(),
-            "newQc" => QualityControl::where('id_sv_qc', $request->user_id)->whereIn('status', ["dicipta", "tolak"])->get(),
+            "newQc" => QualityControl::with(['pokok'])->where('id_sv_qc', $request->user_id)->whereIn('status', ["dicipta", "tolak"])->get(),
         ];
 
     }
