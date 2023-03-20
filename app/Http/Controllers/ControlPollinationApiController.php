@@ -118,6 +118,7 @@ class ControlPollinationApiController extends Controller
         if (!$request->pokok_id) {
            return [
             'cp' => null,
+            "posponedCP"=>ControlPollination::with('pokok')->whereIn('status',['anjak','tolak','dicipta'])->get(),
            ];
         }
         foreach ($request->pokok_id as $key => $pokok_id) {
@@ -192,6 +193,9 @@ class ControlPollinationApiController extends Controller
 
         }
 
-        return $cp;
+        return [
+            "cp"=>$cp,
+            "posponedCP"=>ControlPollination::with('pokok')->whereIn('status',['anjak','tolak','dicipta'])->get(),
+        ];
     }
 }
