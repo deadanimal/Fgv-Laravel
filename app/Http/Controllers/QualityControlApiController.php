@@ -169,7 +169,6 @@ class QualityControlApiController extends Controller
                 }
 
                 $qc[$key] = QualityControl::with(['pokok'])->where('id',$qc[$key]->id)->first();
-
     
             }
     

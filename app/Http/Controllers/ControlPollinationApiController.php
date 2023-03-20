@@ -115,6 +115,11 @@ class ControlPollinationApiController extends Controller
 
     public function multipleCP(Request $request)
     {
+        if (!$request->pokok_id) {
+           return [
+            'cp' => null,
+           ];
+        }
         foreach ($request->pokok_id as $key => $pokok_id) {
             try {
                 $request->id[$key];
