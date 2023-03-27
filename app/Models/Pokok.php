@@ -25,4 +25,9 @@ class Pokok extends Model
         return $this->hasMany(Bagging::class);
     }
 
+    public function qc()
+    {
+        return $this->hasMany(QualityControl::class);
+    }
+
 }

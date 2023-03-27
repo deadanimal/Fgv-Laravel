@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ControlPollination;
+use App\Models\Tandan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -118,7 +119,6 @@ class ControlPollinationApiController extends Controller
         if (!$request->pokok_id) {
            return [
             'cp' => null,
-            "posponedCP"=>ControlPollination::with('pokok')->whereIn('status',['anjak','tolak','dicipta'])->get(),
            ];
         }
         foreach ($request->pokok_id as $key => $pokok_id) {
@@ -151,6 +151,7 @@ class ControlPollinationApiController extends Controller
                     "catatan_pengesah" => $request->catatan_pengesah[$key] ?? $cp[$key]->catatan_pengesah,
                     "status" => $request->status[$key] ?? $cp[$key]->status,
                 ]);
+                  
             } else {
                 $cp[$key] = ControlPollination::create([
                     "pokok_id" => $pokok_id,
@@ -168,6 +169,11 @@ class ControlPollinationApiController extends Controller
                     "status" => $request->status[$key] ?? null,
                 ]);
             }
+            
+            Tandan::find($request->tandan_id[$key])->update([
+                'status_tandan'=>"aktif",
+                'kitaran'=>"debung",
+            ]);
 
         }
 
@@ -195,7 +201,6 @@ class ControlPollinationApiController extends Controller
 
         return [
             "cp"=>$cp,
-            "posponedCP"=>ControlPollination::with('pokok')->whereIn('status',['anjak','tolak','dicipta'])->get(),
         ];
     }
 }

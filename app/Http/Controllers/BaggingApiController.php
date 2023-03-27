@@ -92,6 +92,7 @@ class BaggingApiController extends Controller
 
     public function multipleBagging(Request $request)
     {
+        
         if (!$request->user_id) {
             return [
                 'code' => 404,
@@ -115,6 +116,7 @@ class BaggingApiController extends Controller
                     'kitaran' => 'balut',
                     'pokok_id' => $request->pokok_id[$key],
                     'tarikh_daftar' => now(),
+                    'status_tandan'=>"aktif",
                 ]);
             }
 
@@ -140,7 +142,7 @@ class BaggingApiController extends Controller
             ->get();
 
         $posponedCP = ControlPollination::with(['pokok'])->where('id_sv_cp', $request->user_id)
-            ->whereIn('status', ['anjak', 'tolak'])
+            ->whereIn('status', ['anjak', 'tolak','dicipta'])
             ->get();
 
         $kerosakan = Kerosakan::all();
