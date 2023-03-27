@@ -117,9 +117,9 @@ class ControlPollinationApiController extends Controller
     public function multipleCP(Request $request)
     {
         if (!$request->pokok_id) {
-           return [
-            'cp' => null,
-           ];
+            return [
+                'cp' => null,
+            ];
         }
         foreach ($request->pokok_id as $key => $pokok_id) {
             try {
@@ -151,7 +151,7 @@ class ControlPollinationApiController extends Controller
                     "catatan_pengesah" => $request->catatan_pengesah[$key] ?? $cp[$key]->catatan_pengesah,
                     "status" => $request->status[$key] ?? $cp[$key]->status,
                 ]);
-                  
+
             } else {
                 $cp[$key] = ControlPollination::create([
                     "pokok_id" => $pokok_id,
@@ -169,11 +169,14 @@ class ControlPollinationApiController extends Controller
                     "status" => $request->status[$key] ?? null,
                 ]);
             }
-            
-            Tandan::find($request->tandan_id[$key])->update([
-                'status_tandan'=>"aktif",
-                'kitaran'=>"debung",
-            ]);
+            try {
+                Tandan::find($request->tandan_id[$key])->update([
+                    'status_tandan' => "aktif",
+                    'kitaran' => "debung",
+                ]);
+
+            } catch (\Throwable$th) {
+            }
 
         }
 
@@ -200,7 +203,7 @@ class ControlPollinationApiController extends Controller
         }
 
         return [
-            "cp"=>$cp,
+            "cp" => $cp,
         ];
     }
 }
