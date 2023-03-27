@@ -126,55 +126,84 @@ class FgvPmpsController extends Controller
 
     public function searchQC(Request $request)
     {
-        if ($request->blok == null && $request->progeny == null) {
-            $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')
-                ->get()->pluck('bagging')->flatten();
-            return response()->json($pokoks);
+        $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')
+            ->has('bagging');
+
+        if ($request->blok) {
+            $pokoks = $pokoks->where('blok', $request->blok);
         }
 
-        if ($request->blok != null && $request->progeny == null) {
-            $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')->where('blok', $request->blok)
-                ->get()->pluck('bagging')->flatten();
-            return response()->json($pokoks);
+        if ($request->progeny) {
+            $pokoks = $pokoks->where('progeny', $request->progeny);
         }
 
-        if ($request->blok == null && $request->progeny != null) {
-            $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')->where('progeny', $request->progeny)
-                ->get()->pluck('bagging')->flatten();
-            return response()->json($pokoks);
-        }
+        $pokoks = $pokoks->get()->pluck('bagging')->flatten();
 
-        $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')->where('blok', $request->blok)
-            ->where('progeny', $request->progeny)
-            ->get()->pluck('bagging')->flatten();
+        if ($request->user_id) {
+            $newpokoks = null;
+            foreach ($pokoks as $p) {
+                if ($p->id_sv_balut == $request->user_id) {
+                    $newpokoks[] = $p;
+                }
+            }
+            return response()->json($newpokoks);
+        }
         return response()->json($pokoks);
-
     }
+
     public function searchQC2(Request $request)
     {
-        if ($request->blok == null && $request->progeny == null) {
-            $pokoks = Pokok::with('qc.pokok', 'qc.tandan')->has('qc')
-                ->get()->pluck('qc')->flatten();
-            return response()->json($pokoks);
+        $pokoks = Pokok::with('qc.pokok', 'qc.tandan')->has('qc');
+
+        if ($request->blok) {
+            $pokoks = $pokoks->where('blok', $request->blok);
         }
 
-        if ($request->blok != null && $request->progeny == null) {
-            $pokoks = Pokok::with('qc.pokok', 'qc.tandan')->has('qc')->where('blok', $request->blok)
-                ->get()->pluck('qc')->flatten();
-            return response()->json($pokoks);
+        if ($request->progeny) {
+            $pokoks = $pokoks->where('progeny', $request->progeny);
         }
 
-        if ($request->blok == null && $request->progeny != null) {
-            $pokoks = Pokok::with('qc.pokok', 'qc.tandan')->has('qc')->where('progeny', $request->progeny)
-                ->get()->pluck('qc')->flatten();
-            return response()->json($pokoks);
+        $pokoks = $pokoks->get()->pluck('qc')->flatten();
+
+        if ($request->user_id) {
+            $newpokoks = null;
+            foreach ($pokoks as $p) {
+                if ($p->id_sv_qc == $request->user_id) {
+                    $newpokoks[] = $p;
+                }
+            }
+            return response()->json($newpokoks);
         }
 
-        $pokoks = Pokok::with('qc.pokok', 'qc.tandan')->has('qc')->where('blok', $request->blok)
-            ->where('progeny', $request->progeny)
-            ->get()->pluck('qc')->flatten();
         return response()->json($pokoks);
 
     }
+
+    // public function searchQC3(Request $request)
+    // {
+    //     if ($request->blok == null && $request->progeny == null) {
+    //         $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')
+    //             ->get()->pluck('bagging')->flatten();
+    //         return response()->json($pokoks);
+    //     }
+
+    //     if ($request->blok != null && $request->progeny == null) {
+    //         $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')->where('blok', $request->blok)
+    //             ->get()->pluck('bagging')->flatten();
+    //         return response()->json($pokoks);
+    //     }
+
+    //     if ($request->blok == null && $request->progeny != null) {
+    //         $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')->where('progeny', $request->progeny)
+    //             ->get()->pluck('bagging')->flatten();
+    //         return response()->json($pokoks);
+    //     }
+
+    //     $pokoks = Pokok::with('bagging.pokok', 'bagging.tandan')->has('bagging')->where('blok', $request->blok)
+    //         ->where('progeny', $request->progeny)
+    //         ->get()->pluck('bagging')->flatten();
+    //     return response()->json($pokoks);
+
+    // }
 
 }
