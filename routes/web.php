@@ -4,6 +4,8 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KerosakanController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LaporanController2;
+use App\Http\Controllers\LaporanController3;
 use App\Http\Controllers\LaporanDownloadController;
 use App\Http\Controllers\MatlamatController;
 use App\Http\Controllers\PokokController;
@@ -81,9 +83,7 @@ Route::middleware('auth.basic')->group(function () {
             Route::get('/downloadqrtandan/{tandan}', [TandanController::class, 'downloadqr'])->name('downloadqrtandan');
             Route::post('/generateQR', [TandanController::class, 'generateQR'])->name('generateQR');
             Route::post('/tandan/search', [TandanController::class, 'search'])->name('search.tandan');
-
         });
-
     });
 
     Route::prefix('/laporan')->as('laporan.')->group(function () {
@@ -92,10 +92,21 @@ Route::middleware('auth.basic')->group(function () {
 
         Route::get('/fatherpalm/index', [LaporanController::class, 'fatherpalm'])->name('fatherpalm');
         Route::post('/fatherpalm/store', [LaporanController::class, 'fatherpalmStore'])->name('fatherpalmStore');
+
+        Route::get('/fatherpalm', [LaporanController2::class, 'fatherpalm'])->name('fatherpalm_main');
+
+        Route::get('/bagging/{bulan}/{tahun}', [LaporanController2::class, 'bagging'])->name('bagging');
+
+        Route::get('/master/tandanpokokbagging', [LaporanController3::class, 'masterTandanPokokBagging'])->name('masterTandanPokokBagging');
+        Route::get('/master/controlpollination', [LaporanController3::class, 'masterControlPollination'])->name('masterControlPollination');
+        Route::get('/master/qualitycontrol', [LaporanController3::class, 'masterQualityControl'])->name('masterQualityControl');
+        Route::get('/master/harvest', [LaporanController3::class, 'masterHarvest'])->name('masterHarvest');
+        Route::get('/master/tandan', [LaporanController3::class, 'masterTandan'])->name('masterTandan');
+        Route::get('/master', [LaporanController3::class, 'displayMasterMotherPalm'])->name('displayMasterMotherPalm');
     });
     Route::prefix('/download/laporan')->group(function () {
         Route::prefix('/balut')->group(function () {
-            Route::get('/pf/{type}', [LaporanDownloadController::class, 'PF'])->name('laporanPF');
+            Route::get('/1/{type}', [LaporanDownloadController::class, 'balut1'])->name('laporanBalut1');
             Route::get('/harian/{type}/{bulan}', [LaporanDownloadController::class, 'harianBalut'])->name('laporanHarianBalut');
         });
     });
@@ -111,5 +122,4 @@ Route::middleware('auth.basic')->group(function () {
 
         Route::post('/carian/matlamat', [MatlamatController::class, 'carian']);
     });
-
 });

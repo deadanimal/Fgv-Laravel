@@ -12,16 +12,16 @@
             </select>
         </div>
 
-        <a href="{{ route('laporanPF', 'pdf') }}" id="downloadpdf" style="display: none"></a>
+        <a href="#" id="downloadpdf" style="display: none"></a>
 
-        <a href="{{ route('laporanPF', 'excel') }}" id="downloadexcel" style="display: none"></a>
+        <a href="#" id="downloadexcel" style="display: none"></a>
 
-        <a href="{{ route('laporanPF', 'csv') }}" id="downloadcsv" style="display: none"></a>
+        <a href="#" id="downloadcsv" style="display: none"></a>
 
 
 
         <div class="col-12 mt-4">
-            @include('laporan.motherpalm.table.pf')
+            @include('laporan.motherpalm.table.cp1')
         </div>
     </div>
 
