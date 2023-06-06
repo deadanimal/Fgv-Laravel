@@ -642,15 +642,18 @@ class LaporanController extends Controller
                 count();
 
                 $resultsCountFaktorAll = DB::table('kerosakans')->
+                where('created_at', 'LIKE', $tahun.'%')->
                 count();
 
                 $resultsCountFaktorManusia = DB::table('kerosakans')->
                 where('faktor', 'Manusia')->
+                where('created_at', 'LIKE', $tahun_bulan.'%')->
                 count();
         
 
                 $resultsCountFaktorAlam = DB::table('kerosakans')->
                 where('faktor', 'Alam')->
+                where('created_at', 'LIKE', $tahun_bulan.'%')->
                 count();
 
                 $resultsPeratusFaktorManusia = $resultsCountFaktorManusia/$resultsCountFaktorAll * 100;
@@ -1078,15 +1081,18 @@ class LaporanController extends Controller
             count();
 
             $resultsCountFaktorAll = DB::table('kerosakans')->
+             where('created_at', 'LIKE', $tahun.'%')->
             count();
 
             $resultsCountFaktorManusia = DB::table('kerosakans')->
             where('faktor', 'Manusia')->
+             where('created_at', 'LIKE', $tahun_bulan.'%')->
             count();
         
 
             $resultsCountFaktorAlam = DB::table('kerosakans')->
             where('faktor', 'Alam')->
+             where('created_at', 'LIKE', $tahun_bulan.'%')->
             count();
 
             $resultsPeratusFaktorManusia = $resultsCountFaktorManusia/$resultsCountFaktorAll * 100;
@@ -1495,15 +1501,18 @@ class LaporanController extends Controller
                 count();
 
                 $resultsCountFaktorAll = DB::table('kerosakans')->
+                where('created_at', 'LIKE', $tahun.'%')->
                 count();
 
                 $resultsCountFaktorManusia = DB::table('kerosakans')->
                 where('faktor', 'Manusia')->
+                where('created_at', 'LIKE', $tahun_bulan.'%')->
                 count();
         
 
                 $resultsCountFaktorAlam = DB::table('kerosakans')->
                 where('faktor', 'Alam')->
+                where('created_at', 'LIKE', $tahun_bulan.'%')->
                 count();
 
                 $resultsPeratusFaktorManusia = $resultsCountFaktorManusia/$resultsCountFaktorAll * 100;
@@ -1931,15 +1940,18 @@ class LaporanController extends Controller
             count();
 
             $resultsCountFaktorAll = DB::table('kerosakans')->
+            where('created_at', 'LIKE', $tahun.'%')->
             count();
 
             $resultsCountFaktorManusia = DB::table('kerosakans')->
             where('faktor', 'Manusia')->
+            where('created_at', 'LIKE', $tahun_bulan.'%')->
             count();
         
 
             $resultsCountFaktorAlam = DB::table('kerosakans')->
             where('faktor', 'Alam')->
+            where('created_at', 'LIKE', $tahun_bulan.'%')->
             count();
 
             $resultsPeratusFaktorManusia = $resultsCountFaktorManusia/$resultsCountFaktorAll * 100;
