@@ -25,6 +25,11 @@
 <div class="col-xl-12 text-center">
     <h4 class="mt-5">Motherpalm - Master Rekod</h4>
 </div>
+
+<div class="col-xl-12 text-left">
+    <span>Bulan: FEB</span>
+</div
+
 <div class="col-12 mt-4">
     <div class="table-responsive scrollbar">
         <table class="table table-hover table-bordered overflow-hidden" width="100%">

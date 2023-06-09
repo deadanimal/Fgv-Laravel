@@ -2820,10 +2820,708 @@ class LaporanController extends Controller
 
         $type = $request->laporan;
 
-        if ($type == "1")
+        switch ($request->laporan)
         {
-            $result = $this->MotherMaster( $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
-            return view('laporan.motherpalm.master_harian', compact('result'));
+            case '1':
+            $result = $this->FatherMaster( $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            return view('laporan.fatherpalm.master_bulanan', compact('result'));
+        
+            case '2':
+            switch ($request->hb)
+            {
+                case 'h':
+                $result = $this->RumusanLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                return view('laporan.fatherpalm.rumusan2_harian', [
+                    'result' => $result,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'tarikh_mula' => $tarikh_mula,
+                    'tarikh_akhir' => $tarikh_akhir,
+                    'hb' => $request->hb,
+                ]);
+                break;
+
+                case 'b':
+                $result = $this->RumusanLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                return view('laporan.fatherpalm.rumusan2_bulanan', [
+                    'result' => $result,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'hb' => $request->hb,
+                ]);
+                break;
+
+                default:
+                alert()->error('Gagal', 'Belum Mula');
+                return back();
+                break;
+            }
+
+            case '3':
+            $result = $this->ProgresLaporan3($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            return view('laporan.fatherpalm.progres3_harian', [
+                'result' => $result,
+                'bulan' => $request->bulan,
+                'tahun' => $request->tahun,
+                'tarikh_mula' => $tarikh_mula,
+                'tarikh_akhir' => $tarikh_akhir,
+                'hb' => $request->hb,
+            ]);
+            break;
+
+            case '4':
+            $result = $this->KerosakanLaporan4($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            return view('laporan.fatherpalm.kerosakan4_bulanan', [
+                'result' => $result,
+                'bulan' => $request->bulan,
+                'tahun' => $request->tahun,
+                'hb' => $request->hb,
+            ]);
+            break;
+
+            case '5':
+            $result = $this->PenggunaanLaporan5($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            return view('laporan.fatherpalm.penggunaan5_bulanan', [
+                'result' => $result,
+                'bulan' => $request->bulan,
+                'tahun' => $request->tahun,
+                'hb' => $request->hb,
+            ]);
+            break;
+
+            case '6':
+            $result = $this->PenggunaanLaporan6($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            return view('laporan.fatherpalm.penggunaan6_harian', [
+                'result' => $result,
+                'bulan' => $request->bulan,
+                'tahun' => $request->tahun,
+                'tarikh_mula' => $tarikh_mula,
+                'tarikh_akhir' => $tarikh_akhir,
+                'hb' => $request->hb,
+            ]);
+            break;
+
         }
+    }
+
+    public function FatherMaster($tarikh_mula, $tarikh_akhir)
+    {
+        $result = [];
+        return $result;
+    }
+
+    public function RumusanLaporan2($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
+                $Qcs = QualityControl::whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            } else
+            {
+                $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
+                    ->whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            }
+        }
+        else if ($hb == 'h')
+        {
+            
+            $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
+                ->whereHas('pokok', function ($pokok) {
+                    $pokok->where('status_pokok', 'aktif')
+                        ->where('jantina', 'motherpalm');
+                })
+                ->get();
+        }
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result = [];
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) {
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+            $result[$key]['03'] = 0;
+            $result[$key]['04'] = 0;
+            $result[$key]['05'] = 0;
+            $result[$key]['06'] = 0;
+            $result[$key]['07'] = 0;
+            $result[$key]['08'] = 0;
+            $result[$key]['09'] = 0;
+            $result[$key]['10'] = 0;
+            $result[$key]['11'] = 0;
+            $result[$key]['12'] = 0;
+            $result[$key]['takRosak'] = 0;
+            foreach ($Qcs as $qc) {
+
+                if ($qc->pokok->blok == $lbb->blok && $qc->pokok->baka == $lbb->baka) {
+                    $month = $qc->created_at->format('m');
+                    switch ($month) {
+                        case '01':
+                            $result[$key]['01']++;
+                            break;
+                        case '02':
+                            $result[$key]['02']++;
+                            break;
+                        case '03':
+                            $result[$key]['03']++;
+                            break;
+                        case '04':
+                            $result[$key]['04']++;
+                            break;
+                        case '05':
+                            $result[$key]['05']++;
+                            break;
+                        case '06':
+                            $result[$key]['06']++;
+                            break;
+                        case '07':
+                            $result[$key]['07']++;
+                            break;
+                        case '08':
+                            $result[$key]['08']++;
+                            break;
+                        case '09':
+                            $result[$key]['09']++;
+                            break;
+                        case '10':
+                            $result[$key]['10']++;
+                            break;
+                        case '11':
+                            $result[$key]['11']++;
+                            break;
+                        case '12':
+                            $result[$key]['12']++;
+                            break;
+                    }
+                    $result[$key]['jumlah'] = $result[$key]['01'] + $result[$key]['02'] + $result[$key]['03'] + $result[$key]['04'] + $result[$key]['05'] + $result[$key]['06'] + $result[$key]['07'] + $result[$key]['08'] + $result[$key]['09'] + $result[$key]['10'] + $result[$key]['11'] + $result[$key]['12'];
+                    if (is_null($qc->kerosakan_id)) {
+                        $result[$key]['takRosak']++;
+                    }
+                    $result['T'][$month - 1]++;
+                }
+            }
+            $result[$key]['j_motherpalm'] = Pokok::where('status_pokok', 'aktif')
+                ->where('jantina', 'Motherpalm')
+                ->where('blok', $lbb->blok)
+                ->where('baka', $lbb->baka)->count();
+        }
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
+        return $result;
+    }
+
+    public function ProgresLaporan3($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
+                $Qcs = QualityControl::whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            } else
+            {
+                $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
+                    ->whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            }
+        }
+        else if ($hb == 'h')
+        {
+            
+            $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
+                ->whereHas('pokok', function ($pokok) {
+                    $pokok->where('status_pokok', 'aktif')
+                        ->where('jantina', 'motherpalm');
+                })
+                ->get();
+        }
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result = [];
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) {
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+            $result[$key]['03'] = 0;
+            $result[$key]['04'] = 0;
+            $result[$key]['05'] = 0;
+            $result[$key]['06'] = 0;
+            $result[$key]['07'] = 0;
+            $result[$key]['08'] = 0;
+            $result[$key]['09'] = 0;
+            $result[$key]['10'] = 0;
+            $result[$key]['11'] = 0;
+            $result[$key]['12'] = 0;
+            $result[$key]['takRosak'] = 0;
+            foreach ($Qcs as $qc) {
+
+                if ($qc->pokok->blok == $lbb->blok && $qc->pokok->baka == $lbb->baka) {
+                    $month = $qc->created_at->format('m');
+                    switch ($month) {
+                        case '01':
+                            $result[$key]['01']++;
+                            break;
+                        case '02':
+                            $result[$key]['02']++;
+                            break;
+                        case '03':
+                            $result[$key]['03']++;
+                            break;
+                        case '04':
+                            $result[$key]['04']++;
+                            break;
+                        case '05':
+                            $result[$key]['05']++;
+                            break;
+                        case '06':
+                            $result[$key]['06']++;
+                            break;
+                        case '07':
+                            $result[$key]['07']++;
+                            break;
+                        case '08':
+                            $result[$key]['08']++;
+                            break;
+                        case '09':
+                            $result[$key]['09']++;
+                            break;
+                        case '10':
+                            $result[$key]['10']++;
+                            break;
+                        case '11':
+                            $result[$key]['11']++;
+                            break;
+                        case '12':
+                            $result[$key]['12']++;
+                            break;
+                    }
+                    $result[$key]['jumlah'] = $result[$key]['01'] + $result[$key]['02'] + $result[$key]['03'] + $result[$key]['04'] + $result[$key]['05'] + $result[$key]['06'] + $result[$key]['07'] + $result[$key]['08'] + $result[$key]['09'] + $result[$key]['10'] + $result[$key]['11'] + $result[$key]['12'];
+                    if (is_null($qc->kerosakan_id)) {
+                        $result[$key]['takRosak']++;
+                    }
+                    $result['T'][$month - 1]++;
+                }
+            }
+            $result[$key]['j_motherpalm'] = Pokok::where('status_pokok', 'aktif')
+                ->where('jantina', 'Motherpalm')
+                ->where('blok', $lbb->blok)
+                ->where('baka', $lbb->baka)->count();
+        }
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
+        return $result;
+    }
+
+    public function KerosakanLaporan4($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
+                $Qcs = QualityControl::whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            } else
+            {
+                $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
+                    ->whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            }
+        }
+        else if ($hb == 'h')
+        {
+            
+            $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
+                ->whereHas('pokok', function ($pokok) {
+                    $pokok->where('status_pokok', 'aktif')
+                        ->where('jantina', 'motherpalm');
+                })
+                ->get();
+        }
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result = [];
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) {
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+            $result[$key]['03'] = 0;
+            $result[$key]['04'] = 0;
+            $result[$key]['05'] = 0;
+            $result[$key]['06'] = 0;
+            $result[$key]['07'] = 0;
+            $result[$key]['08'] = 0;
+            $result[$key]['09'] = 0;
+            $result[$key]['10'] = 0;
+            $result[$key]['11'] = 0;
+            $result[$key]['12'] = 0;
+            $result[$key]['takRosak'] = 0;
+            foreach ($Qcs as $qc) {
+
+                if ($qc->pokok->blok == $lbb->blok && $qc->pokok->baka == $lbb->baka) {
+                    $month = $qc->created_at->format('m');
+                    switch ($month) {
+                        case '01':
+                            $result[$key]['01']++;
+                            break;
+                        case '02':
+                            $result[$key]['02']++;
+                            break;
+                        case '03':
+                            $result[$key]['03']++;
+                            break;
+                        case '04':
+                            $result[$key]['04']++;
+                            break;
+                        case '05':
+                            $result[$key]['05']++;
+                            break;
+                        case '06':
+                            $result[$key]['06']++;
+                            break;
+                        case '07':
+                            $result[$key]['07']++;
+                            break;
+                        case '08':
+                            $result[$key]['08']++;
+                            break;
+                        case '09':
+                            $result[$key]['09']++;
+                            break;
+                        case '10':
+                            $result[$key]['10']++;
+                            break;
+                        case '11':
+                            $result[$key]['11']++;
+                            break;
+                        case '12':
+                            $result[$key]['12']++;
+                            break;
+                    }
+                    $result[$key]['jumlah'] = $result[$key]['01'] + $result[$key]['02'] + $result[$key]['03'] + $result[$key]['04'] + $result[$key]['05'] + $result[$key]['06'] + $result[$key]['07'] + $result[$key]['08'] + $result[$key]['09'] + $result[$key]['10'] + $result[$key]['11'] + $result[$key]['12'];
+                    if (is_null($qc->kerosakan_id)) {
+                        $result[$key]['takRosak']++;
+                    }
+                    $result['T'][$month - 1]++;
+                }
+            }
+            $result[$key]['j_motherpalm'] = Pokok::where('status_pokok', 'aktif')
+                ->where('jantina', 'Motherpalm')
+                ->where('blok', $lbb->blok)
+                ->where('baka', $lbb->baka)->count();
+        }
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
+        return $result;
+    }
+
+    public function PenggunaanLaporan5($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
+                $Qcs = QualityControl::whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            } else
+            {
+                $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
+                    ->whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            }
+        }
+        else if ($hb == 'h')
+        {
+            
+            $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
+                ->whereHas('pokok', function ($pokok) {
+                    $pokok->where('status_pokok', 'aktif')
+                        ->where('jantina', 'motherpalm');
+                })
+                ->get();
+        }
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result = [];
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) {
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+            $result[$key]['03'] = 0;
+            $result[$key]['04'] = 0;
+            $result[$key]['05'] = 0;
+            $result[$key]['06'] = 0;
+            $result[$key]['07'] = 0;
+            $result[$key]['08'] = 0;
+            $result[$key]['09'] = 0;
+            $result[$key]['10'] = 0;
+            $result[$key]['11'] = 0;
+            $result[$key]['12'] = 0;
+            $result[$key]['takRosak'] = 0;
+            foreach ($Qcs as $qc) {
+
+                if ($qc->pokok->blok == $lbb->blok && $qc->pokok->baka == $lbb->baka) {
+                    $month = $qc->created_at->format('m');
+                    switch ($month) {
+                        case '01':
+                            $result[$key]['01']++;
+                            break;
+                        case '02':
+                            $result[$key]['02']++;
+                            break;
+                        case '03':
+                            $result[$key]['03']++;
+                            break;
+                        case '04':
+                            $result[$key]['04']++;
+                            break;
+                        case '05':
+                            $result[$key]['05']++;
+                            break;
+                        case '06':
+                            $result[$key]['06']++;
+                            break;
+                        case '07':
+                            $result[$key]['07']++;
+                            break;
+                        case '08':
+                            $result[$key]['08']++;
+                            break;
+                        case '09':
+                            $result[$key]['09']++;
+                            break;
+                        case '10':
+                            $result[$key]['10']++;
+                            break;
+                        case '11':
+                            $result[$key]['11']++;
+                            break;
+                        case '12':
+                            $result[$key]['12']++;
+                            break;
+                    }
+                    $result[$key]['jumlah'] = $result[$key]['01'] + $result[$key]['02'] + $result[$key]['03'] + $result[$key]['04'] + $result[$key]['05'] + $result[$key]['06'] + $result[$key]['07'] + $result[$key]['08'] + $result[$key]['09'] + $result[$key]['10'] + $result[$key]['11'] + $result[$key]['12'];
+                    if (is_null($qc->kerosakan_id)) {
+                        $result[$key]['takRosak']++;
+                    }
+                    $result['T'][$month - 1]++;
+                }
+            }
+            $result[$key]['j_motherpalm'] = Pokok::where('status_pokok', 'aktif')
+                ->where('jantina', 'Motherpalm')
+                ->where('blok', $lbb->blok)
+                ->where('baka', $lbb->baka)->count();
+        }
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
+        return $result;
+    }
+
+    public function PenggunaanLaporan6($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
+                $Qcs = QualityControl::whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            } else
+            {
+                $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
+                    ->whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            }
+        }
+        else if ($hb == 'h')
+        {
+            
+            $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
+                ->whereHas('pokok', function ($pokok) {
+                    $pokok->where('status_pokok', 'aktif')
+                        ->where('jantina', 'motherpalm');
+                })
+                ->get();
+        }
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result = [];
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) {
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+            $result[$key]['03'] = 0;
+            $result[$key]['04'] = 0;
+            $result[$key]['05'] = 0;
+            $result[$key]['06'] = 0;
+            $result[$key]['07'] = 0;
+            $result[$key]['08'] = 0;
+            $result[$key]['09'] = 0;
+            $result[$key]['10'] = 0;
+            $result[$key]['11'] = 0;
+            $result[$key]['12'] = 0;
+            $result[$key]['takRosak'] = 0;
+            foreach ($Qcs as $qc) {
+
+                if ($qc->pokok->blok == $lbb->blok && $qc->pokok->baka == $lbb->baka) {
+                    $month = $qc->created_at->format('m');
+                    switch ($month) {
+                        case '01':
+                            $result[$key]['01']++;
+                            break;
+                        case '02':
+                            $result[$key]['02']++;
+                            break;
+                        case '03':
+                            $result[$key]['03']++;
+                            break;
+                        case '04':
+                            $result[$key]['04']++;
+                            break;
+                        case '05':
+                            $result[$key]['05']++;
+                            break;
+                        case '06':
+                            $result[$key]['06']++;
+                            break;
+                        case '07':
+                            $result[$key]['07']++;
+                            break;
+                        case '08':
+                            $result[$key]['08']++;
+                            break;
+                        case '09':
+                            $result[$key]['09']++;
+                            break;
+                        case '10':
+                            $result[$key]['10']++;
+                            break;
+                        case '11':
+                            $result[$key]['11']++;
+                            break;
+                        case '12':
+                            $result[$key]['12']++;
+                            break;
+                    }
+                    $result[$key]['jumlah'] = $result[$key]['01'] + $result[$key]['02'] + $result[$key]['03'] + $result[$key]['04'] + $result[$key]['05'] + $result[$key]['06'] + $result[$key]['07'] + $result[$key]['08'] + $result[$key]['09'] + $result[$key]['10'] + $result[$key]['11'] + $result[$key]['12'];
+                    if (is_null($qc->kerosakan_id)) {
+                        $result[$key]['takRosak']++;
+                    }
+                    $result['T'][$month - 1]++;
+                }
+            }
+            $result[$key]['j_motherpalm'] = Pokok::where('status_pokok', 'aktif')
+                ->where('jantina', 'Motherpalm')
+                ->where('blok', $lbb->blok)
+                ->where('baka', $lbb->baka)->count();
+        }
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
+        return $result;
     }
 }

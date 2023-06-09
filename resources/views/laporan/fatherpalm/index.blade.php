@@ -10,12 +10,12 @@
                     <label class="col-form-label text-main">Laporan</label>
                     <select name="laporan" class="form-select border-danger" id="select-laporan">
                         <option selected disabled hidden> SILA PILIH </option>
-                        <option value="1">Master Record  (Bulanan)</option>
-                        <option value="2">Rumusan 1P1F (Harian)</option>
-                        <option value="3">Rekod Progress Membalut sub QC dan Tuai bagi Bunga Pisifera Ladang Benih (Harian)</option>
-                        <option value="4">Laporan Kerosakan Membalut Bunga Pisifera dan Kerosakan Sebelum dan Selepas Bunga di Tuai (Bulanan)</option>
-                        <option value="5">Data Penggunaan Pollen Mengikut Blok (Bulanan)</option>
-                        <option value="6">Rekod Penggunaan Harian Pollen ke Ladang Benih (Harian)</option>
+                        <option value="1">Master Record</option>
+                        <option value="2">Rumusan 1P1F</option>
+                        <option value="3">Rekod Progress Membalut sub QC dan Tuai bagi Bunga Pisifera Ladang Benih</option>
+                        <option value="4">Laporan Kerosakan Membalut Bunga Pisifera dan Kerosakan Sebelum dan Selepas Bunga di Tuai</option>
+                        <option value="5">Data Penggunaan Pollen Mengikut Blok</option>
+                        <option value="6">Rekod Penggunaan Harian Pollen ke Ladang Benih</option>
                     </select>
                 </div>
             </div>
@@ -104,7 +104,16 @@
             switch (l)
             {
                 case '2':
-                case '4':
+                    $('#harian-bulan').empty();
+                    $('#harian-bulan').append(`
+                    <option selected disabled hidden> SILA PILIH </option>
+                    <option value="h">Harian</option>
+                    <option value="b">Bulan</option>
+                `);
+                break;
+
+                case '3':
+                case '6':
                 case '7':
                     $('#harian-bulan').empty();
                     $('#harian-bulan').append(`
@@ -114,9 +123,8 @@
                 break;
 
                 case '1':
-                case '3':
+                case '4':
                 case '5':
-                case '6':
                     $('#harian-bulan').empty();
                     $('#harian-bulan').append(`
                     <option selected disabled hidden> SILA PILIH </option>
