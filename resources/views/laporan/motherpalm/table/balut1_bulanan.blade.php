@@ -28,7 +28,8 @@
   </style>
   <div class="col-xl-12 text-center">
       <h4 class="mt-5">Ladang Benih Pusat Pertanian Perkhidmatan Tun Razak</h4>
-      <h6 class="mt-2">Rumusan Pencapaian Penuaian Harian Tandan Ladang Benih</h6>
+      <h6 class="mt-2">Rumusan Pencapaian Penuaian Bulanan Tandan Ladang Benih</h6>
+      <h6 class="mt-2">LAPORAN 1P1F (Motherpalm)</h6>
   </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
@@ -58,7 +59,7 @@
                       <th>DEC</th>
                   </tr>
               </thead>
-              <tbody>
+              <tbody class="border border-dark">
                   @foreach ($result['listBlokBaka'] as $key => $r)
                       @if ($key != 'T')
                           <tr>

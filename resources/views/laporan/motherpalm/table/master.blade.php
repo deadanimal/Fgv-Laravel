@@ -53,7 +53,7 @@
                     <th rowspan="2">Rosak Belum Tuai</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="border border-dark">
                 @foreach ($mTandanPokokBagging as $key => $m)
                     {{-- @if ($key != 'mTPB') --}}
                         <tr>

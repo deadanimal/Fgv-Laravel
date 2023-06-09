@@ -23,7 +23,7 @@
       }
   </style>
   <div class="col-xl-12 text-center">
-      <h4 class="mt-5 text-bold">LAPORAN HARIAN KEROSAKAN BUNGA SEBELUM PENDEBUNGAAN TERKAWAL (CP)</h4>
+      <h4 class="mt-5 text-bold">LAPORAN HARIAN PENDEBUNGAAN TERKAWAL (CP)</h4>
   </div>
 
   <div class="col-12 mt-4">
@@ -34,26 +34,25 @@
                       <td>Penyelia</td>
                       <td>Blok</td>
                       <td>Baka</td>
-                      @for ($i = 1; $i <= $result['daysInMonth']; $i++)
+                      @for ($i = 1; $i <= $results['daysInMonth']; $i++)
                           <td>{{ $i }}</td>
                       @endfor
                       <td>Jumlah</td>
                   </tr>
               </thead>
-              <tbody>
-                  @foreach ($result as $key => $r)
+              <tbody class="border border-dark">
+                  @foreach ($results['listPenyeliaCP'] as $key => $penyelia)
                       @if ($key == 'daysInMonth')
                           @continue
                       @endif
-
                       <tr>
-                          <td>{{ $r['nama'] }}</td>
-                          <td>{{ $r['blok'] }}</td>
-                          <td>{{ $r['baka'] }}</td>
-                          @foreach ($r['data'] as $item)
-                              <td>{{ $item }}</td>
+                          <td>{{ $penyelia['nama'] }}</td>
+                          <td>{{ $penyelia['blok'] }}</td>
+                          <td>{{ $penyelia['baka'] }}</td>
+                          @foreach ($penyelia['data'] as $d)
+                              <td>{{ $d }}</td>
                           @endforeach
-                          <td>{{ $r['jumlah'] }}</td>
+                          <td>{{ $penyelia['jumlah'] }}</td>
                       </tr>
                   @endforeach
               </tbody>

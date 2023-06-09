@@ -45,7 +45,7 @@
                                   <td>Rosak Selepas Tuai</td>
                               </tr>
                           </thead>
-                          <tbody>
+                          <tbody class="border border-dark">
 
                               <tr>
                                   <td rowspan="3">{{ $key }}</td>

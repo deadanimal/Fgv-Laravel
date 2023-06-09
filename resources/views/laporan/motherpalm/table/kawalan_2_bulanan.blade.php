@@ -63,7 +63,7 @@
                       <td>Catitan</td>
                   </tr>
               </thead>
-              <tbody>
+              <tbody class="border border-dark">
                   <tr>
                     <td rowspan="2">{{ $r['nama'] }}</td>
                     <td>{{ $r['blok'] }}</td>

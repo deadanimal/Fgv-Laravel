@@ -54,7 +54,7 @@
                   @endfor
                   <td>JUMLAH</td>
               </thead>
-              <tbody>
+              <tbody class="border border-dark">
                   <?php $temp = ''; ?>
 
                   @foreach ($results as $key1 => $result)

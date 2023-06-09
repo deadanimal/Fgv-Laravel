@@ -68,7 +68,7 @@
                       <td>I.Atas T.Kemas</td>
                   </tr>
               </thead>
-              <tbody>
+              <tbody class="border border-dark">
               @switch($bulan)
                   @case('01')
                   <tr>

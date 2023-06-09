@@ -30,16 +30,30 @@ class LaporanController extends Controller
 
     public function motherpalmStore(Request $request)
     {
-        if ($request->hb == "h") {
+        if ($request->hb == "h")
+        {
             $tarikh_mula = date($request->tarikh_mula);
             $tarikh_akhir = date($request->tarikh_akhir);
         }
+
         $type = $request->kategori;
-        if ($type == "balut") {
-            switch ($request->laporan) {
+
+        if ($type == "master")
+        {
+            $result = $this->MotherMaster( $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            return view('laporan.motherpalm.master_harian', compact('result'));
+        }
+
+        if ($type == "balut")
+        {
+            switch ($request->laporan)
+            {
                 case '1':
+                switch ($request->hb)
+                {
+                    case 'h':
                     $result = $this->BalutLaporan1($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
-                    return view('laporan.motherpalm.balut1', [
+                    return view('laporan.motherpalm.balut1_harian', [
                         'result' => $result,
                         'bulan' => $request->bulan,
                         'tahun' => $request->tahun,
@@ -48,10 +62,54 @@ class LaporanController extends Controller
                         'hb' => $request->hb,
                     ]);
                     break;
-                case '2':
-                    // $result = $this->BalutLaporan2();
 
+                    case 'b':
+                    $result = $this->BalutLaporan1($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    return view('laporan.motherpalm.balut1_bulanan', [
+                        'result' => $result,
+                        'bulan' => $request->bulan,
+                        'tahun' => $request->tahun,
+                        'hb' => $request->hb,
+                    ]);
                     break;
+
+                    default:
+                    alert()->error('Gagal', 'Belum Mula');
+                    return back();
+                    break;
+                }
+
+                case '2':
+                switch ($request->hb)
+                {
+                    case 'h':
+                    $result = $this->BalutLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    return view('laporan.motherpalm.balut2_harian', [
+                        'result' => $result,
+                        'bulan' => $request->bulan,
+                        'tahun' => $request->tahun,
+                        'tarikh_mula' => $tarikh_mula,
+                        'tarikh_akhir' => $tarikh_akhir,
+                        'hb' => $request->hb,
+                    ]);
+                    break;
+
+                    case 'b':
+                    $result = $this->BalutLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    return view('laporan.motherpalm.balut2_bulanan', [
+                        'result' => $result,
+                        'bulan' => $request->bulan,
+                        'tahun' => $request->tahun,
+                        'hb' => $request->hb,
+                    ]);
+                    break;
+
+                    default:
+                    alert()->error('Gagal', 'Belum Mula');
+                    return back();
+                    break;
+                }
+
                 case '3':
                     $result = $this->BalutLaporan3($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     if ($request->tarikh_mula) {
@@ -66,10 +124,102 @@ class LaporanController extends Controller
                         'ta' => $nTarikhAkhir  ?? null,
                     ]);
                     break;
+
                 case '4':
+                switch ($request->hb)
+                {
+                    case 'h':
                     $result = $this->BalutLaporan4($request->bulan, $request->tahun);
-                    return view('laporan.motherpalm.balut4', compact('result'));
+                    return view('laporan.motherpalm.balut4_harian', compact('result'));
                     break;
+
+                    case 'b':
+                    $result = $this->BalutLaporan4($request->bulan, $request->tahun);
+                    return view('laporan.motherpalm.balut4_bulanan', compact('result'));
+                    break;
+
+                    default:
+                    alert()->error('Gagal', 'Belum Mula');
+                    return back();
+                    break;
+                }
+            }
+        }
+
+        if ($type == 'debung')
+        {
+             switch ($request->hb)
+             {
+                    case 'h':
+                        $results = $this->CpLaporan1($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                        return view('laporan.motherpalm.cp1_harian', compact('results'));
+                    break;
+
+                    case 'b':
+                        $results = $this->CpLaporan1($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                        return view('laporan.motherpalm.cp1_bulanan', compact('results'));
+                    break;
+
+                    default:
+                        alert()->error('Gagal', 'Belum Mula');
+                        return back();
+                        break;
+             }
+        }
+
+        if ($type == "kawal")
+        {
+            switch ($request->laporan) {
+                case '1':
+                    $result = $this->KawalLaporan1($request->hb, $request->bulan, $request->tahun);
+                return view('laporan.motherpalm.kawalan_1_bulanan', [
+                    'result' => $result,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'hb' => $request->hb,
+                ]);
+                break;
+
+                case '2':
+                $result = $this->KawalLaporan2($request->bulan, $request->tahun);
+                return view('laporan.motherpalm.kawalan_2_bulanan', [
+                    'result' => $result,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'hb' => $request->hb,
+                ]);
+                break;
+
+                case '3':
+                $result = $this->KawalLaporan3($request->bulan, $request->tahun);
+                return view('laporan.motherpalm.kawalan_3_bulanan', [
+                    'result' => $result,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'hb' => $request->hb,
+                ]);
+                break;
+
+                case '4':
+                $result = $this->KawalLaporan4($request->hb, $request->bulan, $request->tahun);
+                return view('laporan.motherpalm.kawalan_4_bulanan', [
+                    'result' => $result,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'hb' => $request->hb,
+                ]);
+                break;
+
+                case '10':
+                $result = $this->KawalLaporan10($request->bulan, $request->tahun);
+                return view('laporan.motherpalm.kawalan_10_harian', compact('result'));
+                break;
+
+                case '11':
+                $result = $this->KawalLaporan11($request->bulan, $request->tahun);
+                return view('laporan.motherpalm.kawalan_11_harian', compact('result'));
+                break;
+
                 default:
                     alert()->error('Gagal', 'Belum Mula');
                     return back();
@@ -77,37 +227,28 @@ class LaporanController extends Controller
             }
         }
 
-        if ($type == 'debung') {
-            $results = $this->CpLaporan1($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
-            return view('laporan.motherpalm.cp1', compact('results'));
-        }
-
-        if ($type == "kawal")
+        if ($type == "tuai")
+        {
+            switch ($request->laporan)
             {
-                switch ($request->laporan) {
-                    case '1':
-                        $result = $this->KawalLaporan1($request->hb, $request->bulan, $request->tahun);
-                    return view('laporan.motherpalm.kawalan_1_bulanan', [
+                case '2':
+                switch ($request->hb)
+                {
+                    case 'h':
+                    $result = $this->PenuaianLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    return view('laporan.motherpalm.penuaian_2_harian', [
                         'result' => $result,
                         'bulan' => $request->bulan,
                         'tahun' => $request->tahun,
+                        'tarikh_mula' => $tarikh_mula,
+                        'tarikh_akhir' => $tarikh_akhir,
                         'hb' => $request->hb,
                     ]);
                     break;
 
-                    case '2':
-                    $result = $this->KawalLaporan2($request->bulan, $request->tahun);
-                    return view('laporan.motherpalm.kawalan_2_bulanan', [
-                        'result' => $result,
-                        'bulan' => $request->bulan,
-                        'tahun' => $request->tahun,
-                        'hb' => $request->hb,
-                    ]);
-                    break;
-
-                    case '4':
-                    $result = $this->KawalLaporan4($request->hb, $request->bulan, $request->tahun);
-                    return view('laporan.motherpalm.kawalan_4_bulanan', [
+                    case 'b':
+                    $result = $this->PenuaianLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    return view('laporan.motherpalm.penuaian_2_bulanan', [
                         'result' => $result,
                         'bulan' => $request->bulan,
                         'tahun' => $request->tahun,
@@ -116,32 +257,75 @@ class LaporanController extends Controller
                     break;
 
                     default:
+                    alert()->error('Gagal', 'Belum Mula');
+                    return back();
+                    break;
+                }
+
+                case '8':
+                switch ($request->hb)
+                {
+                    case 'b':
+                    $result = $this->PenuaianLaporan8($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    return view('laporan.motherpalm.penuaian_8_bulanan', [
+                        'result' => $result,
+                        'bulan' => $request->bulan,
+                        'tahun' => $request->tahun,
+                        'hb' => $request->hb,
+                    ]);
+                    break;
+
+                    default:
+                    alert()->error('Gagal', 'Belum Mula');
+                    return back();
+                    break;
+                }
+
+                case '9':
+                switch ($request->hb)
+                {
+                    case 'h':
+                        $results = $this->PenuaianLaporan9($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                        return view('laporan.motherpalm.penuaian_9_harian', compact('results'));
+                    break;
+
+                    case 'b':
+                        $results = $this->PenuaianLaporan9($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                        return view('laporan.motherpalm.penuaian_9_bulanan', compact('results'));
+                    break;
+
+                    default:
                         alert()->error('Gagal', 'Belum Mula');
                         return back();
                         break;
                 }
             }
-
-
-        if ($type == "master") {
-            return view('laporan.motherpalm.master');
         }
 
         alert()->error('Fail', "In Development");
         return back();
     }
 
+    public function MotherMaster($tarikh_mula, $tarikh_akhir)
+    {
+        $result = [];
+        return $result;
+    }
+
     public function BalutLaporan1($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
     {
-        if ($hb == 'b') {
-            if ($bulan == "all") {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
                 $Qcs = QualityControl::whereYear('created_at', $tahun)
                     ->whereHas('pokok', function ($pokok) {
                         $pokok->where('status_pokok', 'aktif')
                             ->where('jantina', 'motherpalm');
                     })
                     ->get();
-            } else {
+            } else
+            {
                 $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
                     ->whereYear('created_at', $tahun)
                     ->whereHas('pokok', function ($pokok) {
@@ -150,7 +334,10 @@ class LaporanController extends Controller
                     })
                     ->get();
             }
-        } else if ($hb == 'h') {
+        }
+        else if ($hb == 'h')
+        {
+            
             $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
                 ->whereHas('pokok', function ($pokok) {
                     $pokok->where('status_pokok', 'aktif')
@@ -236,6 +423,138 @@ class LaporanController extends Controller
                 ->where('baka', $lbb->baka)->count();
         }
         $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
+        return $result;
+    }
+
+    public function BalutLaporan2($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
+                $Qcs = QualityControl::whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            } else
+            {
+                $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
+                    ->whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            }
+        }
+        else if ($hb == 'h')
+        {
+            
+            $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
+                ->whereHas('pokok', function ($pokok) {
+                    $pokok->where('status_pokok', 'aktif')
+                        ->where('jantina', 'motherpalm');
+                })
+                ->get();
+        }
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result = [];
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) {
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+            $result[$key]['03'] = 0;
+            $result[$key]['04'] = 0;
+            $result[$key]['05'] = 0;
+            $result[$key]['06'] = 0;
+            $result[$key]['07'] = 0;
+            $result[$key]['08'] = 0;
+            $result[$key]['09'] = 0;
+            $result[$key]['10'] = 0;
+            $result[$key]['11'] = 0;
+            $result[$key]['12'] = 0;
+            $result[$key]['takRosak'] = 0;
+            foreach ($Qcs as $qc) {
+
+                if ($qc->pokok->blok == $lbb->blok && $qc->pokok->baka == $lbb->baka) {
+                    $month = $qc->created_at->format('m');
+                    switch ($month) {
+                        case '01':
+                            $result[$key]['01']++;
+                            break;
+                        case '02':
+                            $result[$key]['02']++;
+                            break;
+                        case '03':
+                            $result[$key]['03']++;
+                            break;
+                        case '04':
+                            $result[$key]['04']++;
+                            break;
+                        case '05':
+                            $result[$key]['05']++;
+                            break;
+                        case '06':
+                            $result[$key]['06']++;
+                            break;
+                        case '07':
+                            $result[$key]['07']++;
+                            break;
+                        case '08':
+                            $result[$key]['08']++;
+                            break;
+                        case '09':
+                            $result[$key]['09']++;
+                            break;
+                        case '10':
+                            $result[$key]['10']++;
+                            break;
+                        case '11':
+                            $result[$key]['11']++;
+                            break;
+                        case '12':
+                            $result[$key]['12']++;
+                            break;
+                    }
+                    $result[$key]['jumlah'] = $result[$key]['01'] + $result[$key]['02'] + $result[$key]['03'] + $result[$key]['04'] + $result[$key]['05'] + $result[$key]['06'] + $result[$key]['07'] + $result[$key]['08'] + $result[$key]['09'] + $result[$key]['10'] + $result[$key]['11'] + $result[$key]['12'];
+                    if (is_null($qc->kerosakan_id)) {
+                        $result[$key]['takRosak']++;
+                    }
+                    $result['T'][$month - 1]++;
+                }
+            }
+            $result[$key]['j_motherpalm'] = Pokok::where('status_pokok', 'aktif')
+                ->where('jantina', 'Motherpalm')
+                ->where('blok', $lbb->blok)
+                ->where('baka', $lbb->baka)->count();
+        }
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
         return $result;
     }
 
@@ -1208,6 +1527,53 @@ class LaporanController extends Controller
 
     public function KawalLaporan2($bulan, $tahun)
     {
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
+            ->join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
+            ->select('users.nama', 'pokoks.blok', 'pokoks.baka', 'control_pollinations.id_sv_cp')
+            ->whereMonth('control_pollinations.created_at', '=', $bulan)
+            ->whereNotNull('control_pollinations.kerosakan_id')
+            ->orderBy('control_pollinations.id_sv_cp')
+            ->distinct()
+            ->get();
+
+        foreach ($result as $key => $value) {
+            $jumlah = 0;
+            for ($i = 1; $i <= $daysInMonth; $i++) {
+                $date = date($tahun . '-' . $bulan . '-' . $i);
+                $a[$key][$i] = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
+                    ->join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
+                    ->where('pokoks.blok', $value['blok'])
+                    ->where('pokoks.baka', $value['baka'])
+                    ->where('control_pollinations.id_sv_cp', $value['id_sv_cp'])
+                    ->whereDate('control_pollinations.created_at', '=', $date)
+                    ->whereNotNull('control_pollinations.kerosakan_id')
+                    ->count();
+
+                $jumlah += $a[$key][$i];
+            }
+
+            $value['data']  = $a[$key];
+            $value['jumlah']  = $jumlah;
+        }
+
+        $result['daysInMonth']  = $daysInMonth;
+
+        return $result;
+    }
+
+    public function KawalLaporan3($bulan, $tahun)
+    {
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
         $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
         $result = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
             ->join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
@@ -2065,15 +2431,399 @@ class LaporanController extends Controller
         return $result;
     }
 
+    public function KawalLaporan10($bulan, $tahun)
+    {
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
+            ->join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
+            ->select('users.nama', 'pokoks.blok', 'pokoks.baka', 'control_pollinations.id_sv_cp')
+            ->whereMonth('control_pollinations.created_at', '=', $bulan)
+            ->whereNotNull('control_pollinations.kerosakan_id')
+            ->orderBy('control_pollinations.id_sv_cp')
+            ->distinct()
+            ->get();
+
+        foreach ($result as $key => $value) {
+            $jumlah = 0;
+            for ($i = 1; $i <= $daysInMonth; $i++) {
+                $date = date($tahun . '-' . $bulan . '-' . $i);
+                $a[$key][$i] = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
+                    ->join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
+                    ->where('pokoks.blok', $value['blok'])
+                    ->where('pokoks.baka', $value['baka'])
+                    ->where('control_pollinations.id_sv_cp', $value['id_sv_cp'])
+                    ->whereDate('control_pollinations.created_at', '=', $date)
+                    ->whereNotNull('control_pollinations.kerosakan_id')
+                    ->count();
+
+                $jumlah += $a[$key][$i];
+            }
+
+            $value['data']  = $a[$key];
+            $value['jumlah']  = $jumlah;
+        }
+        $result['daysInMonth']  = $daysInMonth;
+
+        return $result;
+    }
+
+    public function KawalLaporan11($bulan, $tahun)
+    {
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
+            ->join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
+            ->select('users.nama', 'pokoks.blok', 'pokoks.baka', 'control_pollinations.id_sv_cp')
+            ->whereMonth('control_pollinations.created_at', '=', $bulan)
+            ->whereNotNull('control_pollinations.kerosakan_id')
+            ->orderBy('control_pollinations.id_sv_cp')
+            ->distinct()
+            ->get();
+
+        foreach ($result as $key => $value) {
+            $jumlah = 0;
+            for ($i = 1; $i <= $daysInMonth; $i++) {
+                $date = date($tahun . '-' . $bulan . '-' . $i);
+                $a[$key][$i] = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
+                    ->join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
+                    ->where('pokoks.blok', $value['blok'])
+                    ->where('pokoks.baka', $value['baka'])
+                    ->where('control_pollinations.id_sv_cp', $value['id_sv_cp'])
+                    ->whereDate('control_pollinations.created_at', '=', $date)
+                    ->whereNotNull('control_pollinations.kerosakan_id')
+                    ->count();
+
+                $jumlah += $a[$key][$i];
+            }
+
+            $value['data']  = $a[$key];
+            $value['jumlah']  = $jumlah;
+        }
+        $result['daysInMonth']  = $daysInMonth;
+
+        return $result;
+    }
+
+    public function PenuaianLaporan2($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
+                $Qcs = QualityControl::whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            } else
+            {
+                $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
+                    ->whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            }
+        }
+        else if ($hb == 'h')
+        {
+            
+            $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
+                ->whereHas('pokok', function ($pokok) {
+                    $pokok->where('status_pokok', 'aktif')
+                        ->where('jantina', 'motherpalm');
+                })
+                ->get();
+        }
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result = [];
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) {
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+            $result[$key]['03'] = 0;
+            $result[$key]['04'] = 0;
+            $result[$key]['05'] = 0;
+            $result[$key]['06'] = 0;
+            $result[$key]['07'] = 0;
+            $result[$key]['08'] = 0;
+            $result[$key]['09'] = 0;
+            $result[$key]['10'] = 0;
+            $result[$key]['11'] = 0;
+            $result[$key]['12'] = 0;
+            $result[$key]['takRosak'] = 0;
+            foreach ($Qcs as $qc) {
+
+                if ($qc->pokok->blok == $lbb->blok && $qc->pokok->baka == $lbb->baka) {
+                    $month = $qc->created_at->format('m');
+                    switch ($month) {
+                        case '01':
+                            $result[$key]['01']++;
+                            break;
+                        case '02':
+                            $result[$key]['02']++;
+                            break;
+                        case '03':
+                            $result[$key]['03']++;
+                            break;
+                        case '04':
+                            $result[$key]['04']++;
+                            break;
+                        case '05':
+                            $result[$key]['05']++;
+                            break;
+                        case '06':
+                            $result[$key]['06']++;
+                            break;
+                        case '07':
+                            $result[$key]['07']++;
+                            break;
+                        case '08':
+                            $result[$key]['08']++;
+                            break;
+                        case '09':
+                            $result[$key]['09']++;
+                            break;
+                        case '10':
+                            $result[$key]['10']++;
+                            break;
+                        case '11':
+                            $result[$key]['11']++;
+                            break;
+                        case '12':
+                            $result[$key]['12']++;
+                            break;
+                    }
+                    $result[$key]['jumlah'] = $result[$key]['01'] + $result[$key]['02'] + $result[$key]['03'] + $result[$key]['04'] + $result[$key]['05'] + $result[$key]['06'] + $result[$key]['07'] + $result[$key]['08'] + $result[$key]['09'] + $result[$key]['10'] + $result[$key]['11'] + $result[$key]['12'];
+                    if (is_null($qc->kerosakan_id)) {
+                        $result[$key]['takRosak']++;
+                    }
+                    $result['T'][$month - 1]++;
+                }
+            }
+            $result[$key]['j_motherpalm'] = Pokok::where('status_pokok', 'aktif')
+                ->where('jantina', 'Motherpalm')
+                ->where('blok', $lbb->blok)
+                ->where('baka', $lbb->baka)->count();
+        }
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
+        return $result;
+    }
+
+    public function PenuaianLaporan8($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        if ($hb == 'b')
+        {
+            if ($bulan == "all")
+            {
+                $Qcs = QualityControl::whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            } else
+            {
+                $Qcs = QualityControl::with('pokok')->whereMonth('created_at', $bulan)
+                    ->whereYear('created_at', $tahun)
+                    ->whereHas('pokok', function ($pokok) {
+                        $pokok->where('status_pokok', 'aktif')
+                            ->where('jantina', 'motherpalm');
+                    })
+                    ->get();
+            }
+        }
+        else if ($hb == 'h')
+        {
+            
+            $Qcs = QualityControl::with('pokok')->whereBetween('created_at', [$tarikh_mula, $tarikh_akhir])
+                ->whereHas('pokok', function ($pokok) {
+                    $pokok->where('status_pokok', 'aktif')
+                        ->where('jantina', 'motherpalm');
+                })
+                ->get();
+        }
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result = [];
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) {
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+            $result[$key]['03'] = 0;
+            $result[$key]['04'] = 0;
+            $result[$key]['05'] = 0;
+            $result[$key]['06'] = 0;
+            $result[$key]['07'] = 0;
+            $result[$key]['08'] = 0;
+            $result[$key]['09'] = 0;
+            $result[$key]['10'] = 0;
+            $result[$key]['11'] = 0;
+            $result[$key]['12'] = 0;
+            $result[$key]['takRosak'] = 0;
+            foreach ($Qcs as $qc) {
+
+                if ($qc->pokok->blok == $lbb->blok && $qc->pokok->baka == $lbb->baka) {
+                    $month = $qc->created_at->format('m');
+                    switch ($month) {
+                        case '01':
+                            $result[$key]['01']++;
+                            break;
+                        case '02':
+                            $result[$key]['02']++;
+                            break;
+                        case '03':
+                            $result[$key]['03']++;
+                            break;
+                        case '04':
+                            $result[$key]['04']++;
+                            break;
+                        case '05':
+                            $result[$key]['05']++;
+                            break;
+                        case '06':
+                            $result[$key]['06']++;
+                            break;
+                        case '07':
+                            $result[$key]['07']++;
+                            break;
+                        case '08':
+                            $result[$key]['08']++;
+                            break;
+                        case '09':
+                            $result[$key]['09']++;
+                            break;
+                        case '10':
+                            $result[$key]['10']++;
+                            break;
+                        case '11':
+                            $result[$key]['11']++;
+                            break;
+                        case '12':
+                            $result[$key]['12']++;
+                            break;
+                    }
+                    $result[$key]['jumlah'] = $result[$key]['01'] + $result[$key]['02'] + $result[$key]['03'] + $result[$key]['04'] + $result[$key]['05'] + $result[$key]['06'] + $result[$key]['07'] + $result[$key]['08'] + $result[$key]['09'] + $result[$key]['10'] + $result[$key]['11'] + $result[$key]['12'];
+                    if (is_null($qc->kerosakan_id)) {
+                        $result[$key]['takRosak']++;
+                    }
+                    $result['T'][$month - 1]++;
+                }
+            }
+            $result[$key]['j_motherpalm'] = Pokok::where('status_pokok', 'aktif')
+                ->where('jantina', 'Motherpalm')
+                ->where('blok', $lbb->blok)
+                ->where('baka', $lbb->baka)->count();
+        }
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        if ($bulan == "all")
+        {
+            $bulan = "01";
+        }
+
+        $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
+        $result['daysInMonth'] = $daysInMonth;
+
+        return $result;
+    }
+
+    public function PenuaianLaporan9($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    {
+        $daysInMonth = Carbon::createFromDate($tahun, 2)->daysInMonth;
+
+        $results['daysInMonth'] = $daysInMonth;
+        $listPenyeliaCP = ControlPollination::join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
+            ->join('users', 'users.id', 'control_pollinations.id_sv_cp')
+            ->select(['users.nama', 'control_pollinations.id_sv_cp', 'pokoks.blok', 'pokoks.baka'])
+            ->whereNotNull('control_pollinations.id_sv_cp')
+            ->distinct()
+            ->orderBy('control_pollinations.id_sv_cp')
+            ->get();
+
+        $countCp = array();
+        foreach ($listPenyeliaCP as $penyelia) {
+            $jumlah = 0;
+            for ($i = 1; $i <= $daysInMonth; $i++) {
+                $date = date($tahun . '-' . $bulan . '-' . $i);
+                $countCp[$i] = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
+                    ->join('pokoks', 'pokoks.id', 'control_pollinations.pokok_id')
+                    ->where('pokoks.blok', $penyelia['blok'])
+                    ->where('pokoks.baka', $penyelia['baka'])
+                    ->where('control_pollinations.id_sv_cp', $penyelia['id_sv_cp'])
+                    ->whereDate('control_pollinations.created_at', '=', $date)
+                    ->whereNull('control_pollinations.kerosakan_id')
+                    ->count();
+
+                $jumlah += $countCp[$i];
+            }
+            $penyelia['data'] = $countCp;
+            $penyelia['jumlah'] = $jumlah;
+        }
+
+        $results['listPenyeliaCP'] = $listPenyeliaCP;
+        return $results;
+    }
+
 
     public function fatherpalm()
     {
-        return view('laporan.fatherpalm.index');
+        $currentYear = Carbon::now()->year;
+        $pastYears = 5;
+        $years = [];
+
+        for ($i = $currentYear; $i >= $currentYear - $pastYears; $i--) {
+            $years[$i] = $i;
+        }
+
+        return view('laporan.fatherpalm.index', compact('years'));
     }
 
     public function fatherpalmStore(Request $request)
     {
-        alert('Gagal', 'Belum Sedia', 'error');
-        return back();
+         if ($request->hb == "h")
+        {
+            $tarikh_mula = date($request->tarikh_mula);
+            $tarikh_akhir = date($request->tarikh_akhir);
+        }
+
+        $type = $request->laporan;
+
+        if ($type == "1")
+        {
+            $result = $this->MotherMaster( $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            return view('laporan.motherpalm.master_harian', compact('result'));
+        }
     }
 }

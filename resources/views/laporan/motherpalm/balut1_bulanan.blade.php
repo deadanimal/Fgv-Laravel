@@ -13,7 +13,7 @@
         </div>
 
         <div class="col-12 mt-4">
-            @include('laporan.motherpalm.table.balut1')
+            @include('laporan.motherpalm.table.balut1_bulanan')
         </div>
     </div>
 

@@ -9,8 +9,7 @@
             <div class="row mt-4">
                 <div class="col-xl-6">
                     <div class="form-group row align-items-center">
-                        <label class="col-form-label text-main col-sm-4 text-end" for="select-kategori">Kategori
-                            Laporan</label>
+                        <label class="col-form-label text-main col-sm-4 text-end" for="select-kategori">Kategori Laporan</label>
                         <div class="col-sm-8">
                             <select name="kategori" class="form-select border-danger" id="select-kategori">
                                 <option selected disabled hidden> SILA PILIH </option>
@@ -18,7 +17,7 @@
                                 <option value="balut">Balut (Bagging)</option>
                                 <option value="debung">Pendebungaan Terkawal (Control Pollination)</option>
                                 <option value="kawal">Kawalan Kualiti (Quality Control)</option>
-                                <option value="tuai">Tuai (Harvesting)</option>
+                                <option value="tuai">Penuaian (Harvesting)</option>
                             </select>
                         </div>
                     </div>
@@ -41,9 +40,6 @@
                         <label class="col-form-label text-main col-sm-4 text-end" for="harian-bulan">Filter 1</label>
                         <div class="col-sm-8">
                             <select class="form-select border-danger" name="hb" id="harian-bulan">
-                                <option selected disabled hidden> SILA PILIH </option>
-                                <option value="h">Harian</option>
-                                <option value="b">Bulan</option>
                             </select>
                         </div>
                     </div>
@@ -118,7 +114,10 @@
             $('.hide_tarikh').hide();
             switch (val) {
                 case 'master':
-                    $('.master_hide').hide();
+                    $('#select-laporan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="1">Master Record</option>
+                    `);
                     break;
                 case 'balut':
                     $('#select-laporan').append(`
@@ -137,27 +136,21 @@
                     break;
                 case 'kawal':
                     $('#select-laporan').append(`
-                        <option value="9">Maklumat Mengikut Bulan Bagging</option>
-                        <option value="6">Rosak Selepas QC</option>
-                        <option value="8">Rumusan</option>
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="4">Rumusan Kerosakan Keseluruhan</option>
                         <option value="1">Rumusan Kerosakan Baka</option>
                         <option value="2">Rumusan Kerosakan Blok</option>
-                        <option value="3">Rumusan Kerosakan Petugas</option>
-                        <option value="4">Rumusan Kerosakan Keseluruhan</option>
-                        <option value="5">Senarai Belum QC</option>
-                        <option value="7">Target vs Pencapaian Bulanan</option>
+                        <option value="3">Rumusan Kerosakan Petugas Balut dan CP</option>
+                        <option value="10">Laporan Harian Pemeriksaan Petugas QC</option>
+                        <option value="11">Laporan Harian Kerosakan Petugas QC</option>
                     `);
                     break;
                 case 'tuai':
                     $('#select-laporan').append(`
                         <option selected disabled hidden> SILA PILIH </option>
-                        <option value="1">Laporan Harian Penuaian</option>
                         <option value="2">Laporan Penuaian Mengikut Umur Tandan</option>
-                        <option value="7">Maklumat Mengikut Bulan Bagging</option>
-                        <option value="6">Rumusan</option>
-                        <option value="3">Rumusan Mingguan Tuai (Baka)</option>
-                        <option value="4">Senarai Belum Tuai</option>
-                        <option value="5">Target vs Pencapaian Bulanan</option>
+                        <option value="8">Rumusan Bulanan Jenis Kerosakan (Blok dan Baka)</option>
+                        <option value="9">Laporan Penuaian (Harvesting)</option>
                     `);
                     break;
 
@@ -175,8 +168,10 @@
 
             $("#divharian-bulan").removeClass("d-none");
 
-            if (k == "balut") {
-                switch (l) {
+            if (k == "balut")
+            {
+                switch (l)
+                {
                     case '4':
                         $("#bulanInput").html(``);
                         $("#bulanInput").append(`
@@ -200,6 +195,151 @@
                 }
             }
 
+            if (k == "master")
+            {
+                switch (l)
+                {
+                    case '1':
+                        $('#harian-bulan').empty();
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                    `);
+                    break;
+
+                    default:
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                        <option value="b">Bulan</option>
+                        `);
+                        break;
+                }
+            }
+            else
+            if (k == "balut")
+            {
+                switch (l)
+                {
+                    case '1':
+                    case '2':
+                    case '4':
+                        $('#harian-bulan').empty();
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                        <option value="b">Bulan</option>
+                    `);
+                    break;
+
+                    case '3':
+                        $('#harian-bulan').empty();
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="b">Bulan</option>
+                    `);
+                    break;
+
+                    default:
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                        <option value="b">Bulan</option>
+                        `);
+                        break;
+                }
+            }
+            else
+            if (k == "debung")
+            {
+                switch (l)
+                {
+                    case '1':
+                        $('#harian-bulan').empty();
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                        <option value="b">Bulan</option>
+                    `);
+                    break;
+
+                    default:
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                        <option value="b">Bulan</option>
+                        `);
+                        break;
+                }
+            }
+            else
+            if (k == "kawal")
+            {
+                switch (l)
+                {
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                        $('#harian-bulan').empty();
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="b">Bulan</option>
+                    `);
+                    break;
+
+                    case '10':
+                    case '11':
+                        $('#harian-bulan').empty();
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                    `);
+                    break;
+
+                    default:
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                        <option value="b">Bulan</option>
+                        `);
+                        break;
+                }
+            }
+            else
+            if (k == "tuai")
+            {
+                switch (l)
+                {
+                    case '2':
+                    case '9':
+                        $('#harian-bulan').empty();
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                        <option value="b">Bulan</option>
+                    `);
+                    break;
+
+                    case '8':
+                    case '11':
+                        $('#harian-bulan').empty();
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="b">Bulan</option>
+                    `);
+                    break;
+
+                    default:
+                        $('#harian-bulan').append(`
+                        <option selected disabled hidden> SILA PILIH </option>
+                        <option value="h">Harian</option>
+                        <option value="b">Bulan</option>
+                        `);
+                        break;
+                }
+            }
+            
             $(".divBulanTahun").addClass("d-none");
             $(".divHari").addClass("d-none");
         });
@@ -207,10 +347,13 @@
         $("#harian-bulan").change(function(e) {
             let f1 = $(this).val();
             $("#divjanaDoc").removeClass("d-none");
-            if (f1 == "b") {
+            if (f1 == "b")
+            {
                 $(".divBulanTahun").removeClass("d-none");
                 $(".divHari").addClass("d-none");
-            } else {
+            }
+            else
+            {
                 $(".divBulanTahun").addClass("d-none");
                 $(".divHari").removeClass("d-none");
             }

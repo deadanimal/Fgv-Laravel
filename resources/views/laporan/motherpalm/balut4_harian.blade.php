@@ -21,7 +21,7 @@
 
 
         <div class="col-12 mt-4">
-            @include('laporan.motherpalm.table.balut4')
+            @include('laporan.motherpalm.table.balut4_harian')
         </div>
     </div>
 
