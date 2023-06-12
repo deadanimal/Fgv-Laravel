@@ -34,9 +34,18 @@
                       <td>Penyelia</td>
                       <td>Blok</td>
                       <td>Baka</td>
-                      @for ($i = 1; $i <= $result['daysInMonth']; $i++)
-                          <td>{{ $i }}</td>
-                      @endfor
+                      <td>JAN</td>
+                      <td>FEB</td>
+                      <td>MAR</td>
+                      <td>APR</td>
+                      <td>MAY</td>
+                      <td>JUN</td>
+                      <td>JUL</td>
+                      <td>AUG</td>
+                      <td>SEP</td>
+                      <td>OCT</td>
+                      <td>NOV</td>
+                      <td>DEC</td>
                       <td>Jumlah</td>
                   </tr>
               </thead>
@@ -50,9 +59,18 @@
                           <td>{{ $r['nama'] }}</td>
                           <td>{{ $r['blok'] }}</td>
                           <td>{{ $r['baka'] }}</td>
-                          @foreach ($r['data'] as $item)
-                              <td>{{ $item }}</td>
-                          @endforeach
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
                           <td>{{ $r['jumlah'] }}</td>
                       </tr>
                   @endforeach

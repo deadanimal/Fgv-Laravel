@@ -40,8 +40,13 @@ class LaporanController extends Controller
 
         if ($type == "master")
         {
-            $result = $this->MotherMaster( $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
-            return view('laporan.motherpalm.master_harian', compact('result'));
+            $result = $this->MotherMaster($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            return view('laporan.motherpalm.master_harian', [
+                        'result' => $result,
+                        'bulan' => $request->bulan,
+                        'tahun' => $request->tahun,
+                        'hb' => $request->hb,
+                    ]);
         }
 
         if ($type == "balut")

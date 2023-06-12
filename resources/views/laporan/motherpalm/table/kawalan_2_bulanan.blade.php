@@ -30,6 +30,9 @@
       Rumusan Kerosakan Blok
       </h4>
   </div>
+  <div class="col-xl-12 text-left">
+       BULAN: {{$bulan}}
+  </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
       @foreach ($result as $key => $r)
@@ -164,6 +167,28 @@
           <table class="table table-hover table-bordered overflow-hidden" width="100%">
               <thead class="border border-dark">
                   <tr>
+                      <td colspan='3'><b></b></td>
+                      <td>Baka</td>
+                      <td>Jum. B.Bag</td>
+                      <td>Jum. Rosak</td>
+                      <td>Jum. Lulus</td>
+                      <td>% Rosak</td>
+                      <td>Anai-Anai</td>
+                      <td>Tikus</td>
+                      <td>Bag Pecah</td>
+                      <td>I.Bawah T.Kemas</td>
+                      <td>I.Atas T.Kemas</td>
+                      <td>Bunga Mati</td>
+                      <td>I.Atas Bunga</td>
+                      <td>Patah</td>
+                      <td>WM Masa CP</td>
+                      <td>Kembang Tak Sekata</td>
+                      <td>Bunga Tak CP</td>
+                      <td>Serangan Haiwan</td>
+                      <td>Sambang</td>
+                      <td>Tenggelam Banjir</td>
+                  </tr>
+                  <tr>
                       <td colspan='3'><b>Jumlah Keseluruhan</b></td>
                       <td>1</td>
                       <td>1</td>
@@ -184,16 +209,12 @@
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td></td>
-                      <td></td>
                   </tr>
 
                   <tr>
-                      <td colspan='5'><b>Peratus</b></td>
+                      <td colspan='3'><b>Peratus</b></td>
                       <td>2</td>
                       <td>2</td>
-                      <td></td>
-                      <td></td>
                       <td></td>
                       <td></td>
                       <td></td>

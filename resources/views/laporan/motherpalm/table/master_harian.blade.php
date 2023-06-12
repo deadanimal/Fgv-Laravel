@@ -27,7 +27,7 @@
 </div>
 
 <div class="col-xl-12 text-left">
-    <span>Bulan: FEB</span>
+    <span>Bulan: {{ $bulan }}</span>
 </div
 
 <div class="col-12 mt-4">
@@ -85,6 +85,24 @@
                     <td>Vanithaa</td>
                     <td></td>
                     <td>Petugas tidak buat betul-betul</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>A1</td>
+                    <td>A</td>
+                    <td>B1</td>
+                    <td>Baka</td>
+                    <td>CP</td>
+                    <td>02-Feb-23</td>
+                    <td>Sah</td>
+                    <td>Ali</td>
+                    <td>Vanithaa</td>
+                    <td></td>
+                    <td>OK</td>
                     <td></td>
                     <td></td>
                     <td></td>

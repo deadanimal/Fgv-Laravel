@@ -61,6 +61,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xl-6 d-none divBulanTahun">
                     <div class="form-group row align-items-center">
                         <label class="col-form-label text-main col-sm-4 text-end">Tahun</label>
@@ -204,7 +205,16 @@
                         $('#harian-bulan').append(`
                         <option selected disabled hidden> SILA PILIH </option>
                         <option value="h">Harian</option>
-                    `);
+                        <option value="b">Bulan</option>
+                        `);
+
+                        $("#bulanInput").html(``);
+                        $("#bulanInput").append(`
+                            @for ($i = 1; $i < 13; $i++)
+                                        <option value="{{ sprintf('%02d', $i) }}">
+                                            {{ $i }}</option>
+                            @endfor
+                        `);
                     break;
 
                     default:
