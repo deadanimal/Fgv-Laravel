@@ -31,10 +31,13 @@
       <h6 class="mt-2">Rumusan Pencapaian Penuaian Bulanan Tandan Ladang Benih</h6>
       <h6 class="mt-2">LAPORAN 1P1F (Motherpalm)</h6>
   </div>
+  <div class="col-xl-12 text-left">
+      <span><b>Tempoh Laporan: {{$bulan_word}} {{$tahun}} - {{$bulan_akhir_word}} {{$tahun}}<b></span>
+  </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
           <table class="table table-bordered overflow-hidden" width="100%">
-              <thead class="border border-dark">
+              <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                       <th rowspan="2">Bil</th>
                       <th rowspan="2">Blok</th>
@@ -84,7 +87,7 @@
                           </tr>
                       @endif
                   @endforeach
-                  <thead class="border border-dark">
+                  <thead class="border border-dark" style="background-color: #d9d9d9;">
                       <td></td>
                       <td></td>
                       <td></td>
@@ -92,6 +95,7 @@
                       @foreach ($result['T'] as $r)
                           <td>{{ $r }}</td>
                       @endforeach
+                      <td></td>
                       <td></td>
                   </thead>
               </tbody>

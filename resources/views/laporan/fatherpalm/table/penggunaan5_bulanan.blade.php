@@ -29,13 +29,15 @@
   <div class="col-xl-12 text-center">
       <h4 class="mt-5">UNIT BAHAN TANAMAN</h4>
       <h6 class="mt-2">DATA PENGGUNAAN POLLEN MENGIKUT BLOK TAHUN {{ $tahun }}</h6>
-      <h6 class="mt-2">LAPORAN BULAN: {{ $bulan }} {{ $tahun }}</h6>
+  </div>
+  <div class="col-xl-12 text-left">
+      <span><b>Tempoh Laporan: {{$bulan_word}} {{$tahun}} - {{$bulan_akhir_word}} {{$tahun}}<b></span>
   </div>
 
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
           <table class="table table-bordered overflow-hidden" width="100%">
-              <thead class="border border-dark">
+              <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                     <th rowspan="2">BIL</th>
                     <th rowspan="2">BLOK</th>
@@ -98,7 +100,7 @@
                     <td>0.22</td>
                     <td>239</td>
                   </tr>
-                  <tr>
+                  <tr style="background-color: #d9d9d9;">
                     <td colspan="3">Jumlah</td>
                     <td>489.9</td>
                     <td>1</td>

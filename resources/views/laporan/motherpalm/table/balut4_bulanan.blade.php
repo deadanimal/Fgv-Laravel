@@ -25,11 +25,14 @@
   <div class="col-xl-12 text-center">
       <h4 class="mt-5 text-bold">LAPORAN BULANAN KEROSAKAN BUNGA SEBELUM PENDEBUNGAAN TERKAWAL (CP)</h4>
   </div>
+    <div class="col-xl-12 text-left">
+      <span><b>Tempoh Laporan: {{$bulan_word}} {{$tahun}} - {{$bulan_akhir_word}} {{$tahun}}<b></span>
+  </div>
 
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
           <table class="table table-bordered overflow-hidden" width="100%">
-              <thead class="border border-dark">
+              <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                       <td>Penyelia</td>
                       <td>Blok</td>

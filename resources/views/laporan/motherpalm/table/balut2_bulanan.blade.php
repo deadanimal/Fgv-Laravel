@@ -27,12 +27,15 @@
       }
   </style>
   <div class="col-xl-12 text-center">
-      <h6 class="mt-2">LAPORAN BULANAN BALUT (BAGGING)</h6>
+      <h4 class="mt-2">LAPORAN BULANAN BALUT (BAGGING)</h4>
+  </div>
+  <div class="col-xl-12 text-left">
+      <span><b>Tempoh Laporan: {{$bulan_word}} {{$tahun}} - {{$bulan_akhir_word}} {{$tahun}}<b></span>
   </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
           <table class="table table-bordered overflow-hidden" width="100%">
-              <thead class="border border-dark">
+              <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                       <th rowspan="2">PENYELIA</th>
                       <th rowspan="2">BLOK</th>
@@ -55,38 +58,272 @@
                       <th>DEC</th>
                   </tr>
               </thead>
-              <tbody class="border border-dark">
-                  @foreach ($result['listBlokBaka'] as $key => $r)
-                      @if ($key != 'T')
-                          <tr>
-                              <td></td>
-                              <td>{{ $r['blok'] }}</td>
-                              <td>{{ $r['baka'] }}</td>
-                              <td>{{ $result[$key]['j_motherpalm'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['01'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['02'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['03'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['04'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['05'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['06'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['07'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['08'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['09'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['10'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['11'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                          </tr>
-                      @endif
-                  @endforeach
-                  <thead class="border border-dark">
-                      <td></td>
-                      <td>Jumlah</td>
-                      @foreach ($result['T'] as $r)
-                          <td>{{ $r }}</td>
-                      @endforeach
-                      <td></td>
-                  </thead>
-              </tbody>
+              <?php
+                include_once("../database/Connect.php");
+
+                $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
+
+                $q_selection = "SELECT *
+                FROM pokoks
+                WHERE jantina = 'Motherpalm'
+                AND created_at >= '$tahun-$bulan-01'
+                AND created_at <= '$tahun-$bulan_akhir-31'
+                GROUP By user_id";
+                $result_selection = $mysqli-> query($q_selection);
+                if ($result_selection -> num_rows > 0)
+                {
+	                while($record_selection = $result_selection -> fetch_assoc())
+	                {    
+						$user_id_selection = $record_selection['user_id'];
+                        ?>
+                          <tbody class="border border-dark">
+                          <?php
+                            $q = "SELECT *
+                            FROM pokoks
+                            WHERE jantina = 'Motherpalm'
+                            AND user_id = '$user_id_selection'
+                            AND created_at >= '$tahun-$bulan-01'
+                            AND created_at <= '$tahun-$bulan_akhir-31'
+                            GROUP BY blok, baka";
+                            $result = $mysqli-> query($q);
+                            if ($result -> num_rows > 0)
+                            {
+	                            while($record = $result -> fetch_assoc())
+	                            {    
+						            $id = $record['id'];
+                                    $blok = $record['blok'];
+                                    $induk = $record['induk'];
+                                    $baka = $record['baka'];
+                                    $progeny = $record['progeny'];
+                                    $no_pokok = $record['no_pokok'];
+                                    $user_id  = $record['user_id'];
+                                    $catatan  = $record['catatan'];
+
+                                    $sql_user = "SELECT *
+				                                FROM users
+				                                Where id  = '$user_id'";
+                                    $result_user = $mysqli-> query($sql_user);
+                                    if ($result_user -> num_rows > 0)
+                                    {
+	                                    $row_user = $result_user ->fetch_assoc();
+	                                    $user_nama = $row_user['nama'];
+                                    }
+
+                                    $sql_data_jumlah = "SELECT COUNT(id) As num 
+                                    FROM pokoks
+                                    WHERE jantina = 'Motherpalm'
+                                    AND user_id = '$user_id_selection'
+                                    AND blok = '$blok'
+                                    AND baka = '$baka'
+                                    AND created_at >= '$tahun-01-01'
+                                    AND created_at <= '$tahun-12-31'";
+                                    $result_data_jumlah = $mysqli->query($sql_data_jumlah);
+                                    $row_data_jumlah = $result_data_jumlah->fetch_assoc();
+                                    $total_data_jumlah = $row_data_jumlah['num'];
+
+                                    $sql_data_jumlah_bawah_all = "SELECT COUNT(id) As num 
+                                    FROM pokoks
+                                    WHERE jantina = 'Motherpalm'
+                                    AND user_id = '$user_id_selection'
+                                    AND created_at >= '$tahun-01-01'
+                                    AND created_at <= '$tahun-12-31'";
+                                    $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
+                                    $row_data_jumlah_bawah_all = $result_data_jumlah_bawah_all->fetch_assoc();
+                                    $total_data_jumlah_bawah_all = $row_data_jumlah_bawah_all['num'];
+
+                                    for ($i = 1; $i <= 12; $i++)
+                                    {
+                                        if ($i == 1)
+                                        {
+                                            $i_value = '01';
+                                        }
+                                        else
+                                        if ($i == 2)
+                                        {
+                                            $i_value = '02';
+                                        }
+                                        else
+                                        if ($i == 3)
+                                        {
+                                            $i_value = '03';
+                                        }
+                                        else
+                                        if ($i == 4)
+                                        {
+                                            $i_value = '04';
+                                        }
+                                        else
+                                        if ($i == 5)
+                                        {
+                                            $i_value = '05';
+                                        }
+                                        else
+                                        if ($i == 6)
+                                        {
+                                            $i_value = '06';
+                                        }
+                                        else
+                                        if ($i == 7)
+                                        {
+                                            $i_value = '07';
+                                        }
+                                        else
+                                        if ($i == 8)
+                                        {
+                                            $i_value = '08';
+                                        }
+                                        else
+                                        if ($i == 9)
+                                        {
+                                            $i_value = '09';
+                                        }
+                                        else
+                                        {
+                                            $i_value = $i;
+                                        }
+                                        $day = "31";
+                                        $tarikh_akhir_value = date('Y-m-d', strtotime("+1 day", strtotime($tahun-$i_value-$day)));
+
+                                        $sql_data = "SELECT COUNT(id) As num 
+                                        FROM pokoks
+                                        WHERE jantina = 'Motherpalm'
+                                        AND user_id = '$user_id_selection'
+                                        AND blok = '$blok'
+                                        AND baka = '$baka'
+                                        AND created_at >= '$tahun-$i_value-01'
+                                        AND created_at <= '$tahun-$i_value-31'";
+                                        $result_data = $mysqli->query($sql_data);
+                                        $row_data = $result_data->fetch_assoc();
+                                        $total_data = $row_data['num'];
+
+                                        $sql_data_jumlah_bawah = "SELECT COUNT(id) As num 
+                                        FROM pokoks
+                                        WHERE jantina = 'Motherpalm'
+                                        AND user_id = '$user_id_selection'
+                                        AND created_at >= '$tahun-$i_value-01'
+                                        AND created_at <= '$tahun-$i_value-31'";
+                                        $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
+                                        $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();
+                                        $total_data_jumlah_bawah = $row_data_jumlah_bawah['num'];
+
+                                        if ($i == 1)
+                                        {
+                                            $bulan_1 = $total_data;
+                                            $bulan_1_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 2)
+                                        {
+                                            $bulan_2 = $total_data;
+                                            $bulan_2_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 3)
+                                        {
+                                            $bulan_3 = $total_data;
+                                            $bulan_3_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 4)
+                                        {
+                                            $bulan_4 = $total_data;
+                                            $bulan_4_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 5)
+                                        {
+                                            $bulan_5 = $total_data;
+                                            $bulan_5_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 6)
+                                        {
+                                            $bulan_6 = $total_data;
+                                            $bulan_6_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 7)
+                                        {
+                                            $bulan_7 = $total_data;
+                                            $bulan_7_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 8)
+                                        {
+                                            $bulan_8 = $total_data;
+                                            $bulan_8_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 9)
+                                        {
+                                            $bulan_9 = $total_data;
+                                            $bulan_9_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 10)
+                                        {
+                                            $bulan_10 = $total_data;
+                                            $bulan_10_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 11)
+                                        {
+                                            $bulan_11 = $total_data;
+                                            $bulan_11_bawah = $total_data_jumlah_bawah;
+                                        }
+                                        else
+                                        if ($i == 12)
+                                        {
+                                            $bulan_12 = $total_data;
+                                            $bulan_12_bawah = $total_data_jumlah_bawah;
+                                        }
+                                    }
+                                    ?>
+                                      <tr>
+                                          <td>{{ $user_nama }}</td>
+                                          <td>{{ $blok }}</td>
+                                          <td>{{ $baka }}</td>
+                                          <td>{{ $bulan_1 }}</td>
+                                          <td>{{ $bulan_2 }}</td>
+                                          <td>{{ $bulan_3 }}</td>
+                                          <td>{{ $bulan_4 }}</td>
+                                          <td>{{ $bulan_5 }}</td>
+                                          <td>{{ $bulan_6 }}</td>
+                                          <td>{{ $bulan_7 }}</td>
+                                          <td>{{ $bulan_8 }}</td>
+                                          <td>{{ $bulan_9 }}</td>
+                                          <td>{{ $bulan_10 }}</td>
+                                          <td>{{ $bulan_11 }}</td>
+                                          <td>{{ $bulan_12 }}</td>
+                                          <td>{{ $total_data_jumlah }}</td>
+                                      </tr>
+                                  <?php 
+                                    }
+                                    }
+                                    ?>
+                              <thead class="border border-dark" style="background-color: #d9d9d9;">
+                                  <td></td>
+                                  <td></td>
+                                  <td>Jumlah</td>
+                                  <td>{{ $bulan_1_bawah }}</td>
+                                  <td>{{ $bulan_2_bawah }}</td>
+                                  <td>{{ $bulan_3_bawah }}</td>
+                                  <td>{{ $bulan_4_bawah }}</td>
+                                  <td>{{ $bulan_5_bawah }}</td>
+                                  <td>{{ $bulan_6_bawah }}</td>
+                                  <td>{{ $bulan_7_bawah }}</td>
+                                  <td>{{ $bulan_8_bawah }}</td>
+                                  <td>{{ $bulan_9_bawah }}</td>
+                                  <td>{{ $bulan_10_bawah }}</td>
+                                  <td>{{ $bulan_11_bawah }}</td>
+                                  <td>{{ $bulan_12_bawah }}</td>
+                                  <td>{{ $total_data_jumlah_bawah_all }}</td>
+                              </thead>
+                          </tbody>
+                          <?php 
+                            }
+                            }
+                           ?>
           </table>
       </div>
 

@@ -31,10 +31,13 @@
       <h6 class="mt-2">UNIT BAHAN TANAMAN</h6>
       <h6 class="mt-2">REKOD PROGRESS MEMBALUT & TUAI BAGI BUNGA PISIFERA LADANG BENIH</h6>
   </div>
+  <div class="col-xl-12 text-left">
+      <span><b>Tempoh Laporan: {{$tarikh_mula_word}} - {{$tarikh_akhir_word}}<b></span>
+  </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
           <table class="table table-bordered overflow-hidden" width="100%">
-              <thead class="border border-dark">
+              <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                     <th rowspan="2">TARIKH</th>
                     <th rowspan="2">(BALUT) JUM. JAMBAK</th>
@@ -48,8 +51,6 @@
                     <th colspan="6">SEBELUM TUAI</th>
                     <th>SELEPAS TUAI</th>
                   </tr>
-              </thead>
-              <tbody class="border border-dark">
                   <tr>
                     <td></td>
                     <td></td>
@@ -64,6 +65,8 @@
                     <td></td>
                     <td></td>
                   </tr>
+              </thead>
+              <tbody class="border border-dark">
                   <tr>
                     <td>01.06.23</td>
                     <td></td>

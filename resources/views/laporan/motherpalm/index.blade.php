@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-xl-6">
-                    <div class="form-group row align-items-center">
+                    <div class="form-group row align-items-center" style="padding-top:10px;">
                         <label class="col-form-label text-main col-sm-4 text-end" for="select-laporan">Laporan</label>
                         <div class="col-sm-8">
                             <select name="laporan" class="form-select border-danger" id="select-laporan">
@@ -47,12 +47,12 @@
             </div>
 
             <div class="row mt-5">
-                <div class="col-xl-6 d-none divBulanTahun">
+                <div class="col-xl-4 d-none divBulanTahun">
                     <div class="form-group row align-items-center">
-                        <label class="col-form-label text-main col-sm-4 text-end">Bulan</label>
+                        <label class="col-form-label text-main col-sm-4 text-end">Bulan Mula</label>
                         <div class="col-sm-8">
                             <select name="bulan" class="form-select" id="bulanInput">
-                                <option value="all">All</option>
+                                <!--option value="all">All</option-->
                                 @for ($i = 1; $i < 13; $i++)
                                     <option value="{{ sprintf('%02d', $i) }}">
                                         {{ $i }}</option>
@@ -62,8 +62,23 @@
                     </div>
                 </div>
 
-                <div class="col-xl-6 d-none divBulanTahun">
+                <div class="col-xl-4 d-none divBulanTahun">
                     <div class="form-group row align-items-center">
+                        <label class="col-form-label text-main col-sm-4 text-end">Bulan Akhir</label>
+                        <div class="col-sm-8">
+                            <select name="bulan_akhir" class="form-select" id="bulanInput">
+                                <!--option value="all">All</option-->
+                                @for ($i = 1; $i < 13; $i++)
+                                    <option value="{{ sprintf('%02d', $i) }}">
+                                        {{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 d-none divBulanTahun">
+                    <div class="form-group row align-items-center" style="padding-top:10px;">
                         <label class="col-form-label text-main col-sm-4 text-end">Tahun</label>
                         <div class="col-sm-8">
                             <select name="tahun" class="form-select">
@@ -186,7 +201,7 @@
                     default:
                         $("#bulanInput").html(``);
                         $("#bulanInput").append(`
-                            <option value="all">All</option>
+                            <!--option value="all">All</option-->
                             @for ($i = 1; $i < 13; $i++)
                                         <option value="{{ sprintf('%02d', $i) }}">
                                             {{ $i }}</option>
@@ -205,7 +220,6 @@
                         $('#harian-bulan').append(`
                         <option selected disabled hidden> SILA PILIH </option>
                         <option value="h">Harian</option>
-                        <option value="b">Bulan</option>
                         `);
 
                         $("#bulanInput").html(``);

@@ -30,6 +30,134 @@ class LaporanController extends Controller
 
     public function motherpalmStore(Request $request)
     {
+        $bulan_word_verify = $request->bulan;
+        $bulan_akhir_word_verify = $request->bulan_akhir;
+
+        if ($bulan_word_verify == '01')
+        {
+            $bulan_word = "JAN";
+        }
+        else
+        if ($bulan_word_verify == '02')
+        {
+            $bulan_word = "FEB";
+        }
+        else
+        if ($bulan_word_verify == '03')
+        {
+            $bulan_word = "MAR";
+        }
+        else
+        if ($bulan_word_verify == '04')
+        {
+            $bulan_word = "APR";
+        }
+        else
+        if ($bulan_word_verify == '05')
+        {
+            $bulan_word = "MAY";
+        }
+        else
+        if ($bulan_word_verify == '06')
+        {
+            $bulan_word = "JUN";
+        }
+        else
+        if ($bulan_word_verify == '07')
+        {
+            $bulan_word = "JUL";
+        }
+        else
+        if ($bulan_word_verify == '08')
+        {
+            $bulan_word = "AUG";
+        }
+        else
+        if ($bulan_word_verify == '09')
+        {
+            $bulan_word = "SEP";
+        }
+        else
+        if ($bulan_word_verify == '10')
+        {
+            $bulan_word = "OCT";
+        }
+        else
+        if ($bulan_word_verify == '11')
+        {
+            $bulan_word = "NOV";
+        }
+        else
+        if ($bulan_word_verify == '12')
+        {
+            $bulan_word = "DEC";
+        }
+
+
+        /****************************************************/
+
+        if ($bulan_akhir_word_verify == '01')
+        {
+            $bulan_akhir_word = "JAN";
+        }
+        else
+        if ($bulan_akhir_word_verify == '02')
+        {
+            $bulan_akhir_word = "FEB";
+        }
+        else
+        if ($bulan_akhir_word_verify == '03')
+        {
+            $bulan_akhir_word = "MAR";
+        }
+        else
+        if ($bulan_akhir_word_verify == '04')
+        {
+            $bulan_akhir_word = "APR";
+        }
+        else
+        if ($bulan_akhir_word_verify == '05')
+        {
+            $bulan_akhir_word = "MAY";
+        }
+        else
+        if ($bulan_akhir_word_verify == '06')
+        {
+            $bulan_akhir_word = "JUN";
+        }
+        else
+        if ($bulan_akhir_word_verify == '07')
+        {
+            $bulan_akhir_word = "JUL";
+        }
+        else
+        if ($bulan_akhir_word_verify == '08')
+        {
+            $bulan_akhir_word = "AUG";
+        }
+        else
+        if ($bulan_akhir_word_verify == '09')
+        {
+            $bulan_akhir_word = "SEP";
+        }
+        else
+        if ($bulan_akhir_word_verify == '10')
+        {
+            $bulan_akhir_word = "OCT";
+        }
+        else
+        if ($bulan_akhir_word_verify == '11')
+        {
+            $bulan_akhir_word = "NOV";
+        }
+        else
+        if ($bulan_akhir_word_verify == '12')
+        {
+            $bulan_akhir_word = "DEC";
+        }
+
+        /****************************************************/
+
         if ($request->hb == "h")
         {
             $tarikh_mula = date($request->tarikh_mula);
@@ -45,6 +173,10 @@ class LaporanController extends Controller
                         'result' => $result,
                         'bulan' => $request->bulan,
                         'tahun' => $request->tahun,
+                        'tarikh_mula' => $tarikh_mula,
+                        'tarikh_akhir' => $tarikh_akhir,
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
                         'hb' => $request->hb,
                     ]);
         }
@@ -57,22 +189,27 @@ class LaporanController extends Controller
                 switch ($request->hb)
                 {
                     case 'h':
-                    $result = $this->BalutLaporan1($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    $result = $this->BalutLaporan1($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     return view('laporan.motherpalm.balut1_harian', [
                         'result' => $result,
                         'bulan' => $request->bulan,
                         'tahun' => $request->tahun,
                         'tarikh_mula' => $tarikh_mula,
                         'tarikh_akhir' => $tarikh_akhir,
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
                         'hb' => $request->hb,
                     ]);
                     break;
 
                     case 'b':
-                    $result = $this->BalutLaporan1($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    $result = $this->BalutLaporan1($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     return view('laporan.motherpalm.balut1_bulanan', [
                         'result' => $result,
                         'bulan' => $request->bulan,
+                        'bulan_akhir' => $request->bulan_akhir,
+                        'bulan_word' => $bulan_word,
+                        'bulan_akhir_word' => $bulan_akhir_word,
                         'tahun' => $request->tahun,
                         'hb' => $request->hb,
                     ]);
@@ -88,22 +225,29 @@ class LaporanController extends Controller
                 switch ($request->hb)
                 {
                     case 'h':
-                    $result = $this->BalutLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    $result = $this->BalutLaporan2($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     return view('laporan.motherpalm.balut2_harian', [
                         'result' => $result,
                         'bulan' => $request->bulan,
                         'tahun' => $request->tahun,
                         'tarikh_mula' => $tarikh_mula,
                         'tarikh_akhir' => $tarikh_akhir,
+                        'selected_bulan' => date('m', strtotime($tarikh_mula)),
+                        'selected_year' => date('Y', strtotime($tarikh_mula)),
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
                         'hb' => $request->hb,
                     ]);
                     break;
 
                     case 'b':
-                    $result = $this->BalutLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    $result = $this->BalutLaporan2($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     return view('laporan.motherpalm.balut2_bulanan', [
                         'result' => $result,
                         'bulan' => $request->bulan,
+                        'bulan_akhir' => $request->bulan_akhir,
+                        'bulan_word' => $bulan_word,
+                        'bulan_akhir_word' => $bulan_akhir_word,
                         'tahun' => $request->tahun,
                         'hb' => $request->hb,
                     ]);
@@ -118,13 +262,17 @@ class LaporanController extends Controller
                 case '3':
                     $result = $this->BalutLaporan3($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     if ($request->tarikh_mula) {
-                        $nTarikhMula = DateTime::createFromFormat('Y-m-d', $tarikh_mula)->format('d-m-Y');
-                        $nTarikhAkhir = DateTime::createFromFormat('Y-m-d', $tarikh_akhir)->format('d-m-Y');
+                        $nTarikhMula = DateTime::createFromFormat('Y-m-d', $request->tarikh_mula)->format('d-m-Y');
+                        $nTarikhAkhir = DateTime::createFromFormat('Y-m-d', $request->tarikh_akhir)->format('d-m-Y');
                     }
                     return view('laporan.motherpalm.balut3', [
                         'result' => $result,
                         'hb' => $request->hb,
                         'bulan' => $request->bulan,
+                        'bulan_akhir' => $request->bulan_akhir,
+                        'bulan_word' => $bulan_word,
+                        'bulan_akhir_word' => $bulan_akhir_word,
+                        'tahun' => $request->tahun,
                         'tm' => $nTarikhMula ?? null,
                         'ta' => $nTarikhAkhir  ?? null,
                     ]);
@@ -134,13 +282,29 @@ class LaporanController extends Controller
                 switch ($request->hb)
                 {
                     case 'h':
-                    $result = $this->BalutLaporan4($request->bulan, $request->tahun);
-                    return view('laporan.motherpalm.balut4_harian', compact('result'));
+                    $result = $this->BalutLaporan4($request->bulan, $request->bulan_akhir, $request->tahun);
+                    return view('laporan.motherpalm.balut4_harian', compact('result'),[
+                        'tarikh_mula' => $tarikh_mula,
+                        'tarikh_akhir' => $tarikh_akhir,
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
+                        'selected_bulan' => date('m', strtotime($tarikh_mula)),
+                        'selected_year' => date('Y', strtotime($tarikh_mula)),
+                        'hb' => $request->hb,
+                        ]);
                     break;
 
                     case 'b':
-                    $result = $this->BalutLaporan4($request->bulan, $request->tahun);
-                    return view('laporan.motherpalm.balut4_bulanan', compact('result'));
+                    $result = $this->BalutLaporan4($request->bulan, $request->bulan_akhir, $request->tahun);
+                    return view('laporan.motherpalm.balut4_bulanan', [
+                        'result' => $result,
+                        'bulan' => $request->bulan,
+                        'bulan_akhir' => $request->bulan_akhir,
+                        'bulan_word' => $bulan_word,
+                        'bulan_akhir_word' => $bulan_akhir_word,
+                        'tahun' => $request->tahun,
+                        'hb' => $request->hb,
+                        ]);
                     break;
 
                     default:
@@ -156,13 +320,28 @@ class LaporanController extends Controller
              switch ($request->hb)
              {
                     case 'h':
-                        $results = $this->CpLaporan1($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
-                        return view('laporan.motherpalm.cp1_harian', compact('results'));
+                        $results = $this->CpLaporan1($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                        return view('laporan.motherpalm.cp1_harian', compact('results'),[
+                        'tarikh_mula' => $tarikh_mula,
+                        'tarikh_akhir' => $tarikh_akhir,
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
+                        'selected_bulan' => date('m', strtotime($tarikh_mula)),
+                        'selected_year' => date('Y', strtotime($tarikh_mula)),
+                        'hb' => $request->hb,
+                        ]);
                     break;
 
                     case 'b':
-                        $results = $this->CpLaporan1($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
-                        return view('laporan.motherpalm.cp1_bulanan', compact('results'));
+                        $results = $this->CpLaporan1($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                        return view('laporan.motherpalm.cp1_bulanan', compact('results'),[
+                        'bulan' => $request->bulan,
+                        'bulan_akhir' => $request->bulan_akhir,
+                        'bulan_word' => $bulan_word,
+                        'bulan_akhir_word' => $bulan_akhir_word,
+                        'tahun' => $request->tahun,
+                        'hb' => $request->hb,
+                        ]);
                     break;
 
                     default:
@@ -176,53 +355,81 @@ class LaporanController extends Controller
         {
             switch ($request->laporan) {
                 case '1':
-                    $result = $this->KawalLaporan1($request->hb, $request->bulan, $request->tahun);
+                    $result = $this->KawalLaporan1($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun);
                 return view('laporan.motherpalm.kawalan_1_bulanan', [
                     'result' => $result,
                     'bulan' => $request->bulan,
+                    'bulan_akhir' => $request->bulan_akhir,
+                    'bulan_word' => $bulan_word,
+                    'bulan_akhir_word' => $bulan_akhir_word,
                     'tahun' => $request->tahun,
                     'hb' => $request->hb,
                 ]);
                 break;
 
                 case '2':
-                $result = $this->KawalLaporan2($request->bulan, $request->tahun);
+                $result = $this->KawalLaporan2($request->bulan, $request->bulan_akhir, $request->tahun);
                 return view('laporan.motherpalm.kawalan_2_bulanan', [
                     'result' => $result,
                     'bulan' => $request->bulan,
+                    'bulan_akhir' => $request->bulan_akhir,
+                    'bulan_word' => $bulan_word,
+                    'bulan_akhir_word' => $bulan_akhir_word,
                     'tahun' => $request->tahun,
                     'hb' => $request->hb,
                 ]);
                 break;
 
                 case '3':
-                $result = $this->KawalLaporan3($request->bulan, $request->tahun);
+                $result = $this->KawalLaporan3($request->bulan, $request->bulan_akhir, $request->tahun);
                 return view('laporan.motherpalm.kawalan_3_bulanan', [
                     'result' => $result,
                     'bulan' => $request->bulan,
+                    'bulan_akhir' => $request->bulan_akhir,
+                    'bulan_word' => $bulan_word,
+                    'bulan_akhir_word' => $bulan_akhir_word,
                     'tahun' => $request->tahun,
                     'hb' => $request->hb,
                 ]);
                 break;
 
                 case '4':
-                $result = $this->KawalLaporan4($request->hb, $request->bulan, $request->tahun);
+                $result = $this->KawalLaporan4($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun);
                 return view('laporan.motherpalm.kawalan_4_bulanan', [
                     'result' => $result,
                     'bulan' => $request->bulan,
+                    'bulan_akhir' => $request->bulan_akhir,
+                    'bulan_word' => $bulan_word,
+                    'bulan_akhir_word' => $bulan_akhir_word,
                     'tahun' => $request->tahun,
                     'hb' => $request->hb,
                 ]);
                 break;
 
                 case '10':
-                $result = $this->KawalLaporan10($request->bulan, $request->tahun);
-                return view('laporan.motherpalm.kawalan_10_harian', compact('result'));
+                $result = $this->KawalLaporan10($request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                return view('laporan.motherpalm.kawalan_10_harian', compact('result'),[
+                        'tarikh_mula' => $tarikh_mula,
+                        'tarikh_akhir' => $tarikh_akhir,
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
+                        'selected_bulan' => date('m', strtotime($tarikh_mula)),
+                        'selected_year' => date('Y', strtotime($tarikh_mula)),
+                        'hb' => $request->hb,
+                        ]);
                 break;
 
                 case '11':
-                $result = $this->KawalLaporan11($request->bulan, $request->tahun);
-                return view('laporan.motherpalm.kawalan_11_harian', compact('result'));
+                $result = $this->KawalLaporan11($request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                return view('laporan.motherpalm.kawalan_11_harian', compact('result'),[
+                        'tarikh_mula' => $tarikh_mula,
+                        'tarikh_akhir' => $tarikh_akhir,
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
+                        'selected_bulan' => date('m', strtotime($tarikh_mula)),
+                        'selected_year' => date('Y', strtotime($tarikh_mula)),
+                        'hb' => $request->hb,
+                        ]);
                 break;
 
                 default:
@@ -240,22 +447,29 @@ class LaporanController extends Controller
                 switch ($request->hb)
                 {
                     case 'h':
-                    $result = $this->PenuaianLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    $result = $this->PenuaianLaporan2($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     return view('laporan.motherpalm.penuaian_2_harian', [
                         'result' => $result,
                         'bulan' => $request->bulan,
                         'tahun' => $request->tahun,
                         'tarikh_mula' => $tarikh_mula,
                         'tarikh_akhir' => $tarikh_akhir,
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
+                        'selected_bulan' => date('m', strtotime($tarikh_mula)),
+                        'selected_year' => date('Y', strtotime($tarikh_mula)),
                         'hb' => $request->hb,
                     ]);
                     break;
 
                     case 'b':
-                    $result = $this->PenuaianLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    $result = $this->PenuaianLaporan2($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     return view('laporan.motherpalm.penuaian_2_bulanan', [
                         'result' => $result,
                         'bulan' => $request->bulan,
+                        'bulan_akhir' => $request->bulan_akhir,
+                        'bulan_word' => $bulan_word,
+                        'bulan_akhir_word' => $bulan_akhir_word,
                         'tahun' => $request->tahun,
                         'hb' => $request->hb,
                     ]);
@@ -271,10 +485,13 @@ class LaporanController extends Controller
                 switch ($request->hb)
                 {
                     case 'b':
-                    $result = $this->PenuaianLaporan8($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                    $result = $this->PenuaianLaporan8($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                     return view('laporan.motherpalm.penuaian_8_bulanan', [
                         'result' => $result,
                         'bulan' => $request->bulan,
+                        'bulan_akhir' => $request->bulan_akhir,
+                        'bulan_word' => $bulan_word,
+                        'bulan_akhir_word' => $bulan_akhir_word,
                         'tahun' => $request->tahun,
                         'hb' => $request->hb,
                     ]);
@@ -290,13 +507,30 @@ class LaporanController extends Controller
                 switch ($request->hb)
                 {
                     case 'h':
-                        $results = $this->PenuaianLaporan9($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
-                        return view('laporan.motherpalm.penuaian_9_harian', compact('results'));
+                        $results = $this->PenuaianLaporan9($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                        return view('laporan.motherpalm.penuaian_9_harian', compact('results'),[
+                        'bulan' => $request->bulan,
+                        'tahun' => $request->tahun,
+                        'tarikh_mula' => $tarikh_mula,
+                        'tarikh_akhir' => $tarikh_akhir,
+                        'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                        'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
+                        'selected_bulan' => date('m', strtotime($tarikh_mula)),
+                        'selected_year' => date('Y', strtotime($tarikh_mula)),
+                        'hb' => $request->hb,
+                    ]);
                     break;
 
                     case 'b':
-                        $results = $this->PenuaianLaporan9($request->hb, $request->bulan, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
-                        return view('laporan.motherpalm.penuaian_9_bulanan', compact('results'));
+                        $results = $this->PenuaianLaporan9($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $request->tarikh_mula, $request->tarikh_akhir);
+                        return view('laporan.motherpalm.penuaian_9_bulanan', compact('results'),[
+                        'bulan' => $request->bulan,
+                        'bulan_akhir' => $request->bulan_akhir,
+                        'bulan_word' => $bulan_word,
+                        'bulan_akhir_word' => $bulan_akhir_word,
+                        'tahun' => $request->tahun,
+                        'hb' => $request->hb,
+                    ]);
                     break;
 
                     default:
@@ -314,10 +548,34 @@ class LaporanController extends Controller
     public function MotherMaster($tarikh_mula, $tarikh_akhir)
     {
         $result = [];
+
+        $resultsCountTikusAllMonth = DB::table('kerosakans')->
+        where('nama', 'Tikus')->
+        where('faktor', 'Manusia')->
+        get();
+
+
+        $listBlokBaka = Pokok::select('blok', 'baka')
+            ->where('status_pokok', 'aktif')
+            ->where('jantina', 'Motherpalm')
+            ->distinct()
+            ->get();
+
+        $result['T'] = array_fill(0, 12, 0);
+        foreach ($listBlokBaka as $key => $lbb) 
+		{
+            $result[$key]['01'] = 0;
+            $result[$key]['02'] = 0;
+		}
+
+        $result['listBlokBaka'] = $listBlokBaka;
+
+        //$result[0] = $resultsCountTikusAllMonth;
+
         return $result;
     }
 
-    public function BalutLaporan1($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function BalutLaporan1($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($hb == 'b')
         {
@@ -440,7 +698,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function BalutLaporan2($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function BalutLaporan2($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($hb == 'b')
         {
@@ -634,7 +892,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function BalutLaporan4($bulan, $tahun)
+    public function BalutLaporan4($bulan, $bulan_akhir, $tahun)
     {
         $daysInMonth = Carbon::createFromDate($tahun, $bulan)->daysInMonth;
         $result = ControlPollination::join('users', 'users.id', 'control_pollinations.id_sv_cp')
@@ -670,7 +928,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function CpLaporan1($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function CpLaporan1($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         $daysInMonth = Carbon::createFromDate($tahun, 2)->daysInMonth;
 
@@ -707,7 +965,7 @@ class LaporanController extends Controller
         return $results;
     }
 
-    public function KawalLaporan1($hb, $bulan, $tahun)
+    public function KawalLaporan1($hb, $bulan, $bulan_akhir, $tahun)
     {
         if ($hb == 'b')
         {
@@ -1530,7 +1788,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function KawalLaporan2($bulan, $tahun)
+    public function KawalLaporan2($bulan, $bulan_akhir, $tahun)
     {
         if ($bulan == "all")
         {
@@ -1572,7 +1830,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function KawalLaporan3($bulan, $tahun)
+    public function KawalLaporan3($bulan, $bulan_akhir, $tahun)
     {
         if ($bulan == "all")
         {
@@ -1613,7 +1871,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function KawalLaporan4($hb, $bulan, $tahun)
+    public function KawalLaporan4($hb, $bulan, $bulan_akhir, $tahun)
     {
         if ($hb == 'b')
         {
@@ -2436,7 +2694,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function KawalLaporan10($bulan, $tahun)
+    public function KawalLaporan10($bulan, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($bulan == "all")
         {
@@ -2477,7 +2735,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function KawalLaporan11($bulan, $tahun)
+    public function KawalLaporan11($bulan, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($bulan == "all")
         {
@@ -2518,7 +2776,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function PenuaianLaporan2($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function PenuaianLaporan2($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($hb == 'b')
         {
@@ -2641,7 +2899,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function PenuaianLaporan8($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function PenuaianLaporan8($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($hb == 'b')
         {
@@ -2764,7 +3022,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function PenuaianLaporan9($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function PenuaianLaporan9($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         $daysInMonth = Carbon::createFromDate($tahun, 2)->daysInMonth;
 
@@ -2817,7 +3075,135 @@ class LaporanController extends Controller
 
     public function fatherpalmStore(Request $request)
     {
-         if ($request->hb == "h")
+        $bulan_word_verify = $request->bulan;
+        $bulan_akhir_word_verify = $request->bulan_akhir;
+
+        if ($bulan_word_verify == '01')
+        {
+            $bulan_word = "JAN";
+        }
+        else
+        if ($bulan_word_verify == '02')
+        {
+            $bulan_word = "FEB";
+        }
+        else
+        if ($bulan_word_verify == '03')
+        {
+            $bulan_word = "MAR";
+        }
+        else
+        if ($bulan_word_verify == '04')
+        {
+            $bulan_word = "APR";
+        }
+        else
+        if ($bulan_word_verify == '05')
+        {
+            $bulan_word = "MAY";
+        }
+        else
+        if ($bulan_word_verify == '06')
+        {
+            $bulan_word = "JUN";
+        }
+        else
+        if ($bulan_word_verify == '07')
+        {
+            $bulan_word = "JUL";
+        }
+        else
+        if ($bulan_word_verify == '08')
+        {
+            $bulan_word = "AUG";
+        }
+        else
+        if ($bulan_word_verify == '09')
+        {
+            $bulan_word = "SEP";
+        }
+        else
+        if ($bulan_word_verify == '10')
+        {
+            $bulan_word = "OCT";
+        }
+        else
+        if ($bulan_word_verify == '11')
+        {
+            $bulan_word = "NOV";
+        }
+        else
+        if ($bulan_word_verify == '12')
+        {
+            $bulan_word = "DEC";
+        }
+
+
+        /****************************************************/
+
+        if ($bulan_akhir_word_verify == '01')
+        {
+            $bulan_akhir_word = "JAN";
+        }
+        else
+        if ($bulan_akhir_word_verify == '02')
+        {
+            $bulan_akhir_word = "FEB";
+        }
+        else
+        if ($bulan_akhir_word_verify == '03')
+        {
+            $bulan_akhir_word = "MAR";
+        }
+        else
+        if ($bulan_akhir_word_verify == '04')
+        {
+            $bulan_akhir_word = "APR";
+        }
+        else
+        if ($bulan_akhir_word_verify == '05')
+        {
+            $bulan_akhir_word = "MAY";
+        }
+        else
+        if ($bulan_akhir_word_verify == '06')
+        {
+            $bulan_akhir_word = "JUN";
+        }
+        else
+        if ($bulan_akhir_word_verify == '07')
+        {
+            $bulan_akhir_word = "JUL";
+        }
+        else
+        if ($bulan_akhir_word_verify == '08')
+        {
+            $bulan_akhir_word = "AUG";
+        }
+        else
+        if ($bulan_akhir_word_verify == '09')
+        {
+            $bulan_akhir_word = "SEP";
+        }
+        else
+        if ($bulan_akhir_word_verify == '10')
+        {
+            $bulan_akhir_word = "OCT";
+        }
+        else
+        if ($bulan_akhir_word_verify == '11')
+        {
+            $bulan_akhir_word = "NOV";
+        }
+        else
+        if ($bulan_akhir_word_verify == '12')
+        {
+            $bulan_akhir_word = "DEC";
+        }
+
+        /****************************************************/
+
+        if ($request->hb == "h")
         {
             $tarikh_mula = date($request->tarikh_mula);
             $tarikh_akhir = date($request->tarikh_akhir);
@@ -2828,29 +3214,42 @@ class LaporanController extends Controller
         switch ($request->laporan)
         {
             case '1':
-            $result = $this->FatherMaster( $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
-            return view('laporan.fatherpalm.master_bulanan', compact('result'));
+            $result = $this->FatherMaster($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun);
+            return view('laporan.fatherpalm.master_bulanan', compact('result'),[
+                    'result' => $result,
+                    'bulan' => $request->bulan,
+                    'bulan_akhir' => $request->bulan_akhir,
+                    'bulan_word' => $bulan_word,
+                    'bulan_akhir_word' => $bulan_akhir_word,
+                    'tahun' => $request->tahun,
+                    'hb' => $request->hb,
+                ]);
         
             case '2':
             switch ($request->hb)
             {
                 case 'h':
-                $result = $this->RumusanLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                $result = $this->RumusanLaporan2($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                 return view('laporan.fatherpalm.rumusan2_harian', [
                     'result' => $result,
                     'bulan' => $request->bulan,
                     'tahun' => $request->tahun,
                     'tarikh_mula' => $tarikh_mula,
                     'tarikh_akhir' => $tarikh_akhir,
+                    'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                    'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
                     'hb' => $request->hb,
                 ]);
                 break;
 
                 case 'b':
-                $result = $this->RumusanLaporan2($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+                $result = $this->RumusanLaporan2($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
                 return view('laporan.fatherpalm.rumusan2_bulanan', [
                     'result' => $result,
                     'bulan' => $request->bulan,
+                    'bulan_akhir' => $request->bulan_akhir,
+                    'bulan_word' => $bulan_word,
+                    'bulan_akhir_word' => $bulan_akhir_word,
                     'tahun' => $request->tahun,
                     'hb' => $request->hb,
                 ]);
@@ -2870,25 +3269,33 @@ class LaporanController extends Controller
                 'tahun' => $request->tahun,
                 'tarikh_mula' => $tarikh_mula,
                 'tarikh_akhir' => $tarikh_akhir,
+                'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
                 'hb' => $request->hb,
             ]);
             break;
 
             case '4':
-            $result = $this->KerosakanLaporan4($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            $result = $this->KerosakanLaporan4($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
             return view('laporan.fatherpalm.kerosakan4_bulanan', [
                 'result' => $result,
                 'bulan' => $request->bulan,
+                'bulan_akhir' => $request->bulan_akhir,
+                'bulan_word' => $bulan_word,
+                'bulan_akhir_word' => $bulan_akhir_word,	
                 'tahun' => $request->tahun,
                 'hb' => $request->hb,
             ]);
             break;
 
             case '5':
-            $result = $this->PenggunaanLaporan5($request->hb, $request->bulan, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
+            $result = $this->PenggunaanLaporan5($request->hb, $request->bulan, $request->bulan_akhir, $request->tahun, $tarikh_mula ?? $request->tarikh_mula, $tarikh_akhir ?? $request->tarikh_akhir);
             return view('laporan.fatherpalm.penggunaan5_bulanan', [
                 'result' => $result,
                 'bulan' => $request->bulan,
+                'bulan_akhir' => $request->bulan_akhir,
+                'bulan_word' => $bulan_word,
+                'bulan_akhir_word' => $bulan_akhir_word,	
                 'tahun' => $request->tahun,
                 'hb' => $request->hb,
             ]);
@@ -2902,6 +3309,8 @@ class LaporanController extends Controller
                 'tahun' => $request->tahun,
                 'tarikh_mula' => $tarikh_mula,
                 'tarikh_akhir' => $tarikh_akhir,
+                'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
+                'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
                 'hb' => $request->hb,
             ]);
             break;
@@ -2909,13 +3318,13 @@ class LaporanController extends Controller
         }
     }
 
-    public function FatherMaster($tarikh_mula, $tarikh_akhir)
+    public function FatherMaster($hb, $bulan, $bulan_akhir, $tahun,)
     {
         $result = [];
         return $result;
     }
 
-    public function RumusanLaporan2($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function RumusanLaporan2($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($hb == 'b')
         {
@@ -3161,7 +3570,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function KerosakanLaporan4($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function KerosakanLaporan4($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($hb == 'b')
         {
@@ -3284,7 +3693,7 @@ class LaporanController extends Controller
         return $result;
     }
 
-    public function PenggunaanLaporan5($hb, $bulan, $tahun, $tarikh_mula, $tarikh_akhir)
+    public function PenggunaanLaporan5($hb, $bulan, $bulan_akhir, $tahun, $tarikh_mula, $tarikh_akhir)
     {
         if ($hb == 'b')
         {

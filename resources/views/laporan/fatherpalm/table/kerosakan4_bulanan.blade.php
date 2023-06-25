@@ -29,14 +29,17 @@
   <div class="col-xl-12 text-center">
       <h4 class="mt-5">UNIT BAHAN TANAMAN</h4>
       <h6 class="mt-2">Laporan Kerosakan Membalut Bunga Pisifera dan Kerosakan Sebelum dan Selepas Bunga di Tuai</h6>
-      <h6 class="mt-2">Bulan: {{ $bulan }} {{ $tahun }}</h6>
+  </div>
+
+  <div class="col-xl-12 text-left">
+      <span><b>Tempoh Laporan: {{$bulan_word}} {{$tahun}} - {{$bulan_akhir_word}} {{$tahun}}<b></span>
   </div>
 
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
       <font size="2px">Kerosakan Sebelum Bunga DiTuai</font>
           <table class="table table-bordered overflow-hidden" width="100%">
-              <thead class="border border-dark">
+              <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                     <th>Blok</th>
                     <th>Jum. Pokok</th>
@@ -81,7 +84,7 @@
                     <td></td>
                     <td></td>
                   </tr>
-                  <tr>
+                  <tr style="background-color: #d9d9d9;">
                     <td><b>JUMLAH</b></td>
                     <td>6</td>
                     <td>2</td>
@@ -104,7 +107,7 @@
       <div class="table-responsive scrollbar">
       <font size="2px">Kerosakan Selepas Bunga DiTuai</font>
           <table class="table table-bordered overflow-hidden" width="100%">
-              <thead class="border border-dark">
+              <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                     <th>Blok</th>
                     <th>Jum. Pokok</th>
@@ -149,7 +152,7 @@
                     <td></td>
                     <td></td>
                   </tr>
-                  <tr>
+                  <tr style="background-color: #d9d9d9;">
                     <td><b>JUMLAH</b></td>
                     <td>6</td>
                     <td>2</td>
@@ -163,7 +166,7 @@
                     <td></td>
                     <td></td>
                   </tr>
-                  <tr>
+                  <tr style="background-color: #d9d9d9;">
                     <td><b>PERATUS</b></td>
                     <td></td>
                     <td></td>

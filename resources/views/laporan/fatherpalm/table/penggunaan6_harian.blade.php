@@ -31,11 +31,13 @@
       <h6 class="mt-2">UNIT BAHAN TANAMAN</h6>
       <h6 class="mt-2">REKOD PENGGUNAAN HARIAN POLLEN KE LADANG BENIH</h6>
   </div>
+  <div class="col-xl-12 text-left">
+      <span><b>Tempoh Laporan: {{$tarikh_mula_word}} - {{$tarikh_akhir_word}}<b></span>
+  </div>
   <div class="col-12 mt-4">
       <div class="table-responsive scrollbar">
-      <span>HARI: </span> <span style="padding-left:900px;">TARIKH: </span>
           <table class="table table-bordered overflow-hidden" width="100%">
-              <thead class="border border-dark">
+              <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                     <th>BIL</th>
                     <th>NAMA PENYELIA BLOK</th>
