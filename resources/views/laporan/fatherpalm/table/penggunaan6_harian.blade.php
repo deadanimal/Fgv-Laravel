@@ -52,63 +52,119 @@
                     <th>CATITAN</th>
                   </tr>
               </thead>
+              <?php
+                include_once("../database/Connect.php");
+
+                $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
+
+                $q_selection = "SELECT *
+                FROM pollens
+                WHERE created_at >= '$tarikh_mula'
+                AND created_at <= '$tarikh_akhir'
+                GROUP By id_sv_pollen";
+                $result_selection = $mysqli-> query($q_selection);
+                if ($result_selection -> num_rows > 0)
+                {
+	                while($record_selection = $result_selection -> fetch_assoc())
+	                {    
+						$user_id_selection = $record_selection['id_sv_pollen'];
+                        $pokok_id  = $record_selection['pokok_id'];
+                        $pollen_id  = $record_selection['id'];
+                        $pollen_jenis  = $record_selection['jenis'];
+                        $viabiliti_pollen  = $record_selection['viabiliti_pollen'];
+                        $catatan  = $record_selection['catatan'];
+
+                        ?>
+                          <tbody class="border border-dark">
+                          <?php	
+                            $bil = 0;
+
+                            $q = "SELECT *
+                            FROM pokoks
+                            WHERE id = '$pokok_id'
+                            GROUP BY blok, baka";
+                            $result = $mysqli-> query($q);
+                            if ($result -> num_rows > 0)
+                            {
+	                            while($record = $result -> fetch_assoc())
+	                            {
+                                    $bil = $bil + 1;
+						            $id = $record['id'];
+                                    $blok = $record['blok'];
+                                    $induk = $record['induk'];
+                                    $baka = $record['baka'];
+                                    $progeny = $record['progeny'];
+                                    $no_pokok = $record['no_pokok'];
+                                    $user_id  = $record['user_id'];
+                                    
+
+                                    $sql_user = "SELECT *
+				                                FROM users
+				                                Where id  = '$user_id_selection'";
+                                    $result_user = $mysqli-> query($sql_user);
+                                    if ($result_user -> num_rows > 0)
+                                    {
+	                                    $row_user = $result_user ->fetch_assoc();
+	                                    $user_nama = $row_user['nama'];
+                                    }
+
+                                    $sql_penyelia = "SELECT *
+				                            FROM users
+				                            Where id  = '$user_id'";
+                                    $result_penyelia = $mysqli-> query($sql_penyelia);
+                                    if ($result_penyelia -> num_rows > 0)
+                                    {
+	                                    $row_penyelia = $result_penyelia ->fetch_assoc();
+	                                    $user_penyelia = $row_penyelia['nama'];
+                                    }
+
+                                    $sql_pollen = "SELECT *
+				                    FROM stok_pollens
+				                    Where pollen_id  = '$pollen_id'";
+                                    $result_pollen = $mysqli-> query($sql_pollen);
+                                    if ($result_pollen -> num_rows > 0)
+                                    {
+	                                    $row_pollen = $result_pollen ->fetch_assoc();
+	                                    $amaun_keluar = $row_pollen['amaun_keluar'];
+                                        $amaun_kembali = $row_pollen['amaun_kembali'];
+                                        $amaun_semasa = $row_pollen['amaun_semasa'];
+                                    }
+
+                                    if ($amaun_kembali == 0 OR $amaun_keluar == 0)
+                                    {
+                                        $peratus_kembali = 0;
+                                    }
+                                    else
+                                    {
+                                        $peratus_kembali = ($amaun_kembali/$amaun_keluar) * 100;
+                                    }
+
+                                    $amaun_guna = $amaun_keluar - $amaun_kembali;
+                                    
+
+                                    ?>
               <tbody class="border border-dark">
                   <tr>
-                    <td rowspan="3">1</td>
-                    <td rowspan="3">JAMALUDDIN</td>
-                    <td>5C, 5C-SC</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td rowspan="3"></td>
+                    <td>{{ $bil }}</td>
+                    <td>{{ $user_penyelia }}</td>
+                    <td>{{ $blok }}</td>
+                    <td>{{ $user_nama }}</td>
+                    <td>{{ $pollen_jenis }}</td>
+                    <td>{{ $viabiliti_pollen }}</td>
+                    <td>{{ $amaun_keluar }}</td>
+                    <td>{{ $amaun_kembali }}</td>
+                    <td>{{ $peratus_kembali }}</td>
+                    <td>{{ $amaun_guna }}</td>
+                    <td>{{ $catatan }}</td>
                   </tr>
-                  <tr>
-                    <td>B/18R</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>8/18YR2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td rowspan="2">2</td>
-                    <td rowspan="2">RAMLI</td>
-                    <td>PRT10</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td rowspan="2"></td>
-                  </tr>
-                  <tr>
-                    <td>7/16</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>        
+                  <?php 
+                    }
+                    }
+                    ?>
+                    <?php 
+                    }
+                    }
+                    ?>  
               </tbody>
           </table>
       </div>

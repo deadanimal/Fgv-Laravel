@@ -46,68 +46,142 @@
                       <td>Progeni</td>
                       <td>No.Pokok</td>
                       <td>Nama Pembalut</td>
-                      @for ($i = 1; $i <= $result['daysInMonth']; $i++)
-                          <td>{{ $i }}</td>
-                      @endfor
+                      <td>1</td>
+                      <td>2</td>
+                      <td>3</td>
+                      <td>4</td>
+                      <td>5</td>
+                      <td>6</td>
+                      <td>7</td>
+                      <td>8</td>
+                      <td>9</td>
+                      <td>10</td>
+                      <td>11</td>
+                      <td>12</td>
+                      <td>13</td>
+                      <td>14</td>
+                      <td>15</td>
+                      <td>16</td>
+                      <td>17</td>
+                      <td>18</td>
+                      <td>19</td>
+                      <td>20</td>
+                      <td>21</td>
+                      <td>22</td>
+                      <td>23</td>
+                      <td>24</td>
+                      <td>25</td>
+                      <td>26</td>
+                      <td>27</td>
+                      <td>28</td>
+                      <td>29</td>
+                      <td>30</td>
+                      <td>31</td>
                       <td>Jumlah</td>
                       <td>Catatan</td>
                   </tr>
               </thead>
               <tbody class="border border-dark">
-                  @foreach ($result['listBlokBaka'] as $key => $r)
-                      @if ($key != 'T')
-                          <tr>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>{{ $r['blok'] }}</td>
-                              <td>{{ $r['baka'] }}</td>
-                              <td>{{ $result[$key]['j_motherpalm'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['01'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['02'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['03'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['04'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['05'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['06'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['07'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['08'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['09'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['10'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['11'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['12'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['jumlah'] ?? 0 }}</td>
-                              <td>{{ $result[$key]['takRosak'] ?? 0 }}</td>
-                          </tr>
-                      @endif
-                  @endforeach
+                <?php
+                include_once("../database/Connect.php");
+
+                $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
+                $bil = 0;
+
+                $q = "SELECT *
+                FROM pokoks
+                WHERE jantina = 'Fatherpalm'
+                AND created_at >= '$tarikh_mula'
+                AND created_at <= '$tarikh_akhir'";
+                $result = $mysqli-> query($q);
+                if ($result -> num_rows > 0)
+                {
+	                while($record = $result -> fetch_assoc())
+	                {    
+						$id = $record['id'];
+                        $blok = $record['blok'];
+                        $induk = $record['induk'];
+                        $baka = $record['baka'];
+                        $progeny = $record['progeny'];
+                        $no_pokok = $record['no_pokok'];
+                        $user_id  = $record['user_id'];
+                        $catatan  = $record['catatan'];
+
+                        $sql_user = "SELECT *
+				                    FROM users
+				                    Where id  = '$user_id'";
+                        $result_user = $mysqli-> query($sql_user);
+                        if ($result_user -> num_rows > 0)
+                        {
+	                        $row_user = $result_user ->fetch_assoc();
+	                        $user_nama = $row_user['nama'];
+                        }
+
+                        $bil = $bil + 1;
+                ?>
+                <tr>
+                    <td>{{ $bil }}</td>
+                    <td>{{ $blok }}</td>
+                    <td>{{ $induk }}</td>
+                    <td>{{ $baka }}</td>
+                    <td>{{ $progeny }}</td>
+                    <td>{{ $no_pokok }}</td>
+                    <td>{{ $user_nama }}</td>
+                    <td>1</td>
+                      <td>2</td>
+                      <td>3</td>
+                      <td>4</td>
+                      <td>5</td>
+                      <td>6</td>
+                      <td>7</td>
+                      <td>8</td>
+                      <td>9</td>
+                      <td>10</td>
+                      <td>11</td>
+                      <td>12</td>
+                      <td>13</td>
+                      <td>14</td>
+                      <td>15</td>
+                      <td>16</td>
+                      <td>17</td>
+                      <td>18</td>
+                      <td>19</td>
+                      <td>20</td>
+                      <td>21</td>
+                      <td>22</td>
+                      <td>23</td>
+                      <td>24</td>
+                      <td>25</td>
+                      <td>26</td>
+                      <td>27</td>
+                      <td>28</td>
+                      <td>29</td>
+                      <td>30</td>
+                      <td>31</td>
+                      <td></td>
+                      <td></td>
+                </tr>
+                <?php 
+                }
+                }
+                ?>
                   <thead class="border border-dark" style="background-color: #d9d9d9;">
                       <td></td>
                       <td></td>
                       <td></td>
                       <td>Jumlah</td>
-                      @foreach ($result['T'] as $r)
-                          <td>{{ $r }}</td>
-                      @endforeach
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -136,5 +210,4 @@
               </tbody>
           </table>
       </div>
-
   </div>
