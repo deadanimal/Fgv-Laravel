@@ -73,7 +73,7 @@ class RegisterController extends Controller
             'no_kad_pengenalan' => '000000000000',
             'kategori_petugas' => 'kategori1',
             'tugasan' => 'tugasan1',
-            'peranan' => 'admin',
+            'peranan' => 'Superadmin',
         ]);
 
     }
