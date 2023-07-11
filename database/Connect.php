@@ -25,7 +25,7 @@ $port = "25060";
 $host = "104.248.157.97";
 $username = "asrar"; 
 $password = "PabloEscobar"; 
-$db = "fgv";
+$db = "FGV";
 $port = "3306"; 
 ?>
 
