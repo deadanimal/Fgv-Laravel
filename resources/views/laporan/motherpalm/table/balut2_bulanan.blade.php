@@ -136,51 +136,81 @@
                                         if ($i == 1)
                                         {
                                             $i_value = '01';
+                                            $last_day = '31';
                                         }
                                         else
                                         if ($i == 2)
                                         {
                                             $i_value = '02';
+                                            $last_day = '28';
                                         }
                                         else
                                         if ($i == 3)
                                         {
                                             $i_value = '03';
+                                            $last_day = '31';
                                         }
                                         else
                                         if ($i == 4)
                                         {
                                             $i_value = '04';
+                                            $last_day = '30';
                                         }
                                         else
                                         if ($i == 5)
                                         {
                                             $i_value = '05';
+                                            $last_day = '31';
                                         }
                                         else
                                         if ($i == 6)
                                         {
                                             $i_value = '06';
+                                            $last_day = '30';
                                         }
                                         else
                                         if ($i == 7)
                                         {
                                             $i_value = '07';
+                                            $last_day = '31';
                                         }
                                         else
                                         if ($i == 8)
                                         {
                                             $i_value = '08';
+                                            $last_day = '31';
                                         }
                                         else
                                         if ($i == 9)
                                         {
                                             $i_value = '09';
+                                            $last_day = '30';
+                                        }
+                                        else
+                                        if ($i == 10)
+                                        {
+                                            $i_value = '10';
+                                            $last_day = '31';
+                                        }
+                                        else
+                                        if ($i == 11)
+                                        {
+                                            $i_value = '11';
+                                            $last_day = '30';
+                                        }
+                                        else
+                                        if ($i == 12)
+                                        {
+                                            $i_value = '12';
+                                            $last_day = '31';
                                         }
                                         else
                                         {
                                             $i_value = $i;
                                         }
+
+
+
                                         $day = "31";
                                         $tarikh_akhir_value = date('Y-m-d', strtotime("+1 day", strtotime($tahun-$i_value-$day)));
 
@@ -191,7 +221,7 @@
                                         AND blok = '$blok'
                                         AND baka = '$baka'
                                         AND created_at >= '$tahun-$i_value-01'
-                                        AND created_at <= '$tahun-$i_value-31'";
+                                        AND created_at <= '$tahun-$i_value-$last_day'";
                                         $result_data = $mysqli->query($sql_data);
                                         $row_data = $result_data->fetch_assoc();
                                         $total_data = $row_data['num'];
@@ -201,7 +231,7 @@
                                         WHERE jantina = 'Motherpalm'
                                         AND user_id = '$user_id_selection'
                                         AND created_at >= '$tahun-$i_value-01'
-                                        AND created_at <= '$tahun-$i_value-31'";
+                                        AND created_at <= '$tahun-$i_value-$last_day'";
                                         $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
                                         $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();
                                         $total_data_jumlah_bawah = $row_data_jumlah_bawah['num'];
