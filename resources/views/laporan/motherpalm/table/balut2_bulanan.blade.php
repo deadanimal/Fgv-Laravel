@@ -63,11 +63,71 @@
 
                 $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
 
+                if ($bulan_akhir == '01')
+                {
+                    $last_day = '31';
+                }
+                else
+                if ($bulan_akhir == '02')
+                {
+                    $last_day = '28';
+                }
+                else
+                if ($bulan_akhir == '03')
+                {
+                    $last_day = '31';
+                }
+                else
+                if ($bulan_akhir == '04')
+                {
+                    $last_day = '30';
+                }
+                else
+                if ($bulan_akhir == '05')
+                {
+                    $last_day = '31';
+                }
+                else
+                if ($bulan_akhir == '06')
+                {
+                    $last_day = '30';
+                }
+                else
+                if ($bulan_akhir == '07')
+                {
+                    $last_day = '31';
+                }
+                else
+                if ($bulan_akhir == '08')
+                {
+                    $last_day = '31';
+                }
+                else
+                if ($bulan_akhir == '09')
+                {
+                    $last_day = '30';
+                }
+                else
+                if ($bulan_akhir == '10')
+                {
+                    $last_day = '31';
+                }
+                else
+                if ($bulan_akhir == '11')
+                {
+                    $last_day = '30';
+                }
+                else
+                if ($bulan_akhir == '12')
+                {
+                    $last_day = '31';
+                }
+
                 $q_selection = "SELECT *
                 FROM pokoks
                 WHERE jantina = 'Motherpalm'
                 AND created_at >= '$tahun-$bulan-01'
-                AND created_at <= '$tahun-$bulan_akhir-31'
+                AND created_at <= '$tahun-$bulan_akhir-$last_day'
                 GROUP By user_id";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
@@ -83,7 +143,7 @@
                             WHERE jantina = 'Motherpalm'
                             AND user_id = '$user_id_selection'
                             AND created_at >= '$tahun-$bulan-01'
-                            AND created_at <= '$tahun-$bulan_akhir-31'
+                            AND created_at <= '$tahun-$bulan_akhir-$last_day'
                             GROUP BY blok, baka";
                             $result = $mysqli-> query($q);
                             if ($result -> num_rows > 0)
