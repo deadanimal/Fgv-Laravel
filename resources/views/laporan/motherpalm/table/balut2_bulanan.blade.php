@@ -133,7 +133,7 @@
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
-						$user_id_selection = $record_selection['user_id'];
+						$user_id_selection = $record_selection['id_sv_balut'];
                         $pokok_id = $record_selection['pokok_id'];
 
                         ?>
@@ -142,10 +142,7 @@
                             $q = "SELECT *
                             FROM pokoks
                             WHERE id = '$pokok_id'
-                            AND user_id = '$user_id_selection'
-                            AND created_at >= '$tahun-$bulan-01'
-                            AND created_at <= '$tahun-$bulan_akhir-$last_day'
-                            GROUP BY blok, baka";
+                            GROUP BY blok";
                             $result = $mysqli-> query($q);
                             if ($result -> num_rows > 0)
                             {

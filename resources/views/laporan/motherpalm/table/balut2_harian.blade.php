@@ -90,7 +90,7 @@
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
-						$user_id_selection = $record_selection['user_id'];
+						$user_id_selection = $record_selection['id_sv_balut'];
                         $pokok_id = $record_selection['pokok_id'];
 
                         ?>
@@ -99,8 +99,7 @@
                 
                             $sql_count = "SELECT COUNT(id_sv_balut) As num 
                             FROM baggings
-                            WHERE id_sv_balut = '$user_id_selection'
-                            AND created_at >= '$tarikh_mula'
+                            WHERE created_at >= '$tarikh_mula'
                             AND created_at <= '$tarikh_akhir'";
                             $result_count = $mysqli->query($sql_count);
                             $row_count = $result_count->fetch_assoc();
@@ -110,10 +109,7 @@
                             $q = "SELECT *
                             FROM pokoks
                             WHERE id = '$pokok_id'
-                            AND user_id = '$user_id_selection'
-                            AND created_at >= '$tarikh_mula'
-                            AND created_at <= '$tarikh_akhir'
-                            GROUP BY blok, baka";
+                            GROUP BY blok";
                             $result = $mysqli-> query($q);
                             if ($result -> num_rows > 0)
                             {
@@ -143,9 +139,7 @@
                                     WHERE jantina = 'Motherpalm'
                                     AND user_id = '$user_id_selection'
                                     AND blok = '$blok'
-                                    AND baka = '$baka'
-                                    AND created_at >= '$tarikh_mula'
-                                    AND created_at <= '$tarikh_akhir'";
+                                    AND baka = '$baka'";
                                     $result_data_jumlah = $mysqli->query($sql_data_jumlah);
                                     $row_data_jumlah = $result_data_jumlah->fetch_assoc();
                                     $total_data_jumlah = $row_data_jumlah['num'];
@@ -153,9 +147,7 @@
                                     $sql_data_jumlah_bawah_all = "SELECT COUNT(id) As num 
                                     FROM pokoks
                                     WHERE jantina = 'Motherpalm'
-                                    AND user_id = '$user_id_selection'
-                                    AND created_at >= '$tarikh_mula'
-                                    AND created_at <= '$tarikh_akhir'";
+                                    AND user_id = '$user_id_selection''";
                                     $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
                                     $row_data_jumlah_bawah_all = $result_data_jumlah_bawah_all->fetch_assoc();
                                     $total_data_jumlah_bawah_all = $row_data_jumlah_bawah_all['num'];
