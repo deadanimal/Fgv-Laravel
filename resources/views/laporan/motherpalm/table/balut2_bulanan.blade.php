@@ -124,23 +124,24 @@
                 }
 
                 $q_selection = "SELECT *
-                FROM pokoks
-                WHERE jantina = 'Motherpalm'
-                AND created_at >= '$tahun-$bulan-01'
+                FROM baggings
+                WHERE created_at >= '$tahun-$bulan-01'
                 AND created_at <= '$tahun-$bulan_akhir-$last_day'
-                GROUP By user_id";
+                GROUP By id_sv_balut";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
 						$user_id_selection = $record_selection['user_id'];
+                        $pokok_id = $record_selection['pokok_id'];
+
                         ?>
                           <tbody class="border border-dark">
                           <?php
                             $q = "SELECT *
                             FROM pokoks
-                            WHERE jantina = 'Motherpalm'
+                            WHERE id = '$pokok_id'
                             AND user_id = '$user_id_selection'
                             AND created_at >= '$tahun-$bulan-01'
                             AND created_at <= '$tahun-$bulan_akhir-$last_day'

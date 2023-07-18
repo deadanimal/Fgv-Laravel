@@ -81,25 +81,25 @@
                 $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
 
                 $q_selection = "SELECT *
-                FROM pokoks
-                WHERE jantina = 'Motherpalm'
-                AND created_at >= '$tarikh_mula'
+                FROM baggings
+                WHERE created_at >= '$tarikh_mula'
                 AND created_at <= '$tarikh_akhir'
-                GROUP By user_id";
+                GROUP By id_sv_balut";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
 						$user_id_selection = $record_selection['user_id'];
+                        $pokok_id = $record_selection['pokok_id'];
+
                         ?>
                           <tbody class="border border-dark">
                           <?php
                 
-                            $sql_count = "SELECT COUNT(user_id) As num 
-                            FROM pokoks
-                            WHERE jantina = 'Motherpalm'
-                            AND user_id = '$user_id_selection'
+                            $sql_count = "SELECT COUNT(id_sv_balut) As num 
+                            FROM baggings
+                            WHERE id_sv_balut = '$user_id_selection'
                             AND created_at >= '$tarikh_mula'
                             AND created_at <= '$tarikh_akhir'";
                             $result_count = $mysqli->query($sql_count);
@@ -109,7 +109,7 @@
 
                             $q = "SELECT *
                             FROM pokoks
-                            WHERE jantina = 'Motherpalm'
+                            WHERE id = '$pokok_id'
                             AND user_id = '$user_id_selection'
                             AND created_at >= '$tarikh_mula'
                             AND created_at <= '$tarikh_akhir'
