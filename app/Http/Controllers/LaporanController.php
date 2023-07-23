@@ -1989,6 +1989,7 @@ class LaporanController extends Controller
 
         $resultsCountJumlahRosakAllMonth = DB::table('quality_controls')->
         whereNotNull('jum_bagging_rosak')->
+        where('status', 'rosak')->
         where('created_at', 'LIKE', $tahun.'%')->
         count();
 
@@ -1999,6 +2000,7 @@ class LaporanController extends Controller
 
         $resultsCountPeratusRosakAllMonth = DB::table('quality_controls')->
         whereNotNull('peratus_rosak')->
+        where('status', 'rosak')->
         where('created_at', 'LIKE', $tahun.'%')->
         count();
 
@@ -2116,6 +2118,7 @@ class LaporanController extends Controller
 
                 $resultsCountJumlahRosak = DB::table('quality_controls')->
                 whereNotNull('jum_bagging')->
+                where('status', 'rosak')->
                 where('created_at', 'LIKE', $tahun_bulan.'%')->
                 count();
 
@@ -2126,6 +2129,7 @@ class LaporanController extends Controller
 
                 $resultsCountPeratusRosak = DB::table('quality_controls')->
                 whereNotNull('peratus_rosak')->
+                where('status', 'rosak')->
                 where('created_at', 'LIKE', $tahun_bulan.'%')->
                 count();
 
@@ -2555,6 +2559,7 @@ class LaporanController extends Controller
 
             $resultsCountJumlahRosak = DB::table('quality_controls')->
             whereNotNull('jum_bagging')->
+            where('status', 'rosak')->
             where('created_at', 'LIKE', $tahun_bulan.'%')->
             count();
 
@@ -2565,6 +2570,7 @@ class LaporanController extends Controller
 
             $resultsCountPeratusRosak = DB::table('quality_controls')->
             whereNotNull('peratus_rosak')->
+            where('status', 'rosak')->
             where('created_at', 'LIKE', $tahun_bulan.'%')->
             count();
 

@@ -101,25 +101,24 @@
                             AND kerosakan_id != ''";
                             $result_count = $mysqli->query($sql_count);
                             $row_count = $result_count->fetch_assoc();
-                            $total_count = $row_count['num'];	
+                            $total_count = $row_count['num'];
 
                             $q = "SELECT *
-                            FROM pokoks
-                            WHERE id = '$pokok_id'
-                            GROUP BY blok, baka";
+                            FROM users
+                            WHERE id = '$user_id_selection'";
                             $result = $mysqli-> query($q);
                             if ($result -> num_rows > 0)
                             {
 	                            while($record = $result -> fetch_assoc())
 	                            {    
 						            $id = $record['id'];
-                                    $blok = $record['blok'];
-                                    $induk = $record['induk'];
-                                    $baka = $record['baka'];
-                                    $progeny = $record['progeny'];
-                                    $no_pokok = $record['no_pokok'];
-                                    $user_id  = $record['user_id'];
-                                    $catatan  = $record['catatan'];
+                                    $list_of_bloks = $record['blok'];
+
+                                    $specificCharacter = ',';
+                                    $outputString = str_replace($specificCharacter, "'" . $specificCharacter, $list_of_bloks);
+                                    $characterToReplace = ',';
+                                    $newString = str_replace($characterToReplace, $characterToReplace."'", $outputString);
+                                    $newString = "'" . $newString . "'";
 
                                     $sql_user = "SELECT *
 				                                FROM users
@@ -131,281 +130,320 @@
 	                                    $user_nama = $row_user['nama'];
                                     }
 
-                                    $sql_data_jumlah = "SELECT COUNT(id) As num 
-                                    FROM control_pollinations
-                                    WHERE id_sv_cp = '$user_id_selection'
-                                    AND created_at >= '$tarikh_mula'
-                                    AND created_at <= '$tarikh_akhir'
-                                    AND kerosakan_id != ''";
-                                    $result_data_jumlah = $mysqli->query($sql_data_jumlah);
-                                    $row_data_jumlah = $result_data_jumlah->fetch_assoc();
-                                    $total_data_jumlah = $row_data_jumlah['num'];
-
-                                    $sql_data_jumlah_bawah_all = "SELECT COUNT(id) As num 
-                                    FROM control_pollinations
-                                    WHERE id_sv_cp = '$user_id_selection'
-                                    AND created_at >= '$tarikh_mula'
-                                    AND created_at <= '$tarikh_akhir'
-                                    AND kerosakan_id != ''";
-                                    $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
-                                    $row_data_jumlah_bawah_all = $result_data_jumlah_bawah_all->fetch_assoc();
-                                    $total_data_jumlah_bawah_all = $row_data_jumlah_bawah_all['num'];
-
-                                    for ($i = 1; $i <= 31; $i++)
+                                    $q = "SELECT *
+                                    FROM pokoks
+                                    WHERE blok IN ($newString)
+                                    group by blok, baka";
+                                    $result = $mysqli-> query($q);
+                                    if ($result -> num_rows > 0)
                                     {
-                                        if ($i == 1)
-                                        {
-                                            $i_value = '01';
-                                        }
-                                        else
-                                        if ($i == 2)
-                                        {
-                                            $i_value = '02';
-                                        }
-                                        else
-                                        if ($i == 3)
-                                        {
-                                            $i_value = '03';
-                                        }
-                                        else
-                                        if ($i == 4)
-                                        {
-                                            $i_value = '04';
-                                        }
-                                        else
-                                        if ($i == 5)
-                                        {
-                                            $i_value = '05';
-                                        }
-                                        else
-                                        if ($i == 6)
-                                        {
-                                            $i_value = '06';
-                                        }
-                                        else
-                                        if ($i == 7)
-                                        {
-                                            $i_value = '07';
-                                        }
-                                        else
-                                        if ($i == 8)
-                                        {
-                                            $i_value = '08';
-                                        }
-                                        else
-                                        if ($i == 9)
-                                        {
-                                            $i_value = '09';
-                                        }
-                                        else
-                                        {
-                                            $i_value = $i;
-                                        }
+	                                    while($record = $result -> fetch_assoc())
+	                                    {    
+						                    $id = $record['id'];
+                                            $blok = $record['blok'];
+                                            $induk = $record['induk'];
+                                            $baka = $record['baka'];
+                                            $progeny = $record['progeny'];
+                                            $no_pokok = $record['no_pokok'];
+                                            $user_id  = $record['user_id'];
+                                            $catatan  = $record['catatan'];
 
-                                        $sql_data = "SELECT COUNT(id) As num 
-                                        FROM control_pollinations
-                                        WHERE id_sv_cp = '$user_id_selection'
-                                        AND created_at Like '$selected_year-$selected_bulan-$i_value%'
-                                        AND kerosakan_id != ''";
-                                        $result_data = $mysqli->query($sql_data);
-                                        $row_data = $result_data->fetch_assoc();
-                                        $total_data = $row_data['num'];
+                                            $sql_data_jumlah = "SELECT COUNT(CP.id) As num 
+                                            FROM control_pollinations CP
+                                            INNER JOIN pokoks P
+                                            ON CP.pokok_id = P.id
+                                            WHERE CP.pokok_id = '$pokok_id'
+                                            AND CP.id_sv_cp = '$user_id_selection'
+                                            AND CP.kerosakan_id IS NOT NULL
+                                            AND P.jantina = 'Motherpalm'
+                                            AND P.baka = '$baka'
+                                            AND P.blok = '$blok'";
+                                            $result_data_jumlah = $mysqli->query($sql_data_jumlah);
+                                            $row_data_jumlah = $result_data_jumlah->fetch_assoc();
+                                            $total_data_jumlah = $row_data_jumlah['num'];
 
-                                        $sql_data_jumlah_bawah = "SELECT COUNT(id) As num 
-                                        FROM control_pollinations
-                                        WHERE id_sv_cp = '$user_id_selection'
-                                        AND created_at Like '$selected_year-$selected_bulan-$i_value%'
-                                        AND kerosakan_id != ''";
-                                        $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
-                                        $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();
-                                        $total_data_jumlah_bawah = $row_data_jumlah_bawah['num'];
+                                            $sql_data_jumlah_bawah_all = "SELECT COUNT(CP.id) As num 
+                                            FROM control_pollinations CP
+                                            INNER JOIN pokoks P
+                                            ON CP.pokok_id = P.id
+                                            WHERE CP.pokok_id = '$pokok_id'
+                                            AND CP.id_sv_cp = '$user_id_selection'
+                                            AND CP.kerosakan_id IS NOT NULL
+                                            AND P.jantina = 'Motherpalm'
+                                            AND P.baka = '$baka'
+                                            AND P.blok = '$blok'
+                                            AND CP.created_at >= '$tarikh_mula'
+                                            AND CP.created_at <= '$tarikh_akhir'";
+                                            $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
+                                            $row_data_jumlah_bawah_all = $result_data_jumlah_bawah_all->fetch_assoc();
+                                            $total_data_jumlah_bawah_all = $row_data_jumlah_bawah_all['num'];
 
-                                        if ($i == 1)
-                                        {
-                                            $day_1 = $total_data;
-                                            $day_1_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 2)
-                                        {
-                                            $day_2 = $total_data;
-                                            $day_2_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 3)
-                                        {
-                                            $day_3 = $total_data;
-                                            $day_3_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 4)
-                                        {
-                                            $day_4 = $total_data;
-                                            $day_4_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 5)
-                                        {
-                                            $day_5 = $total_data;
-                                            $day_5_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 6)
-                                        {
-                                            $day_6 = $total_data;
-                                            $day_6_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 7)
-                                        {
-                                            $day_7 = $total_data;
-                                            $day_7_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 8)
-                                        {
-                                            $day_8 = $total_data;
-                                            $day_8_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 9)
-                                        {
-                                            $day_9 = $total_data;
-                                            $day_9_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 10)
-                                        {
-                                            $day_10 = $total_data;
-                                            $day_10_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 11)
-                                        {
-                                            $day_11 = $total_data;
-                                            $day_11_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 12)
-                                        {
-                                            $day_12 = $total_data;
-                                            $day_12_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 13)
-                                        {
-                                            $day_13 = $total_data;
-                                            $day_13_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 14)
-                                        {
-                                            $day_14 = $total_data;
-                                            $day_14_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 15)
-                                        {
-                                            $day_15 = $total_data;
-                                            $day_15_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 16)
-                                        {
-                                            $day_16 = $total_data;
-                                            $day_16_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 17)
-                                        {
-                                            $day_17 = $total_data;
-                                            $day_17_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 18)
-                                        {
-                                            $day_18 = $total_data;
-                                            $day_18_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 19)
-                                        {
-                                            $day_19 = $total_data;
-                                            $day_19_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 20)
-                                        {
-                                            $day_20 = $total_data;
-                                            $day_20_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 21)
-                                        {
-                                            $day_21 = $total_data;
-                                            $day_21_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 22)
-                                        {
-                                            $day_22 = $total_data;
-                                            $day_22_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 23)
-                                        {
-                                            $day_23 = $total_data;
-                                            $day_23_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 24)
-                                        {
-                                            $day_24 = $total_data;
-                                            $day_24_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 25)
-                                        {
-                                            $day_25 = $total_data;
-                                            $day_25_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 26)
-                                        {
-                                            $day_26 = $total_data;
-                                            $day_26_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 27)
-                                        {
-                                            $day_27 = $total_data;
-                                            $day_27_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 28)
-                                        {
-                                            $day_28 = $total_data;
-                                            $day_28_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 29)
-                                        {
-                                            $day_29 = $total_data;
-                                            $day_29_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 30)
-                                        {
-                                            $day_30 = $total_data;
-                                            $day_30_bawah = $total_data_jumlah_bawah;
-                                        }
-                                        else
-                                        if ($i == 31)
-                                        {
-                                            $day_31 = $total_data;
-                                            $day_31_bawah = $total_data_jumlah_bawah;
-                                        }
-                                    }
+                                            for ($i = 1; $i <= 31; $i++)
+                                            {
+                                                if ($i == 1)
+                                                {
+                                                    $i_value = '01';
+                                                }
+                                                else
+                                                if ($i == 2)
+                                                {
+                                                    $i_value = '02';
+                                                }
+                                                else
+                                                if ($i == 3)
+                                                {
+                                                    $i_value = '03';
+                                                }
+                                                else
+                                                if ($i == 4)
+                                                {
+                                                    $i_value = '04';
+                                                }
+                                                else
+                                                if ($i == 5)
+                                                {
+                                                    $i_value = '05';
+                                                }
+                                                else
+                                                if ($i == 6)
+                                                {
+                                                    $i_value = '06';
+                                                }
+                                                else
+                                                if ($i == 7)
+                                                {
+                                                    $i_value = '07';
+                                                }
+                                                else
+                                                if ($i == 8)
+                                                {
+                                                    $i_value = '08';
+                                                }
+                                                else
+                                                if ($i == 9)
+                                                {
+                                                    $i_value = '09';
+                                                }
+                                                else
+                                                {
+                                                    $i_value = $i;
+                                                }
+
+                                                $sql_data = "SELECT COUNT(CP.id) As num 
+                                                FROM control_pollinations CP
+                                                INNER JOIN pokoks P
+                                                ON CP.pokok_id = P.id
+                                                WHERE CP.pokok_id = '$pokok_id'
+                                                AND CP.id_sv_cp = '$user_id_selection'
+                                                AND CP.kerosakan_id IS NOT NULL
+                                                AND P.jantina = 'Motherpalm'
+                                                AND P.baka = '$baka'
+                                                AND P.blok = '$blok'
+                                                AND CP.created_at Like '$selected_year-$selected_bulan-$i_value%'";
+                                                $result_data = $mysqli->query($sql_data);
+                                                $row_data = $result_data->fetch_assoc();
+                                                $total_data = $row_data['num'];
+
+                                                $sql_data_jumlah_bawah = "SELECT COUNT(CP.id) As num 
+                                                FROM control_pollinations CP
+                                                INNER JOIN pokoks P
+                                                ON CP.pokok_id = P.id
+                                                WHERE CP.pokok_id = '$pokok_id'
+                                                AND CP.kerosakan_id IS NOT NULL
+                                                AND P.jantina = 'Motherpalm'
+                                                AND P.baka = '$baka'
+                                                AND P.blok = '$blok'
+                                                AND CP.created_at Like '$selected_year-$selected_bulan-$i_value%'";
+                                                $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
+                                                $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();
+                                                $total_data_jumlah_bawah = $row_data_jumlah_bawah['num'];
+
+                                                if ($i == 1)
+                                                {
+                                                    $day_1 = $total_data;
+                                                    $day_1_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 2)
+                                                {
+                                                    $day_2 = $total_data;
+                                                    $day_2_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 3)
+                                                {
+                                                    $day_3 = $total_data;
+                                                    $day_3_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 4)
+                                                {
+                                                    $day_4 = $total_data;
+                                                    $day_4_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 5)
+                                                {
+                                                    $day_5 = $total_data;
+                                                    $day_5_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 6)
+                                                {
+                                                    $day_6 = $total_data;
+                                                    $day_6_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 7)
+                                                {
+                                                    $day_7 = $total_data;
+                                                    $day_7_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 8)
+                                                {
+                                                    $day_8 = $total_data;
+                                                    $day_8_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 9)
+                                                {
+                                                    $day_9 = $total_data;
+                                                    $day_9_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 10)
+                                                {
+                                                    $day_10 = $total_data;
+                                                    $day_10_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 11)
+                                                {
+                                                    $day_11 = $total_data;
+                                                    $day_11_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 12)
+                                                {
+                                                    $day_12 = $total_data;
+                                                    $day_12_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 13)
+                                                {
+                                                    $day_13 = $total_data;
+                                                    $day_13_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 14)
+                                                {
+                                                    $day_14 = $total_data;
+                                                    $day_14_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 15)
+                                                {
+                                                    $day_15 = $total_data;
+                                                    $day_15_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 16)
+                                                {
+                                                    $day_16 = $total_data;
+                                                    $day_16_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 17)
+                                                {
+                                                    $day_17 = $total_data;
+                                                    $day_17_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 18)
+                                                {
+                                                    $day_18 = $total_data;
+                                                    $day_18_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 19)
+                                                {
+                                                    $day_19 = $total_data;
+                                                    $day_19_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 20)
+                                                {
+                                                    $day_20 = $total_data;
+                                                    $day_20_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 21)
+                                                {
+                                                    $day_21 = $total_data;
+                                                    $day_21_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 22)
+                                                {
+                                                    $day_22 = $total_data;
+                                                    $day_22_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 23)
+                                                {
+                                                    $day_23 = $total_data;
+                                                    $day_23_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 24)
+                                                {
+                                                    $day_24 = $total_data;
+                                                    $day_24_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 25)
+                                                {
+                                                    $day_25 = $total_data;
+                                                    $day_25_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 26)
+                                                {
+                                                    $day_26 = $total_data;
+                                                    $day_26_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 27)
+                                                {
+                                                    $day_27 = $total_data;
+                                                    $day_27_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 28)
+                                                {
+                                                    $day_28 = $total_data;
+                                                    $day_28_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 29)
+                                                {
+                                                    $day_29 = $total_data;
+                                                    $day_29_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 30)
+                                                {
+                                                    $day_30 = $total_data;
+                                                    $day_30_bawah = $total_data_jumlah_bawah;
+                                                }
+                                                else
+                                                if ($i == 31)
+                                                {
+                                                    $day_31 = $total_data;
+                                                    $day_31_bawah = $total_data_jumlah_bawah;
+                                                }
+                                            }
                                     ?>
                                       <tr>
                                           <td>{{ $user_nama }}</td>
@@ -445,6 +483,7 @@
                                           <td>{{ $total_data_jumlah }}</td>
                                       </tr>
                                     <?php 
+                                    }
                                     }
                                     }
                                     ?>
@@ -487,6 +526,7 @@
                               </thead>
                           </tbody>
                           <?php 
+                            }
                             }
                             }
                            ?>

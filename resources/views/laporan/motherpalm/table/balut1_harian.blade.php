@@ -89,11 +89,14 @@
                 $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
                 $bil = 0;
 
-                $q = "SELECT *
-                FROM pokoks
-                WHERE jantina = 'Motherpalm'
-                AND created_at >= '$tarikh_mula'
-                AND created_at <= '$tarikh_akhir'";
+                $q = "SELECT B.id, P.blok, P.induk, P.jantina, P.baka, P.progeny, P.no_pokok, B.id_sv_balut, B.catatan
+                FROM baggings B
+                INNER JOIN pokoks P
+                ON B.pokok_id = P.id
+                WHERE B.jenis = 'Balut'
+                AND P.jantina = 'Motherpalm'
+                AND B.created_at >= '$tarikh_mula'
+                AND B.created_at <= '$tarikh_akhir'";
                 $result = $mysqli-> query($q);
                 if ($result -> num_rows > 0)
                 {
@@ -101,16 +104,16 @@
 	                {    
 						$id = $record['id'];
                         $blok = $record['blok'];
-                        $induk = $record['induk'];
+                        $jantina = $record['jantina'];
                         $baka = $record['baka'];
                         $progeny = $record['progeny'];
                         $no_pokok = $record['no_pokok'];
-                        $user_id  = $record['user_id'];
+                        $id_sv_balut  = $record['id_sv_balut'];
                         $catatan  = $record['catatan'];
 
                         $sql_user = "SELECT *
 				                    FROM users
-				                    Where id  = '$user_id'";
+				                    Where id  = '$id_sv_balut'";
                         $result_user = $mysqli-> query($sql_user);
                         if ($result_user -> num_rows > 0)
                         {
@@ -123,7 +126,7 @@
                 <tr>
                     <td>{{ $bil }}</td>
                     <td>{{ $blok }}</td>
-                    <td>{{ $induk }}</td>
+                    <td>{{ $jantina }}</td>
                     <td>{{ $baka }}</td>
                     <td>{{ $progeny }}</td>
                     <td>{{ $no_pokok }}</td>

@@ -91,7 +91,8 @@
                 WHERE P.jantina = 'Motherpalm'
                 AND QC.created_at >= '$tarikh_mula'
                 AND QC.created_at <= '$tarikh_akhir'
-                AND kerosakan_id != ''
+                AND kerosakan_id IS NOT NULL
+                AND status = 'rosak'
                 GROUP BY id_sv_qc";
                 $result = $mysqli-> query($q);
                 if ($result -> num_rows > 0)
@@ -127,7 +128,8 @@
                         AND QC.id_sv_qc = '$user_id'
                         AND QC.created_at >= '$tarikh_mula'
                         AND QC.created_at <= '$tarikh_akhir'
-                        AND kerosakan_id != ''";
+                        AND status = 'rosak'
+                        AND kerosakan_id IS NOT NULL";
                         $result_data_jumlah = $mysqli->query($sql_data_jumlah);
                         $row_data_jumlah = $result_data_jumlah->fetch_assoc();
                         $total_data_jumlah = $row_data_jumlah['num'];
@@ -139,7 +141,8 @@
                         WHERE P.jantina = 'Motherpalm'
                         AND QC.created_at >= '$tarikh_mula'
                         AND QC.created_at <= '$tarikh_akhir'
-                        AND kerosakan_id != ''";
+                        AND status = 'rosak'
+                        AND kerosakan_id IS NOT NULL";
                         $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
                         $row_data_jumlah_bawah_all = $result_data_jumlah_bawah_all->fetch_assoc();
                         $total_data_jumlah_bawah_all = $row_data_jumlah_bawah_all['num'];
@@ -202,7 +205,8 @@
                             WHERE P.jantina = 'Motherpalm'
                             AND id_sv_qc = '$user_id'
                             AND QC.created_at Like '$selected_year-$selected_bulan-$i_value%'
-                            AND kerosakan_id != ''";
+                            AND status = 'rosak'
+                            AND kerosakan_id IS NOT NULL";
                             $result_data = $mysqli->query($sql_data);
                             $row_data = $result_data->fetch_assoc();
                             $total_data = $row_data['num'];
@@ -213,7 +217,8 @@
                             ON QC.pokok_id = P.id
                             WHERE P.jantina = 'Motherpalm'
                             AND QC.created_at Like '$selected_year-$selected_bulan-$i_value%'
-                            AND kerosakan_id != ''";
+                            AND status = 'rosak'
+                            AND kerosakan_id IS NOT NULL";
                             $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
                             $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();
                             $total_data_jumlah_bawah = $row_data_jumlah_bawah['num'];

@@ -52,18 +52,12 @@
                     <th rowspan="2">Nama Pembalut</th>
                     <th colspan="3">Tarikh</th>
                     <th rowspan="2">Jenis Pollen</th>
-                    <th colspan="3">Beg</th>
-                    <th rowspan="2">Label</th>
-                    <th rowspan="2">Jenis Kerosakan</th>
                     <th rowspan="2">Catatan</th>
                   </tr>
                   <tr>
                     <th>Balut</th>
                     <th>CP</th>
                     <th>QC</th>
-                    <th>Ikatan Atas</th>
-                    <th>Ikatan Bawah</th>
-                    <th>Lapisan Bag</th>
                   </tr>
               </thead>
               <tbody class="border border-dark">
@@ -104,6 +98,7 @@
                         if ($result_tandan -> num_rows > 0)
                         {
 	                        $row_tandan = $result_tandan ->fetch_assoc();
+                            $tandan_id = $row_tandan['id'];
                             $no_daftar = $row_tandan['no_daftar'];
 	                        $umur_tandan = $row_tandan['umur'];
                             $kerosakans_id = $row_tandan['kerosakans_id'];
@@ -111,7 +106,7 @@
 
                         $sql_bagging = "SELECT *
 				        FROM baggings
-				        Where pokok_id  = '$pokok_id'";
+				        Where tandan_id = '$tandan_id'";
                         $result_bagging = $mysqli-> query($sql_bagging);
                         if ($result_bagging -> num_rows > 0)
                         {
@@ -122,7 +117,7 @@
 
                         $sql_cp = "SELECT *
 				        FROM control_pollinations
-				        Where pokok_id  = '$pokok_id'";
+				        Where tandan_id = '$tandan_id'";
                         $result_cp = $mysqli-> query($sql_cp);
                         if ($result_cp -> num_rows > 0)
                         {
@@ -132,7 +127,7 @@
 
                         $sql_qc = "SELECT *
 				        FROM quality_controls
-				        Where pokok_id  = '$pokok_id'";
+				        Where tandan_id = '$tandan_id'";
                         $result_qc = $mysqli-> query($sql_qc);
                         if ($result_qc -> num_rows > 0)
                         {
@@ -142,7 +137,7 @@
 
                         $sql_pollen = "SELECT *
 				        FROM pollens
-				        Where pokok_id  = '$pokok_id'";
+				        Where tandan_id = '$tandan_id'";
                         $result_pollen = $mysqli-> query($sql_pollen);
                         if ($result_pollen -> num_rows > 0)
                         {
@@ -172,11 +167,6 @@
                     <td>{{ $cp_created_at }}</td>
                     <td>{{ $qc_created_at }}</td>
                     <td>{{ $jenis_pollen }}</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
                     <td>{{ $catatan }}</td>
                   </tr>
                   <?php 

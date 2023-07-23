@@ -54,6 +54,7 @@
 	        while($record_selection = $result_selection -> fetch_assoc())
 	        {    
 				$user_id_selection = $record_selection['id_sv_harvest'];
+                $kerosakan_id = $record_selection['kerosakan_id'];
 
                 $sql_user = "SELECT *
 				            FROM users
@@ -93,146 +94,168 @@
                 </thead>
                 <tbody class="border border-dark">
                 <?php
-                $q_info = "SELECT P.id, B.no_harvest, P.blok, P.no_pokok, P.baka, B.created_at, B.status, B.id_sv_harvest, B.pengesah_id, B.catatan_pengesah, B.tandan_id, B.kerosakan_id
-                FROM harvests B       
-                INNER JOIN pokoks P
-                ON B.pokok_id = P.id
-                WHERE P.jantina = 'Motherpalm'
-                AND B.created_at >= '$tahun-$bulan-01'
-                AND B.created_at <= '$tahun-$bulan_akhir-31'
-                AND kerosakan_id != ''
-                AND B.id_sv_harvest = '$user_id_selection'
-                GROUP BY P.blok";
-                $result_info = $mysqli-> query($q_info);
-                if ($result_info -> num_rows > 0)
+
+                $q = "SELECT *
+                FROM users
+                WHERE id = '$user_id_selection'";
+                $result = $mysqli-> query($q);
+                if ($result -> num_rows > 0)
                 {
-	                while($record_info = $result_info -> fetch_assoc())
+	                while($record = $result -> fetch_assoc())
 	                {    
-				        $pokok_id = $record_info['id'];
-                        $no_harvest = $record_info['no_harvest'];
-                        $blok = $record_info['blok'];
-                        $no_pokok = $record_info['no_pokok'];
-                        $baka = $record_info['baka'];
-                        $created_at = date('d-m-Y', strtotime($record_info['created_at']));
-                        $status = $record_info['status'];
-                        $id_sv_harvest  = $record_info['id_sv_harvest'];
-                        $pengesah_id  = $record_info['pengesah_id'];
-                        $catatan_pengesah  = $record_info['catatan_pengesah'];
-                        $tandan_id  = $record_info['tandan_id'];
-                        $kerosakan_id  = $record_info['kerosakan_id'];
+						$id = $record['id'];
+                        $list_of_bloks = $record['blok'];
 
-                        $sql_bagging = "SELECT COUNT(id) As num 
-				        FROM baggings
-				        Where pokok_id = '$pokok_id'";
-                        $result_bagging = $mysqli-> query($sql_bagging);
-                        if ($result_bagging -> num_rows > 0)
+                        $specificCharacter = ',';
+                        $outputString = str_replace($specificCharacter, "'" . $specificCharacter, $list_of_bloks);
+                        $characterToReplace = ',';
+                        $newString = str_replace($characterToReplace, $characterToReplace."'", $outputString);
+                        $newString = "'" . $newString . "'";
+
+                        $q_info = "SELECT *
+                        FROM pokoks
+                        WHERE blok IN ($newString)
+                        group by blok";
+                        $result_info = $mysqli-> query($q_info);
+                        if ($result_info -> num_rows > 0)
                         {
-	                        $row_bagging = $result_bagging ->fetch_assoc();
-                            $jumlah_balut = $row_bagging['num'];
-                        }
+	                        while($record_info = $result_info -> fetch_assoc())
+	                        {    
+				                $pokok_id = $record_info['id'];
+                                $blok = $record_info['blok'];
+                                $created_at = date('d-m-Y', strtotime($record_info['created_at']));
+                                $status = $record_info['status'];
 
-                        $kerosakan_id_looping = array("40", "41", "48", "42", "43", "31", "35", "32", "49", "50", "34", "44");
-
-                        foreach ($kerosakan_id_looping as $kerosakan_id_looping_list) 
-		                {
-                            if ($kerosakan_id_looping_list == $kerosakan_id)
-                            {
-                                $sql_count_kerosakan = "SELECT COUNT(id) As num 
-				                                   FROM kerosakans
-				                                   Where id  = '$kerosakan_id_looping_list'";
-                                $result_count_kerosakan = $mysqli-> query($sql_count_kerosakan);
-                                if ($result_count_kerosakan -> num_rows > 0)
+                                $sql_bagging = "SELECT COUNT(id) As num 
+				                FROM baggings
+				                Where pokok_id = '$pokok_id'";
+                                $result_bagging = $mysqli-> query($sql_bagging);
+                                if ($result_bagging -> num_rows > 0)
                                 {
-	                                $row_count_kerosakan = $result_count_kerosakan ->fetch_assoc();
-                                    $num_kerosakan = $row_count_kerosakan['num'];
+	                                $row_bagging = $result_bagging ->fetch_assoc();
+                                    $jumlah_balut = $row_bagging['num'];
                                 }
 
-                                if ($kerosakan_id_looping_list == '40') //BUNGA MATI
-                                {
-                                    $kerosakan_count_bunga_mati = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '41') //IKAT ATAS BUNGA
-                                {
-                                    $kerosakan_count_ikat_atas_bunga = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '48') //KEMBANG AWAL
-                                {
-                                    $kerosakan_count_kembang_awal = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '42') //WEEVIL
-                                {
-                                    $kerosakan_count_weevil = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '43') //TIDAK CP
-                                {
-                                    $kerosakan_count_tidak_cp = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '31') //Tikus
-                                {
-                                    $kerosakan_count_tikus = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '35') //BERUK
-                                {
-                                    $kerosakan_count_beruk = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '32') //BEG PECAH
-                                {
-                                    $kerosakan_count_beg_pecah = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '49') //SEMUT
-                                {
-                                    $kerosakan_count_semut = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '50') //DURI
-                                {
-                                    $kerosakan_count_duri = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '34') //KEMBANG TIDAK SEKATA
-                                {
-                                    $kerosakan_count_kembang_tidak_sekata = $num_kerosakan;
-                                }
-                                else
-                                if ($kerosakan_id_looping_list == '44') //LAIN-LAIN
-                                {
-                                    $kerosakan_count_lain = $num_kerosakan;
-                                }
-                            }
-                        }
+                                $kerosakan_id_looping = array("40", "41", "48", "42", "43", "31", "35", "32", "49", "50", "34", "44");
 
-                        $jumlah_rosak = $kerosakan_count_bunga_mati + $kerosakan_count_ikat_atas_bunga + $kerosakan_count_kembang_awal + $kerosakan_count_weevil + $kerosakan_count_tidak_cp + $kerosakan_count_tikus + $kerosakan_count_beruk + $kerosakan_count_beg_pecah + $kerosakan_count_semut +  $kerosakan_count_duri + $kerosakan_count_kembang_tidak_sekata + $kerosakan_count_lain;
+                                foreach ($kerosakan_id_looping as $kerosakan_id_looping_list) 
+		                        {
+                                    if ($kerosakan_id_looping_list == $kerosakan_id)
+                                    {
+                                        $sql_count_kerosakan = "SELECT COUNT(H.id) As num
+                                                                FROM harvests H
+				                                                Inner Join kerosakans K
+                                                                On H.kerosakan_id = K.id
+                                                                Inner Join pokoks P
+                                                                On H.pokok_id = P.id
+                                                                WHERE P.blok = '$blok'
+				                                                AND K.id  = '$kerosakan_id_looping_list'";
+                                        $result_count_kerosakan = $mysqli-> query($sql_count_kerosakan);
+                                        if ($result_count_kerosakan -> num_rows > 0)
+                                        {
+	                                        $row_count_kerosakan = $result_count_kerosakan ->fetch_assoc();
+                                            $num_kerosakan = $row_count_kerosakan['num'];
+                                        }
 
-                        if ($jumlah_rosak != '0' && $jumlah_balut != '0')
-                        {
-                            $peratus_rosak = ($jumlah_rosak / $jumlah_balut) * 100;
-                            $peratus_rosak = number_format($peratus_rosak,2);
-                        }
-                        else
-                        {
-                            $peratus_rosak = 0.00;
-                        }
+                                        if ($kerosakan_id_looping_list == '40') //BUNGA MATI
+                                        {
+                                            $kerosakan_count_bunga_mati = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '41') //IKAT ATAS BUNGA
+                                        {
+                                            $kerosakan_count_ikat_atas_bunga = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '48') //KEMBANG AWAL
+                                        {
+                                            $kerosakan_count_kembang_awal = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '42') //WEEVIL
+                                        {
+                                            $kerosakan_count_weevil = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '43') //TIDAK CP
+                                        {
+                                            $kerosakan_count_tidak_cp = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '31') //Tikus
+                                        {
+                                            $kerosakan_count_tikus = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '35') //BERUK
+                                        {
+                                            $kerosakan_count_beruk = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '32') //BEG PECAH
+                                        {
+                                            $kerosakan_count_beg_pecah = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '49') //SEMUT
+                                        {
+                                            $kerosakan_count_semut = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '50') //DURI
+                                        {
+                                            $kerosakan_count_duri = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '34') //KEMBANG TIDAK SEKATA
+                                        {
+                                            $kerosakan_count_kembang_tidak_sekata = $num_kerosakan;
+                                        }
+                                        else
+                                        if ($kerosakan_id_looping_list == '44') //LAIN-LAIN
+                                        {
+                                            $kerosakan_count_lain = $num_kerosakan;
+                                        } 
+                                    }
+                                }
+
+                                if ($kerosakan_count_bunga_mati == "") {$kerosakan_count_bunga_mati = 0;}
+                                if ($kerosakan_count_ikat_atas_bunga == "") {$kerosakan_count_ikat_atas_bunga = 0;}
+                                if ($kerosakan_count_kembang_awal == "") {$kerosakan_count_kembang_awal = 0;}
+                                if ($kerosakan_count_weevil == "") {$kerosakan_count_weevil = 0;}
+                                if ($kerosakan_count_tidak_cp == "") {$kerosakan_count_tidak_cp = 0;}
+                                if ($kerosakan_count_tikus == "") {$kerosakan_count_tikus = 0;}
+                                if ($kerosakan_count_beruk == "") {$kerosakan_count_beruk = 0;}
+                                if ($kerosakan_count_beg_pecah == "") {$kerosakan_count_beg_pecah = 0;}
+                                if ($kerosakan_count_semut == "") {$kerosakan_count_semut = 0;}
+                                if ($kerosakan_count_duri == "") {$kerosakan_count_duri = 0;}
+                                if ($kerosakan_count_kembang_tidak_sekata == "") {$kerosakan_count_kembang_tidak_sekata = 0;}
+                                if ($kerosakan_count_lain == "") {$kerosakan_count_lain = 0;}
+
+                                $jumlah_rosak = $kerosakan_count_bunga_mati + $kerosakan_count_ikat_atas_bunga + $kerosakan_count_kembang_awal + $kerosakan_count_weevil + $kerosakan_count_tidak_cp + $kerosakan_count_tikus + $kerosakan_count_beruk + $kerosakan_count_beg_pecah + $kerosakan_count_semut +  $kerosakan_count_duri + $kerosakan_count_kembang_tidak_sekata + $kerosakan_count_lain;
+
+                                if ($jumlah_rosak != '0' && $jumlah_balut != '0')
+                                {
+                                    $peratus_rosak = ($jumlah_rosak / $jumlah_balut) * 100;
+                                    $peratus_rosak = number_format($peratus_rosak,2);
+                                }
+                                else
+                                {
+                                    $peratus_rosak = 0.00;
+                                }
                         
 
-                        /*
-                        $sql_kerosakan = "SELECT *
-				                          FROM kerosakans
-				                          Where id  = '$kerosakan_id'";
-                        $result_kerosakan = $mysqli-> query($sql_kerosakan);
-                        if ($result_kerosakan -> num_rows > 0)
-                        {
-	                        $row_kerosakan = $result_kerosakan ->fetch_assoc();
-                            $nama_kerosakan = $row_kerosakan['nama'];
-                        }
-                        */
+                                /*
+                                $sql_kerosakan = "SELECT *
+				                                  FROM kerosakans
+				                                  Where id  = '$kerosakan_id'";
+                                $result_kerosakan = $mysqli-> query($sql_kerosakan);
+                                if ($result_kerosakan -> num_rows > 0)
+                                {
+	                                $row_kerosakan = $result_kerosakan ->fetch_assoc();
+                                    $nama_kerosakan = $row_kerosakan['nama'];
+                                }
+                                */
                 ?>
                   <tr>
                     <td>{{ $user_nama }}</td>
@@ -256,10 +279,12 @@
                   <?php
                   }
                   }
+                  }
                   ?>
                 </tbody>
           </table>
           <?php
+          }
           }
           }
           ?>
