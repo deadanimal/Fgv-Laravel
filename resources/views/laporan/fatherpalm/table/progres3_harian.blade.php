@@ -77,7 +77,7 @@
               WHERE B.created_at >= '$tarikh_mula'
               AND B.created_at <= '$tarikh_akhir'
               AND B.id_sv_balut != ''
-              group by DateOnly Asc";
+              group by id_sv_balut";
               $result_selection = $mysqli-> query($q_selection);
               if ($result_selection -> num_rows > 0)
               {
