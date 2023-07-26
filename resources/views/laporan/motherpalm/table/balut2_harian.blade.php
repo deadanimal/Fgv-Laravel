@@ -161,7 +161,7 @@
                                             $sql_data_jumlah_bawah_all = "SELECT COUNT(id) As num 
                                             FROM pokoks
                                             WHERE jantina = 'Motherpalm'
-                                            AND P.baka != 'Pesifera'
+                                            AND baka != 'Pesifera'
                                             AND user_id = '$user_id_selection'";
                                             $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
                                             $row_data_jumlah_bawah_all = $result_data_jumlah_bawah_all->fetch_assoc();
