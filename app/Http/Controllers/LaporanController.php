@@ -196,6 +196,8 @@ class LaporanController extends Controller
                         'tahun' => $request->tahun,
                         'tarikh_mula' => $tarikh_mula,
                         'tarikh_akhir' => $tarikh_akhir,
+                        'selected_bulan' => date('m', strtotime($tarikh_mula)),
+                        'selected_year' => date('Y', strtotime($tarikh_mula)),
                         'tarikh_mula_word' => date('d.m.Y', strtotime($tarikh_mula)),
                         'tarikh_akhir_word' => date('d.m.Y', strtotime($tarikh_akhir)),
                         'hb' => $request->hb,

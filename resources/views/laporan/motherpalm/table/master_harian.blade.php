@@ -36,10 +36,10 @@
             <thead class="border border-dark" style="background-color: #d9d9d9;">
                 <tr>
                     <th rowspan="2">Bil</th>
-                    <th rowspan="2">No. Daftar</th>
-                    <th rowspan="2">No. Blok</th>
-                    <th rowspan="2">No. Pokok</th>
-                    <th rowspan="2">No. Baka</th>
+                    <th rowspan="2">No.Daftar</th>
+                    <th rowspan="2">No.Blok</th>
+                    <th rowspan="2">No.Pokok</th>
+                    <th rowspan="2">No.Baka</th>
                     <th rowspan="2">Aktiviti</th>
                     <th rowspan="2">Tarikh Aktiviti</th>
                     <th rowspan="2">Status</th>
@@ -59,11 +59,12 @@
             $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
             $bil = 0;
 
-            $q_selection = "SELECT B.no_bagging, P.blok, P.no_pokok, P.baka, B.created_at, B.status, B.id_sv_balut, B.pengesah_id, B.catatan_pengesah, B.tandan_id
+            $q_selection = "SELECT B.no_bagging, P.blok, P.no_pokok, P.progeny, P.baka, B.created_at, B.status, B.id_sv_balut, B.pengesah_id, B.catatan_pengesah, B.tandan_id
             FROM baggings B       
             INNER JOIN pokoks P
             ON B.pokok_id = P.id
             WHERE P.jantina = 'Motherpalm'
+            AND P.baka != 'Pesifera'
             AND B.created_at >= '$tarikh_mula'
             AND B.created_at <= '$tarikh_akhir'";
             $result_selection = $mysqli-> query($q_selection);
@@ -73,7 +74,9 @@
 	            {    
 					$no_bagging = $record_selection['no_bagging'];
                     $blok = $record_selection['blok'];
-                    $no_pokok = $record_selection['no_pokok'];
+                    $no_pokok_1 = $record_selection['no_pokok'];
+                    $progeny = $record_selection['progeny'];
+                    $no_pokok = $progeny."-".$no_pokok_1;
                     $baka = $record_selection['baka'];
                     $created_at = date('d-m-Y', strtotime($record_selection['created_at']));
                     $status = $record_selection['status'];
@@ -91,7 +94,7 @@
                     if ($result_user -> num_rows > 0)
                     {
 	                    $row_user = $result_user ->fetch_assoc();
-	                    $user_nama = $row_user['nama'];
+	                    $nama_petugas = $row_user['nama'];
                     }
 
                     $sql_pengesah = "SELECT *
@@ -101,7 +104,7 @@
                     if ($result_pengesah -> num_rows > 0)
                     {
 	                    $row_pengesah = $result_pengesah ->fetch_assoc();
-	                    $pengesah_nama = $row_pengesah['nama'];
+	                    $nama_penyelia = $row_pengesah['nama'];
                     }
 
                     $sql_tandan = "SELECT *
@@ -137,8 +140,8 @@
                     <td>BAGGING</td>
                     <td>{{ $created_at }}</td>
                     <td>{{ $status }}</td>
-                    <td>{{ $user_nama }}</td>
-                    <td>{{ $pengesah_nama }}</td>
+                    <td>{{ $nama_petugas }}</td>
+                    <td>{{ $nama_penyelia }}</td>
                     <td>{{ $nama_kerosakan }}</td>
                     <td>{{ $catatan_pengesah }}</td>
                     <td></td>
@@ -157,11 +160,12 @@
             $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
             $bil = 0;
 
-            $q_selection = "SELECT B.no_cp, P.blok, P.no_pokok, P.baka, B.created_at, B.status, B.id_sv_cp, B.pengesah_id, B.catatan_pengesah, B.tandan_id, B.peratus_pollen
+            $q_selection = "SELECT B.no_cp, P.blok, P.no_pokok, P.progeny, P.baka, B.created_at, B.status, B.id_sv_cp, B.pengesah_id, B.catatan_pengesah, B.tandan_id, B.peratus_pollen
             FROM control_pollinations B       
             INNER JOIN pokoks P
             ON B.pokok_id = P.id
             WHERE P.jantina = 'Motherpalm'
+            AND P.baka != 'Pesifera'
             AND B.created_at >= '$tarikh_mula'
             AND B.created_at <= '$tarikh_akhir'";
             $result_selection = $mysqli-> query($q_selection);
@@ -171,7 +175,9 @@
 	            {    
 					$no_cp = $record_selection['no_cp'];
                     $blok = $record_selection['blok'];
-                    $no_pokok = $record_selection['no_pokok'];
+                    $no_pokok_1 = $record_selection['no_pokok'];
+                    $progeny = $record_selection['progeny'];
+                    $no_pokok = $progeny."-".$no_pokok_1;
                     $baka = $record_selection['baka'];
                     $created_at = date('d-m-Y', strtotime($record_selection['created_at']));
                     $status = $record_selection['status'];
@@ -190,7 +196,7 @@
                     if ($result_user -> num_rows > 0)
                     {
 	                    $row_user = $result_user ->fetch_assoc();
-	                    $user_nama = $row_user['nama'];
+	                    $nama_petugas = $row_user['nama'];
                     }
 
                     $sql_pengesah = "SELECT *
@@ -200,7 +206,7 @@
                     if ($result_pengesah -> num_rows > 0)
                     {
 	                    $row_pengesah = $result_pengesah ->fetch_assoc();
-	                    $pengesah_nama = $row_pengesah['nama'];
+	                    $nama_penyelia = $row_pengesah['nama'];
                     }
 
                     $sql_tandan = "SELECT *
@@ -236,8 +242,8 @@
                     <td>CP</td>
                     <td>{{ $created_at }}</td>
                     <td>{{ $status }}</td>
-                    <td>{{ $user_nama }}</td>
-                    <td>{{ $pengesah_nama }}</td>
+                    <td>{{ $nama_petugas }}</td>
+                    <td>{{ $nama_penyelia }}</td>
                     <td>{{ $nama_kerosakan }}</td>
                     <td>{{ $catatan_pengesah }}</td>
                     <td>{{ $peratus_pollen }}</td>
@@ -256,11 +262,12 @@
             $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
             $bil = 0;
 
-            $q_selection = "SELECT B.no_qc, P.blok, P.no_pokok, P.baka, B.created_at, B.status, B.id_sv_qc, B.pengesah_id, B.catatan_pengesah, B.tandan_id
+            $q_selection = "SELECT B.no_qc, P.blok, P.no_pokok, P.progeny, P.baka, B.created_at, B.status, B.id_sv_qc, B.pengesah_id, B.catatan_pengesah, B.tandan_id
             FROM quality_controls B       
             INNER JOIN pokoks P
             ON B.pokok_id = P.id
             WHERE P.jantina = 'Motherpalm'
+            AND P.baka != 'Pesifera'
             AND B.created_at >= '$tarikh_mula'
             AND B.created_at <= '$tarikh_akhir'";
             $result_selection = $mysqli-> query($q_selection);
@@ -270,7 +277,9 @@
 	            {    
 					$no_qc = $record_selection['no_qc'];
                     $blok = $record_selection['blok'];
-                    $no_pokok = $record_selection['no_pokok'];
+                    $no_pokok_1 = $record_selection['no_pokok'];
+                    $progeny = $record_selection['progeny'];
+                    $no_pokok = $progeny."-".$no_pokok_1;
                     $baka = $record_selection['baka'];
                     $created_at = date('d-m-Y', strtotime($record_selection['created_at']));
                     $status = $record_selection['status'];
@@ -289,7 +298,7 @@
                     if ($result_user -> num_rows > 0)
                     {
 	                    $row_user = $result_user ->fetch_assoc();
-	                    $user_nama = $row_user['nama'];
+	                    $nama_petugas = $row_user['nama'];
                     }
 
                     $sql_pengesah = "SELECT *
@@ -299,7 +308,7 @@
                     if ($result_pengesah -> num_rows > 0)
                     {
 	                    $row_pengesah = $result_pengesah ->fetch_assoc();
-	                    $pengesah_nama = $row_pengesah['nama'];
+	                    $nama_penyelia = $row_pengesah['nama'];
                     }
 
                     $sql_tandan = "SELECT *
@@ -335,8 +344,8 @@
                     <td>QC</td>
                     <td>{{ $created_at }}</td>
                     <td>{{ $status }}</td>
-                    <td>{{ $user_nama }}</td>
-                    <td>{{ $pengesah_nama }}</td>
+                    <td>{{ $nama_petugas }}</td>
+                    <td>{{ $nama_penyelia }}</td>
                     <td>{{ $nama_kerosakan }}</td>
                     <td>{{ $catatan_pengesah }}</td>
                     <td>{{ $peratus_pollen }}</td>
@@ -355,11 +364,12 @@
             $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
             $bil = 0;
 
-            $q_selection = "SELECT B.no_harvest, P.blok, P.no_pokok, P.baka, B.created_at, B.status, B.id_sv_harvest, B.pengesah_id, B.catatan_pengesah, B.tandan_id
+            $q_selection = "SELECT B.no_harvest, P.blok, P.no_pokok, P.progeny, P.baka, B.created_at, B.status, B.id_sv_harvest, B.pengesah_id, B.catatan_pengesah, B.tandan_id
             FROM harvests B       
             INNER JOIN pokoks P
             ON B.pokok_id = P.id
             WHERE P.jantina = 'Motherpalm'
+            AND P.baka != 'Pesifera'
             AND B.created_at >= '$tarikh_mula'
             AND B.created_at <= '$tarikh_akhir'";
             $result_selection = $mysqli-> query($q_selection);
@@ -369,7 +379,9 @@
 	            {    
 					$no_harvest = $record_selection['no_harvest'];
                     $blok = $record_selection['blok'];
-                    $no_pokok = $record_selection['no_pokok'];
+                    $no_pokok_1 = $record_selection['no_pokok'];
+                    $progeny = $record_selection['progeny'];
+                    $no_pokok = $progeny."-".$no_pokok_1;
                     $baka = $record_selection['baka'];
                     $created_at = date('d-m-Y', strtotime($record_selection['created_at']));
                     $status = $record_selection['status'];
@@ -387,7 +399,7 @@
                     if ($result_user -> num_rows > 0)
                     {
 	                    $row_user = $result_user ->fetch_assoc();
-	                    $user_nama = $row_user['nama'];
+	                    $nama_petugas = $row_user['nama'];
                     }
 
                     $sql_pengesah = "SELECT *
@@ -397,7 +409,7 @@
                     if ($result_pengesah -> num_rows > 0)
                     {
 	                    $row_pengesah = $result_pengesah ->fetch_assoc();
-	                    $pengesah_nama = $row_pengesah['nama'];
+	                    $nama_penyelia = $row_pengesah['nama'];
                     }
 
                     $sql_tandan = "SELECT *
@@ -433,8 +445,8 @@
                     <td>HARVEST</td>
                     <td>{{ $created_at }}</td>
                     <td>{{ $status }}</td>
-                    <td>{{ $user_nama }}</td>
-                    <td>{{ $pengesah_nama }}</td>
+                    <td>{{ $nama_petugas }}</td>
+                    <td>{{ $nama_penyelia }}</td>
                     <td>{{ $nama_kerosakan }}</td>
                     <td>{{ $catatan_pengesah }}</td>
                     <td></td>

@@ -127,13 +127,13 @@
                 FROM baggings
                 WHERE created_at >= '$tahun-$bulan-01'
                 AND created_at <= '$tahun-$bulan_akhir-$last_day'
-                GROUP By id_sv_balut";
+                GROUP By pengesah_id";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
-						$user_id_selection = $record_selection['id_sv_balut'];
+						$user_id_selection = $record_selection['pengesah_id'];
                         $pokok_id = $record_selection['pokok_id'];
 
                         ?>
@@ -183,30 +183,30 @@
 	                                            $user_nama = $row_user['nama'];
                                             }
 
-                                            $sql_data_jumlah = "SELECT COUNT(P.id) As num 
+                                            $sql_data_jumlah = "SELECT COUNT(B.id) As num 
                                             FROM baggings B
                                             INNER JOIN pokoks P
                                             ON B.pokok_id = P.id
-                                            WHERE B.pokok_id = '$pokok_id'
-                                            AND B.jenis = 'Balut'
-                                            AND B.id_sv_balut = '$user_id_selection'
+                                            WHERE B.jenis = 'Balut'
+                                            AND B.pengesah_id = '$user_id_selection'
                                             AND P.jantina = 'Motherpalm'
                                             AND P.baka = '$baka'
                                             AND P.blok = '$blok'
+                                            AND P.baka != 'Pesifera'
                                             AND B.created_at >= '$tahun-01-01'
                                             AND B.created_at <= '$tahun-12-31'";
                                             $result_data_jumlah = $mysqli->query($sql_data_jumlah);
                                             $row_data_jumlah = $result_data_jumlah->fetch_assoc();
                                             $total_data_jumlah = $row_data_jumlah['num'];
 
-                                            $sql_data_jumlah_bawah_all = "SELECT COUNT(P.id) As num 
+                                            $sql_data_jumlah_bawah_all = "SELECT COUNT(B.id) As num 
                                             FROM baggings B
                                             INNER JOIN pokoks P
                                             ON B.pokok_id = P.id
-                                            WHERE B.pokok_id = '$pokok_id'
-                                            AND B.jenis = 'Balut'
-                                            AND B.id_sv_balut = '$user_id_selection'
+                                            WHERE B.jenis = 'Balut'
+                                            AND B.pengesah_id = '$user_id_selection'
                                             AND P.jantina = 'Motherpalm'
+                                            AND P.baka != 'Pesifera'
                                             AND B.created_at >= '$tahun-01-01'
                                             AND B.created_at <= '$tahun-12-31'";
                                             $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
@@ -294,29 +294,30 @@
                                                 $day = "31";
                                                 $tarikh_akhir_value = date('Y-m-d', strtotime("+1 day", strtotime($tahun-$i_value-$day)));
 
-                                                $sql_data = "SELECT COUNT(P.id) As num 
+                                                $sql_data = "SELECT COUNT(B.id) As num 
                                                 FROM baggings B
                                                 INNER JOIN pokoks P
                                                 ON B.pokok_id = P.id
-                                                WHERE B.pokok_id = '$pokok_id'
-                                                AND B.jenis = 'Balut'
-                                                AND B.id_sv_balut = '$user_id_selection'
+                                                WHERE B.jenis = 'Balut'
+                                                AND B.pengesah_id = '$user_id_selection'
                                                 AND P.jantina = 'Motherpalm'
                                                 AND P.baka = '$baka'
                                                 AND P.blok = '$blok'
+                                                AND P.baka != 'Pesifera'
                                                 AND B.created_at >= '$tahun-$i_value-01'
                                                 AND B.created_at <= '$tahun-$i_value-$last_day'";
                                                 $result_data = $mysqli->query($sql_data);
                                                 $row_data = $result_data->fetch_assoc();
                                                 $total_data = $row_data['num'];
 
-                                                $sql_data_jumlah_bawah = "SELECT COUNT(P.id) As num
+                                                $sql_data_jumlah_bawah = "SELECT COUNT(B.id) As num 
                                                 FROM baggings B
                                                 INNER JOIN pokoks P
                                                 ON B.pokok_id = P.id
-                                                WHERE B.pokok_id = '$pokok_id'
-                                                AND B.jenis = 'Balut'
+                                                WHERE B.jenis = 'Balut'
+                                                AND B.pengesah_id = '$user_id_selection'
                                                 AND P.jantina = 'Motherpalm'
+                                                AND P.baka != 'Pesifera'
                                                 AND B.created_at >= '$tahun-$i_value-01'
                                                 AND B.created_at <= '$tahun-$i_value-$last_day'";
                                                 $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);

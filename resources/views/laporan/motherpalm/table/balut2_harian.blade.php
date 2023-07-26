@@ -84,20 +84,20 @@
                 FROM baggings
                 WHERE created_at >= '$tarikh_mula'
                 AND created_at <= '$tarikh_akhir'
-                GROUP By id_sv_balut";
+                GROUP By pengesah_id";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
-						$user_id_selection = $record_selection['id_sv_balut'];
+						$user_id_selection = $record_selection['pengesah_id'];
                         $pokok_id = $record_selection['pokok_id'];
 
                         ?>
                           <tbody class="border border-dark">
                           <?php
                 
-                            $sql_count = "SELECT COUNT(id_sv_balut) As num 
+                            $sql_count = "SELECT COUNT(pengesah_id) As num 
                             FROM baggings
                             WHERE created_at >= '$tarikh_mula'
                             AND created_at <= '$tarikh_akhir'";
@@ -144,16 +144,16 @@
                                             $blok = $record['blok'];
                                             $baka = $record['baka'];
 
-                                            $sql_data_jumlah = "SELECT COUNT(P.id) As num 
+                                            $sql_data_jumlah = "SELECT COUNT(B.id) As num 
                                             FROM baggings B
                                             INNER JOIN pokoks P
                                             ON B.pokok_id = P.id
-                                            WHERE B.pokok_id = '$pokok_id'
-                                            AND B.jenis = 'Balut'
-                                            AND B.id_sv_balut = '$user_id_selection'
+                                            WHERE B.jenis = 'Balut'
+                                            AND B.pengesah_id = '$user_id_selection'
                                             AND P.jantina = 'Motherpalm'
                                             AND P.baka = '$baka'
-                                            AND P.blok = '$blok'";
+                                            AND P.blok = '$blok'
+                                            AND P.baka != 'Pesifera'";
                                             $result_data_jumlah = $mysqli->query($sql_data_jumlah);
                                             $row_data_jumlah = $result_data_jumlah->fetch_assoc();
                                             $total_data_jumlah = $row_data_jumlah['num'];
@@ -161,6 +161,7 @@
                                             $sql_data_jumlah_bawah_all = "SELECT COUNT(id) As num 
                                             FROM pokoks
                                             WHERE jantina = 'Motherpalm'
+                                            AND P.baka != 'Pesifera'
                                             AND user_id = '$user_id_selection'";
                                             $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
                                             $row_data_jumlah_bawah_all = $result_data_jumlah_bawah_all->fetch_assoc();
@@ -217,28 +218,29 @@
                                                     $i_value = $i;
                                                 }
 
-                                                $sql_data = "SELECT COUNT(P.id) As num 
+                                                $sql_data = "SELECT COUNT(B.id) As num 
                                                 FROM baggings B
                                                 INNER JOIN pokoks P
                                                 ON B.pokok_id = P.id
-                                                WHERE B.pokok_id = '$pokok_id'
-                                                AND B.jenis = 'Balut'
-                                                AND B.id_sv_balut = '$user_id_selection'
+                                                WHERE B.jenis = 'Balut'
+                                                AND B.pengesah_id = '$user_id_selection'
                                                 AND P.jantina = 'Motherpalm'
                                                 AND P.baka = '$baka'
                                                 AND P.blok = '$blok'
+                                                AND P.baka != 'Pesifera'
                                                 AND B.created_at Like '$selected_year-$selected_bulan-$i_value%'";
                                                 $result_data = $mysqli->query($sql_data);
                                                 $row_data = $result_data->fetch_assoc();
                                                 $total_data = $row_data['num'];
 
-                                                $sql_data_jumlah_bawah = "SELECT COUNT(P.id) As num
+                                                $sql_data_jumlah_bawah = "SELECT COUNT(B.id) As num
                                                 FROM baggings B
                                                 INNER JOIN pokoks P
                                                 ON B.pokok_id = P.id
-                                                WHERE B.pokok_id = '$pokok_id'
-                                                AND B.jenis = 'Balut'
+                                                WHERE B.jenis = 'Balut'
+                                                AND B.pengesah_id = '$user_id_selection'
                                                 AND P.jantina = 'Motherpalm'
+                                                AND P.baka != 'Pesifera'
                                                 AND B.created_at Like '$selected_year-$selected_bulan-$i_value%'";
                                                 $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
                                                 $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();
