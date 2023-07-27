@@ -124,6 +124,7 @@
                                     $q = "SELECT *
                                     FROM pokoks
                                     WHERE blok IN ($newString)
+                                    AND baka != 'Pesifera'
                                     group by blok, baka
                                     LIMIT 100";
                                     $result = $mysqli-> query($q);

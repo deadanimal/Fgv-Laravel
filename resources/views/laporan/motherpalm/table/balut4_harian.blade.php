@@ -77,32 +77,21 @@
                 $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
 
                 $q_selection = "SELECT *
-                FROM control_pollinations
+                FROM baggings
                 WHERE created_at >= '$tarikh_mula'
                 AND created_at <= '$tarikh_akhir'
-                AND kerosakan_id != ''
-                GROUP By id_sv_cp";
+                AND status = 'tolak'
+                GROUP By pengesah_id";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
-						$user_id_selection = $record_selection['id_sv_cp'];
+						$user_id_selection = $record_selection['pengesah_id'];
                         $pokok_id  = $record_selection['pokok_id'];
                         ?>
                           <tbody class="border border-dark">
                           <?php
-                
-                            $sql_count = "SELECT COUNT(id_sv_cp) As num 
-                            FROM control_pollinations
-                            WHERE id_sv_cp = '$user_id_selection'
-                            AND created_at >= '$tarikh_mula'
-                            AND created_at <= '$tarikh_akhir'
-                            AND kerosakan_id != ''";
-                            $result_count = $mysqli->query($sql_count);
-                            $row_count = $result_count->fetch_assoc();
-                            $total_count = $row_count['num'];
-
                             $q = "SELECT *
                             FROM users
                             WHERE id = '$user_id_selection'";
@@ -133,6 +122,7 @@
                                     $q = "SELECT *
                                     FROM pokoks
                                     WHERE blok IN ($newString)
+                                    AND baka != 'Pesifera'
                                     group by blok, baka";
                                     $result = $mysqli-> query($q);
                                     if ($result -> num_rows > 0)
@@ -149,13 +139,14 @@
                                             $catatan  = $record['catatan'];
 
                                             $sql_data_jumlah = "SELECT COUNT(CP.id) As num 
-                                            FROM control_pollinations CP
+                                            FROM baggings CP
                                             INNER JOIN pokoks P
                                             ON CP.pokok_id = P.id
                                             WHERE CP.pokok_id = '$pokok_id'
-                                            AND CP.id_sv_cp = '$user_id_selection'
-                                            AND CP.kerosakan_id IS NOT NULL
+                                            AND CP.pengesah_id = '$user_id_selection'
+                                            AND CP.status = 'tolak'
                                             AND P.jantina = 'Motherpalm'
+                                            AND P.baka != 'Pesifera'
                                             AND P.baka = '$baka'
                                             AND P.blok = '$blok'";
                                             $result_data_jumlah = $mysqli->query($sql_data_jumlah);
@@ -163,13 +154,14 @@
                                             $total_data_jumlah = $row_data_jumlah['num'];
 
                                             $sql_data_jumlah_bawah_all = "SELECT COUNT(CP.id) As num 
-                                            FROM control_pollinations CP
+                                            FROM baggings CP
                                             INNER JOIN pokoks P
                                             ON CP.pokok_id = P.id
                                             WHERE CP.pokok_id = '$pokok_id'
-                                            AND CP.id_sv_cp = '$user_id_selection'
-                                            AND CP.kerosakan_id IS NOT NULL
+                                            AND CP.pengesah_id = '$user_id_selection'
+                                            AND CP.status = 'tolak'
                                             AND P.jantina = 'Motherpalm'
+                                            AND P.baka != 'Pesifera'
                                             AND P.baka = '$baka'
                                             AND P.blok = '$blok'
                                             AND CP.created_at >= '$tarikh_mula'
@@ -230,13 +222,14 @@
                                                 }
 
                                                 $sql_data = "SELECT COUNT(CP.id) As num 
-                                                FROM control_pollinations CP
+                                                FROM baggings CP
                                                 INNER JOIN pokoks P
                                                 ON CP.pokok_id = P.id
                                                 WHERE CP.pokok_id = '$pokok_id'
-                                                AND CP.id_sv_cp = '$user_id_selection'
-                                                AND CP.kerosakan_id IS NOT NULL
+                                                AND CP.pengesah_id = '$user_id_selection'
+                                                AND CP.status = 'tolak'
                                                 AND P.jantina = 'Motherpalm'
+                                                AND P.baka != 'Pesifera'
                                                 AND P.baka = '$baka'
                                                 AND P.blok = '$blok'
                                                 AND CP.created_at Like '$selected_year-$selected_bulan-$i_value%'";
@@ -245,14 +238,15 @@
                                                 $total_data = $row_data['num'];
 
                                                 $sql_data_jumlah_bawah = "SELECT COUNT(CP.id) As num 
-                                                FROM control_pollinations CP
+                                                FROM baggings CP
                                                 INNER JOIN pokoks P
                                                 ON CP.pokok_id = P.id
                                                 WHERE CP.pokok_id = '$pokok_id'
-                                                AND CP.kerosakan_id IS NOT NULL
+                                                AND CP.pengesah_id = '$user_id_selection'
+                                                AND CP.status = 'tolak'
                                                 AND P.jantina = 'Motherpalm'
-                                                AND P.baka = '$baka'
-                                                AND P.blok = '$blok'
+                                                AND P.baka != 'Pesifera'
+                                                AND P.blok IN ($newString)
                                                 AND CP.created_at Like '$selected_year-$selected_bulan-$i_value%'";
                                                 $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
                                                 $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();

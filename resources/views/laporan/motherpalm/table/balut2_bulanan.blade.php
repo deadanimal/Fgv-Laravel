@@ -159,6 +159,7 @@
                                     $q = "SELECT *
                                     FROM pokoks
                                     WHERE blok IN ($newString)
+                                    AND baka != 'Pesifera'
                                     group by blok, baka";
                                     $result = $mysqli-> query($q);
                                     if ($result -> num_rows > 0)
@@ -317,6 +318,7 @@
                                                 WHERE B.jenis = 'Balut'
                                                 AND B.pengesah_id = '$user_id_selection'
                                                 AND P.jantina = 'Motherpalm'
+                                                AND P.blok In ($newString)
                                                 AND P.baka != 'Pesifera'
                                                 AND B.created_at >= '$tahun-$i_value-01'
                                                 AND B.created_at <= '$tahun-$i_value-$last_day'";
@@ -396,6 +398,8 @@
                                                     $bulan_12_bawah = $total_data_jumlah_bawah;
                                                 }
                                             }
+
+                                            
                                     ?>
                                       <tr>
                                           <td>{{ $user_nama }}</td>

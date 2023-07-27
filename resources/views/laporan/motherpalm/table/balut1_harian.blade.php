@@ -95,6 +95,7 @@
                 ON B.pokok_id = P.id
                 WHERE B.jenis = 'Balut'
                 AND P.jantina = 'Motherpalm'
+                AND P.baka != 'Pesifera'
                 AND B.created_at >= '$tarikh_mula'
                 AND B.created_at <= '$tarikh_akhir'
                 GROUP BY id_sv_balut, P.blok, P.baka

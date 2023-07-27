@@ -40,19 +40,21 @@
 
     $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
 
-    $q_selection = "SELECT P.blok, P.baka, B.id_sv_qc, B.pokok_id
+    $q_selection = "SELECT P.blok, P.baka, B.pengesah_id, B.pokok_id
     FROM quality_controls B
     INNER JOIN pokoks P on B.pokok_id = P.id
     WHERE B.created_at >= '$tahun-$bulan-01'
     AND B.created_at <= '$tahun-$bulan_akhir-31'
-    AND B.id_sv_qc != ''
-    group by B.id_sv_qc";
+    AND B.pengesah_id != ''
+    AND P.jantina = 'Motherpalm'
+    AND P.baka != 'Pesifera'
+    group by B.pengesah_id";
     $result_selection = $mysqli-> query($q_selection);
     if ($result_selection -> num_rows > 0)
     {
 	    while($record_selection = $result_selection -> fetch_assoc())
 	    {    
-		    $user_id_selection = $record_selection['id_sv_qc'];
+		    $user_id_selection = $record_selection['pengesah_id'];
         ?>
           <table class="table table-hover table-bordered overflow-hidden" width="100%">
               <thead class="border border-dark" style="background-color: #d9d9d9;">
@@ -83,10 +85,12 @@
               </thead>
               <tbody class="border border-dark">
             <?php
-                    $q = "SELECT P.blok, P.baka, B.id_sv_qc, B.pokok_id, B.tandan_id, B.catatan
+                    $q = "SELECT P.blok, P.baka, B.pengesah_id, B.pokok_id, B.tandan_id, B.catatan
                     FROM quality_controls B
                     INNER JOIN pokoks P on B.pokok_id = P.id
-                    WHERE  id_sv_qc = '$user_id_selection'
+                    WHERE  pengesah_id = '$user_id_selection'
+                    AND P.jantina = 'Motherpalm'
+                    AND P.baka != 'Pesifera'
                     AND B.created_at >= '$tahun-$bulan-01'
                     AND B.created_at <= '$tahun-$bulan_akhir-31'
                     group by B.pokok_id";
@@ -115,6 +119,8 @@
                             FROM quality_controls B
                             INNER JOIN pokoks P on B.pokok_id = P.id
                             WHERE  pokok_id = '$pokok_id'
+                            AND P.jantina = 'Motherpalm'
+                            AND P.baka != 'Pesifera'
                             AND B.created_at >= '$tahun-$bulan-01'
                             AND B.created_at <= '$tahun-$bulan_akhir-31'";
                             $result_data_jumlah = $mysqli->query($sql_data_jumlah);
@@ -125,7 +131,7 @@
                             FROM quality_controls B
                             WHERE B.created_at >= '$tahun-$bulan-01'
                             AND B.created_at <= '$tahun-$bulan_akhir-31'
-                            AND B.id_sv_qc = $user_id_selection";
+                            AND B.pengesah_id = $user_id_selection";
                             $result_data_jumlah_bag_bawah = $mysqli->query($sql_data_jumlah_bag_bawah);
                             $row_data_jumlah_bag_bawah = $result_data_jumlah_bag_bawah->fetch_assoc();
                             $total_data_jumlah_bag_bawah = $row_data_jumlah_bag_bawah['num'];
@@ -135,6 +141,8 @@
                             FROM quality_controls B
                             INNER JOIN pokoks P on B.pokok_id = P.id
                             WHERE  pokok_id = '$pokok_id'
+                            AND P.jantina = 'Motherpalm'
+                            AND P.baka != 'Pesifera'
                             AND B.created_at >= '$tahun-$bulan-01'
                             AND B.created_at <= '$tahun-$bulan_akhir-31'
                             AND status = 'tolak'";
@@ -146,6 +154,8 @@
                             FROM quality_controls B
                             INNER JOIN pokoks P on B.pokok_id = P.id
                             WHERE  pokok_id = '$pokok_id'
+                            AND P.jantina = 'Motherpalm'
+                            AND P.baka != 'Pesifera'
                             AND B.created_at >= '$tahun-$bulan-01'
                             AND B.created_at <= '$tahun-$bulan_akhir-31'
                             AND status = 'tolak'";

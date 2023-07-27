@@ -324,8 +324,8 @@
                     $total_data_jumlah_AtasTKemas = $row_data_jumlah_AtasTKemas['num'];
 
                     $sql_data_jumlah_JumlahPeriksa = "SELECT Count(QC.id) As num 
-                    FROM quality_controls QC
-                    WHERE jum_bagging IS NOT NULL
+                    FROM baggings QC
+                    WHERE status = 'sah'
                     AND QC.created_at >= '$tahun-$i_value-01'
                     AND QC.created_at <= '$tahun-$i_value-$last_day'";
                     $result_data_jumlah_JumlahPeriksa = $mysqli->query($sql_data_jumlah_JumlahPeriksa);
@@ -334,30 +334,12 @@
 
                     $sql_data_jumlah_JumlahRosak = "SELECT Count(QC.id) As num 
                     FROM quality_controls QC
-                    WHERE jum_bagging_rosak IS NOT NULL
+                    WHERE kerosakan_id IS NOT NULL
                     AND QC.created_at >= '$tahun-$i_value-01'
                     AND QC.created_at <= '$tahun-$i_value-$last_day'";
                     $result_data_jumlah_JumlahRosak = $mysqli->query($sql_data_jumlah_JumlahRosak);
                     $row_data_jumlah_JumlahRosak = $result_data_jumlah_JumlahRosak->fetch_assoc();
                     $total_data_jumlah_JumlahRosak = $row_data_jumlah_JumlahRosak['num'];
-
-                    $sql_data_jumlah_JumlahLulus = "SELECT Count(QC.id) As num 
-                    FROM quality_controls QC
-                    WHERE jum_bagging_lulus IS NOT NULL
-                    AND QC.created_at >= '$tahun-$i_value-01'
-                    AND QC.created_at <= '$tahun-$i_value-$last_day'";
-                    $result_data_jumlah_JumlahLulus = $mysqli->query($sql_data_jumlah_JumlahLulus);
-                    $row_data_jumlah_JumlahLulus = $result_data_jumlah_JumlahLulus->fetch_assoc();
-                    $total_data_jumlah_JumlahLulus = $row_data_jumlah_JumlahLulus['num'];
-
-                    $sql_data_jumlah_PeratusRosak = "SELECT Count(QC.id) As num 
-                    FROM quality_controls QC
-                    WHERE jum_bagging IS NOT NULL
-                    AND QC.created_at >= '$tahun-$i_value-01'
-                    AND QC.created_at <= '$tahun-$i_value-$last_day'";
-                    $result_data_jumlah_PeratusRosak = $mysqli->query($sql_data_jumlah_PeratusRosak);
-                    $row_data_jumlah_PeratusRosak = $result_data_jumlah_PeratusRosak->fetch_assoc();
-                    $total_data_jumlah_PeratusRosak = $row_data_jumlah_PeratusRosak['num'];
 
                     $sql_data_jumlah_FaktorManusia = "SELECT COUNT(QC.id) As num 
                     FROM quality_controls QC
@@ -381,9 +363,19 @@
                     $row_data_jumlah_FaktorAlam = $result_data_jumlah_FaktorAlam->fetch_assoc();
                     $total_data_jumlah_FaktorAlam = $row_data_jumlah_FaktorAlam['num'];
 
-                    $total_data_jumlah_FaktorSemua = $total_data_jumlah_FaktorManusia + $total_data_jumlah_FaktorAlam;
+                    $total_data_jumlah_JumlahLulus = $total_data_jumlah_JumlahPeriksa - $total_data_jumlah_JumlahRosak;
 
-                    //echo "<script type='text/javascript'>alert('$total_data_jumlah_FaktorSemua');</script>";
+                    if ($total_data_jumlah_JumlahRosak != 0 && $total_data_jumlah_JumlahPeriksa != 0)
+                    {
+                        $total_data_jumlah_PeratusRosak = ($total_data_jumlah_JumlahRosak/$total_data_jumlah_JumlahPeriksa) * 100;
+                        $total_data_jumlah_PeratusRosak = number_format($total_data_jumlah_PeratusRosak,2);
+                    }
+                    else
+                    {
+                        $total_data_jumlah_PeratusRosak = 0;
+                    }
+                    
+                    $total_data_jumlah_FaktorSemua = $total_data_jumlah_FaktorManusia + $total_data_jumlah_FaktorAlam;
 
                     if ($total_data_jumlah_FaktorSemua == 0)
                     {

@@ -115,6 +115,7 @@
                         $q_info = "SELECT *
                         FROM pokoks
                         WHERE blok IN ($newString)
+                        AND baka != 'Pesifera'
                         group by blok";
                         $result_info = $mysqli-> query($q_info);
                         if ($result_info -> num_rows > 0)

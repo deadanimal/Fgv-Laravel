@@ -81,21 +81,21 @@
                 WHERE created_at >= '$tarikh_mula'
                 AND created_at <= '$tarikh_akhir'
                 AND kerosakan_id IS NULL
-                GROUP By id_sv_cp";
+                GROUP By pengesah_id";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
-						$user_id_selection = $record_selection['id_sv_cp'];
+						$user_id_selection = $record_selection['pengesah_id'];
                         $pokok_id  = $record_selection['pokok_id'];
                         ?>
                           <tbody class="border border-dark">
                           <?php
                 
-                            $sql_count = "SELECT COUNT(id_sv_cp) As num 
+                            $sql_count = "SELECT COUNT(pengesah_id) As num 
                             FROM control_pollinations
-                            WHERE id_sv_cp = '$user_id_selection'
+                            WHERE pengesah_id = '$user_id_selection'
                             AND created_at >= '$tarikh_mula'
                             AND created_at <= '$tarikh_akhir'
                             AND kerosakan_id IS NULL ";
@@ -133,6 +133,7 @@
                                     $q = "SELECT *
                                     FROM pokoks
                                     WHERE blok IN ($newString)
+                                    AND baka != 'Pesifera'
                                     group by blok, baka";
                                     $result = $mysqli-> query($q);
                                     if ($result -> num_rows > 0)
@@ -153,9 +154,10 @@
                                             INNER JOIN pokoks P
                                             ON CP.pokok_id = P.id
                                             WHERE CP.pokok_id = '$pokok_id'
-                                            AND CP.id_sv_cp = '$user_id_selection'
+                                            AND CP.pengesah_id = '$user_id_selection'
                                             AND CP.kerosakan_id IS NULL
                                             AND P.jantina = 'Motherpalm'
+                                            AND P.baka != 'Pesifera'
                                             AND P.baka = '$baka'
                                             AND P.blok = '$blok'";
                                             $result_data_jumlah = $mysqli->query($sql_data_jumlah);
@@ -167,9 +169,10 @@
                                             INNER JOIN pokoks P
                                             ON CP.pokok_id = P.id
                                             WHERE CP.pokok_id = '$pokok_id'
-                                            AND CP.id_sv_cp = '$user_id_selection'
+                                            AND CP.pengesah_id = '$user_id_selection'
                                             AND CP.kerosakan_id IS NULL
                                             AND P.jantina = 'Motherpalm'
+                                            AND P.baka != 'Pesifera'
                                             AND P.baka = '$baka'
                                             AND P.blok = '$blok'
                                             AND CP.created_at >= '$tarikh_mula'
@@ -234,9 +237,10 @@
                                                 INNER JOIN pokoks P
                                                 ON CP.pokok_id = P.id
                                                 WHERE CP.pokok_id = '$pokok_id'
-                                                AND CP.id_sv_cp = '$user_id_selection'
+                                                AND CP.pengesah_id = '$user_id_selection'
                                                 AND CP.kerosakan_id IS NULL
                                                 AND P.jantina = 'Motherpalm'
+                                                AND P.baka != 'Pesifera'
                                                 AND P.baka = '$baka'
                                                 AND P.blok = '$blok'
                                                 AND CP.created_at Like '$selected_year-$selected_bulan-$i_value%'";
@@ -251,8 +255,8 @@
                                                 WHERE CP.pokok_id = '$pokok_id'
                                                 AND CP.kerosakan_id IS NULL
                                                 AND P.jantina = 'Motherpalm'
-                                                AND P.baka = '$baka'
-                                                AND P.blok = '$blok'
+                                                AND P.baka != 'Pesifera'
+                                                AND P.blok IN ($newString)
                                                 AND CP.created_at Like '$selected_year-$selected_bulan-$i_value%'";
                                                 $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
                                                 $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();
