@@ -63,7 +63,7 @@
             $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
             $bil = 0;
 
-            $q_selection = "SELECT P.blok, P.no_pokok, P.baka, P.progeny, B.created_at, B.no_pollen, B.viabiliti_pollen, B.berat_pollen, B.status, B.pemeriksa_id, B.pengesah_id, B.catatan_pengesah, B.tandan_id,
+            $q_selection = "SELECT P.blok, P.no_pokok, P.baka, P.progeny, B.created_at, B.no_pollen, B.viabiliti_pollen, B.berat_pollen, B.status, B.id_sv_pollen, B.pengesah_id, B.catatan_pengesah, B.tandan_id,
             B.tarikh_ketuk, B.tarikh_ayak, B.tarikh_uji, B.tarikh_qc,
             B.masa_masuk_pertama, B.masa_keluar_pertama, B.masa_masuk_kedua, B.masa_keluar_kedua
             FROM pollens B       
@@ -86,7 +86,7 @@
                     $viabiliti_pollen = $record_selection['viabiliti_pollen'];
                     $berat_pollen = $record_selection['berat_pollen'];
                     $status = $record_selection['status'];
-                    $pemeriksa_id  = $record_selection['pemeriksa_id'];
+                    $id_sv_pollen  = $record_selection['id_sv_pollen'];
                     $pengesah_id  = $record_selection['pengesah_id'];
                     $catatan_pengesah  = $record_selection['catatan_pengesah'];
                     $tandan_id  = $record_selection['tandan_id'];
@@ -128,12 +128,12 @@
 
                     $sql_user = "SELECT *
 				                FROM users
-				                Where id  = '$pemeriksa_id'";
+				                Where id  = '$id_sv_pollen'";
                     $result_user = $mysqli-> query($sql_user);
                     if ($result_user -> num_rows > 0)
                     {
 	                    $row_user = $result_user ->fetch_assoc();
-	                    $user_nama = $row_user['nama'];
+	                    $nama_petugas = $row_user['nama'];
                     }
 
                     $sql_pengesah = "SELECT *
@@ -183,7 +183,7 @@
             <tbody class="border border-dark">
                 <tr>
                     <td>{{ $no_daftar }}</td>
-                    <td>{{ $user_nama }}</td>
+                    <td>{{ $nama_petugas }}</td>
                     <td>{{ $progeny }}</td>
                     <td>{{ $aktiviti }}</td>
                     <td>{{ $tarikh_aktiviti }}</td>

@@ -214,8 +214,6 @@
                             ON B.pokok_id = P.id
                             WHERE B.jenis = 'Balut'
                             AND P.jantina = 'Motherpalm'
-                            AND P.blok = '$blok'
-                            AND P.baka = '$baka'
                             AND P.baka != 'Pesifera'
                             AND B.created_at Like '$selected_year-$selected_bulan-$i_value%'";
                             $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
