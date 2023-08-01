@@ -63,7 +63,7 @@
               $tarikh_akhir = date('Y-m-d', strtotime("+1 day", strtotime($tarikh_akhir)));
               $bil = 0;
 
-              $q_selection = "SELECT P.blok, P.baka, P.user_id, B.pokok_id, B.berat_pollen, B.id
+              $q_selection = "SELECT P.blok, P.baka, B.pengesah_id, B.pokok_id, B.berat_pollen, B.id
               FROM pollens B
               INNER JOIN pokoks P on B.pokok_id = P.id
               WHERE B.created_at >= '$tahun-$bulan-01'
@@ -74,7 +74,7 @@
               {
 	              while($record_selection = $result_selection -> fetch_assoc())
 	              {    
-		                $user_id_selection = $record_selection['user_id'];
+		                $user_id_selection = $record_selection['pengesah_id'];
                         $pollens_id = $record_selection['id'];
                         $pokok_id = $record_selection['pokok_id'];
                         $tandan_id = $record_selection['tandan_id'];

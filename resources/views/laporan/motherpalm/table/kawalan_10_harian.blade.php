@@ -89,6 +89,7 @@
                 INNER JOIN pokoks P
                 ON QC.pokok_id = P.id
                 WHERE P.jantina = 'Motherpalm'
+                AND P.baka != 'Pesifera'
                 AND QC.created_at >= '$tarikh_mula'
                 AND QC.created_at <= '$tarikh_akhir'
                 GROUP BY id_sv_qc";
@@ -123,6 +124,7 @@
                         INNER JOIN pokoks P
                         ON QC.pokok_id = P.id
                         WHERE P.jantina = 'Motherpalm'
+                        AND P.baka != 'Pesifera'
                         AND QC.id_sv_qc = '$user_id'
                         AND QC.created_at >= '$tarikh_mula'
                         AND QC.created_at <= '$tarikh_akhir'";
@@ -135,6 +137,7 @@
                         INNER JOIN pokoks P
                         ON QC.pokok_id = P.id
                         WHERE P.jantina = 'Motherpalm'
+                        AND P.baka != 'Pesifera'
                         AND QC.created_at >= '$tarikh_mula'
                         AND QC.created_at <= '$tarikh_akhir'";
                         $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
@@ -197,6 +200,7 @@
                             INNER JOIN pokoks P
                             ON QC.pokok_id = P.id
                             WHERE P.jantina = 'Motherpalm'
+                            AND P.baka != 'Pesifera'
                             AND id_sv_qc = '$user_id'
                             AND QC.created_at Like '$selected_year-$selected_bulan-$i_value%'";
                             $result_data = $mysqli->query($sql_data);
@@ -208,10 +212,21 @@
                             INNER JOIN pokoks P
                             ON QC.pokok_id = P.id
                             WHERE P.jantina = 'Motherpalm'
+                            AND P.baka != 'Pesifera'
                             AND QC.created_at Like '$selected_year-$selected_bulan-$i_value%'";
                             $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
                             $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();
                             $total_data_jumlah_bawah = $row_data_jumlah_bawah['num'];
+
+                            $sql_data_jumlah_bawah_kini = "SELECT COUNT(QC.id) As num 
+                            FROM quality_controls QC
+                            INNER JOIN pokoks P
+                            ON QC.pokok_id = P.id
+                            WHERE P.jantina = 'Motherpalm'
+                            AND P.baka != 'Pesifera'";
+                            $result_data_jumlah_bawah_kini = $mysqli->query($sql_data_jumlah_bawah_kini);
+                            $row_data_jumlah_bawah_kini = $result_data_jumlah_bawah_kini->fetch_assoc();
+                            $total_data_jumlah_bawah_kini = $row_data_jumlah_bawah_kini['num'];
 
                             if ($i == 1)
                             {
@@ -479,37 +494,37 @@
                       </tr>
                       <tr style="background-color: #d9d9d9;">
                             <td colspan="2"><b>HINGGA KINI</b></td>
-                            <td>{{ $day_1_bawah }}</td>
-                            <td>{{ $day_2_bawah }}</td>
-                            <td>{{ $day_3_bawah }}</td>
-                            <td>{{ $day_4_bawah }}</td>
-                            <td>{{ $day_5_bawah }}</td>
-                            <td>{{ $day_6_bawah }}</td>
-                            <td>{{ $day_7_bawah }}</td>
-                            <td>{{ $day_8_bawah }}</td>
-                            <td>{{ $day_9_bawah }}</td>
-                            <td>{{ $day_10_bawah }}</td>
-                            <td>{{ $day_11_bawah }}</td>
-                            <td>{{ $day_12_bawah }}</td>
-                            <td>{{ $day_13_bawah }}</td>
-                            <td>{{ $day_14_bawah }}</td>
-                            <td>{{ $day_15_bawah }}</td>
-                            <td>{{ $day_16_bawah }}</td>
-                            <td>{{ $day_17_bawah }}</td>
-                            <td>{{ $day_18_bawah }}</td>
-                            <td>{{ $day_19_bawah }}</td>
-                            <td>{{ $day_20_bawah }}</td>
-                            <td>{{ $day_21_bawah }}</td>
-                            <td>{{ $day_22_bawah }}</td>
-                            <td>{{ $day_23_bawah }}</td>
-                            <td>{{ $day_24_bawah }}</td>
-                            <td>{{ $day_25_bawah }}</td>
-                            <td>{{ $day_26_bawah }}</td>
-                            <td>{{ $day_27_bawah }}</td>
-                            <td>{{ $day_28_bawah }}</td>
-                            <td>{{ $day_29_bawah }}</td>
-                            <td>{{ $day_30_bawah }}</td>
-                            <td>{{ $day_31_bawah }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
+                            <td>{{ $total_data_jumlah_bawah_kini }}</td>
                             <td>{{ $total_data_jumlah_bawah_all }}</td>
                       </tr>
               </tbody>

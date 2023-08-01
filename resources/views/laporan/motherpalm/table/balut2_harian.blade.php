@@ -154,16 +154,24 @@
                                             AND P.jantina = 'Motherpalm'
                                             AND P.baka = '$baka'
                                             AND P.blok = '$blok'
-                                            AND P.baka != 'Pesifera'";
+                                            AND P.baka != 'Pesifera'
+                                            AND B.created_at >= '$tarikh_mula'
+                                            AND B.created_at <= '$tarikh_akhir'";
                                             $result_data_jumlah = $mysqli->query($sql_data_jumlah);
                                             $row_data_jumlah = $result_data_jumlah->fetch_assoc();
                                             $total_data_jumlah = $row_data_jumlah['num'];
 
-                                            $sql_data_jumlah_bawah_all = "SELECT COUNT(id) As num 
-                                            FROM pokoks
-                                            WHERE jantina = 'Motherpalm'
-                                            AND baka != 'Pesifera'
-                                            AND user_id = '$user_id_selection'";
+                                            $sql_data_jumlah_bawah_all = "SELECT COUNT(B.id) As num 
+                                            FROM baggings B
+                                            INNER JOIN pokoks P
+                                            ON B.pokok_id = P.id
+                                            WHERE B.jenis = 'Balut'
+                                            AND B.pengesah_id = '$user_id_selection'
+                                            AND P.jantina = 'Motherpalm'
+                                            AND P.blok IN ($newString)
+                                            AND P.baka != 'Pesifera'
+                                            AND B.created_at >= '$tarikh_mula'
+                                            AND B.created_at <= '$tarikh_akhir'";
                                             $result_data_jumlah_bawah_all = $mysqli->query($sql_data_jumlah_bawah_all);
                                             $row_data_jumlah_bawah_all = $result_data_jumlah_bawah_all->fetch_assoc();
                                             $total_data_jumlah_bawah_all = $row_data_jumlah_bawah_all['num'];
@@ -242,6 +250,7 @@
                                                 AND B.pengesah_id = '$user_id_selection'
                                                 AND P.jantina = 'Motherpalm'
                                                 AND P.baka != 'Pesifera'
+                                                AND P.blok IN ($newString)
                                                 AND B.created_at Like '$selected_year-$selected_bulan-$i_value%'";
                                                 $result_data_jumlah_bawah = $mysqli->query($sql_data_jumlah_bawah);
                                                 $row_data_jumlah_bawah = $result_data_jumlah_bawah->fetch_assoc();

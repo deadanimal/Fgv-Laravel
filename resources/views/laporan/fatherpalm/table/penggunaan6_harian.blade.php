@@ -61,13 +61,13 @@
                 FROM pollens
                 WHERE created_at >= '$tarikh_mula'
                 AND created_at <= '$tarikh_akhir'
-                GROUP By id_sv_pollen";
+                GROUP By pengesah_id";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
-						$user_id_selection = $record_selection['id_sv_pollen'];
+						$user_id_selection = $record_selection['pengesah_id'];
                         $pokok_id  = $record_selection['pokok_id'];
                         $pollen_id  = $record_selection['id'];
                         $pollen_jenis  = $record_selection['jenis'];

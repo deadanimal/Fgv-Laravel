@@ -174,7 +174,7 @@
                             $total_data_jumlah_percent_rosak_bawah = number_format(($total_data_jumlah_rosak_bawah/$total_data_jumlah_bag_bawah) * 100,2);
                         }
 
-                        $kerosakan_id_looping = array("34", "32", "40", "37", "34", "43", "42");
+                        $kerosakan_id_looping = array("38", "32", "40", "37", "34", "43", "42");
 
                         foreach ($kerosakan_id_looping as $kerosakan_id_looping_list) 
 		                {
@@ -196,7 +196,7 @@
                             $row_data_jumlah_kerosakan_bawah = $result_data_jumlah_kerosakan_bawah ->fetch_assoc();
                             $total_data_jumlah_kerosakan_bawah = $row_data_jumlah_kerosakan_bawah['num'];
 
-                            if ($kerosakan_id_looping_list == '34')
+                            if ($kerosakan_id_looping_list == '38')
                             {
                                 $total_data_jumlah_kembang_awal = $total_data_jumlah_kerosakan;
                                 $total_data_jumlah_kembang_awal_bawah = $total_data_jumlah_kerosakan_bawah;
@@ -484,7 +484,7 @@
                             $total_data_jumlah_percent_rosak_bawah = number_format(($total_data_jumlah_rosak_bawah/$total_data_jumlah_bag_bawah) * 100,2);
                         }
 
-                        $kerosakan_id_looping = array("34", "32", "40", "37", "34", "43", "42");
+                        $kerosakan_id_looping = array("38", "32", "40", "37", "34", "43", "42");
 
                         foreach ($kerosakan_id_looping as $kerosakan_id_looping_list) 
 		                {
@@ -506,7 +506,7 @@
                             $row_data_jumlah_kerosakan_bawah = $result_data_jumlah_kerosakan_bawah ->fetch_assoc();
                             $total_data_jumlah_kerosakan_bawah = $row_data_jumlah_kerosakan_bawah['num'];
 
-                            if ($kerosakan_id_looping_list == '34')
+                            if ($kerosakan_id_looping_list == '38')
                             {
                                 $total_data_jumlah_kembang_awal = $total_data_jumlah_kerosakan;
                                 $total_data_jumlah_kembang_awal_bawah = $total_data_jumlah_kerosakan_bawah;

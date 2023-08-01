@@ -89,6 +89,7 @@
                 INNER JOIN pokoks P
                 ON QC.pokok_id = P.id
                 WHERE P.jantina = 'Motherpalm'
+                AND P.baka != 'Pesifera'
                 AND QC.created_at >= '$tarikh_mula'
                 AND QC.created_at <= '$tarikh_akhir'
                 AND kerosakan_id IS NOT NULL
@@ -125,6 +126,7 @@
                         INNER JOIN pokoks P
                         ON QC.pokok_id = P.id
                         WHERE P.jantina = 'Motherpalm'
+                        AND P.baka != 'Pesifera'
                         AND QC.id_sv_qc = '$user_id'
                         AND QC.created_at >= '$tarikh_mula'
                         AND QC.created_at <= '$tarikh_akhir'
@@ -139,6 +141,7 @@
                         INNER JOIN pokoks P
                         ON QC.pokok_id = P.id
                         WHERE P.jantina = 'Motherpalm'
+                        AND P.baka != 'Pesifera'
                         AND QC.created_at >= '$tarikh_mula'
                         AND QC.created_at <= '$tarikh_akhir'
                         AND status = 'rosak'
@@ -203,6 +206,7 @@
                             INNER JOIN pokoks P
                             ON QC.pokok_id = P.id
                             WHERE P.jantina = 'Motherpalm'
+                            AND P.baka != 'Pesifera'
                             AND id_sv_qc = '$user_id'
                             AND QC.created_at Like '$selected_year-$selected_bulan-$i_value%'
                             AND status = 'rosak'
@@ -216,6 +220,7 @@
                             INNER JOIN pokoks P
                             ON QC.pokok_id = P.id
                             WHERE P.jantina = 'Motherpalm'
+                            AND P.baka != 'Pesifera'
                             AND QC.created_at Like '$selected_year-$selected_bulan-$i_value%'
                             AND status = 'rosak'
                             AND kerosakan_id IS NOT NULL";

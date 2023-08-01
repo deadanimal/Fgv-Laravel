@@ -47,13 +47,13 @@
         WHERE created_at >= '$tahun-$bulan-01'
         AND created_at <= '$tahun-$bulan_akhir-31'
         AND kerosakan_id != ''
-        GROUP By id_sv_harvest";
+        GROUP By pengesah_id";
         $result_selection = $mysqli-> query($q_selection);
         if ($result_selection -> num_rows > 0)
         {
 	        while($record_selection = $result_selection -> fetch_assoc())
 	        {    
-				$user_id_selection = $record_selection['id_sv_harvest'];
+				$user_id_selection = $record_selection['pengesah_id'];
                 $kerosakan_id = $record_selection['kerosakan_id'];
 
                 $sql_user = "SELECT *

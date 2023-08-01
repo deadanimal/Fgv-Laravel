@@ -46,7 +46,7 @@
               <thead class="border border-dark" style="background-color: #d9d9d9;">
                   <tr>
                     <th rowspan="2">Bil</th>
-                    <th rowspan="2">Pkt./Blok</th>
+                    <th rowspan="2">Blok</th>
                     <th rowspan="2">No. Daftar</th>
                     <th rowspan="2">No. Pokok</th>
                     <th rowspan="2">Nama Pembalut</th>
@@ -73,6 +73,7 @@
                 INNER JOIN tandans T
                 ON P.id = T.pokok_id
                 WHERE P.jantina = 'Motherpalm'
+                AND P.baka != 'Pesifera'
                 AND P.created_at >= '$tahun-$bulan-01'
                 AND P.created_at <= '$tahun-$bulan_akhir-31'
                 AND T.no_daftar != ''
@@ -87,7 +88,8 @@
                         $induk = $record['induk'];
                         $baka = $record['baka'];
                         $progeny = $record['progeny'];
-                        $no_pokok = $record['no_pokok'];
+                        $no_pokok_1 = $record['no_pokok'];
+                        $no_pokok = $progeny."-".$no_pokok_1;
                         $user_id  = $record['user_id'];
                         $catatan  = $record['catatan'];
 
@@ -106,7 +108,8 @@
 
                         $sql_bagging = "SELECT *
 				        FROM baggings
-				        Where tandan_id = '$tandan_id'";
+				        WHERE tandan_id = '$tandan_id'
+                        AND status = 'sah'";
                         $result_bagging = $mysqli-> query($sql_bagging);
                         if ($result_bagging -> num_rows > 0)
                         {
@@ -117,7 +120,8 @@
 
                         $sql_cp = "SELECT *
 				        FROM control_pollinations
-				        Where tandan_id = '$tandan_id'";
+				        Where tandan_id = '$tandan_id'
+                        AND status = 'sah'";
                         $result_cp = $mysqli-> query($sql_cp);
                         if ($result_cp -> num_rows > 0)
                         {
@@ -127,7 +131,8 @@
 
                         $sql_qc = "SELECT *
 				        FROM quality_controls
-				        Where tandan_id = '$tandan_id'";
+				        Where tandan_id = '$tandan_id'
+                        AND status = 'sah'";
                         $result_qc = $mysqli-> query($sql_qc);
                         if ($result_qc -> num_rows > 0)
                         {
@@ -136,13 +141,18 @@
                         }
 
                         $sql_pollen = "SELECT *
-				        FROM pollens
-				        Where tandan_id = '$tandan_id'";
+				        FROM pollens Pol
+                        INNER JOIN pokoks P
+                        On Pol.pokok_id = P.id
+                        AND P.baka != 'Pesifera'
+				        AND Pol.tandan_id = '$tandan_id'";
                         $result_pollen = $mysqli-> query($sql_pollen);
                         if ($result_pollen -> num_rows > 0)
                         {
 	                        $row_pollen = $result_pollen ->fetch_assoc();
-                            $jenis_pollen = $row_pollen['jenis'];
+                            $no_pollen = $row_pollen['no_pollen'];
+                            $progeny = $row_pollen['progeny'];
+                            $jenis_pollen = $progeny."-".$no_pollen;
                         }
 
                         $sql_user = "SELECT *

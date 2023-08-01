@@ -81,22 +81,22 @@
                 WHERE created_at >= '$tarikh_mula'
                 AND created_at <= '$tarikh_akhir'
                 AND kerosakan_id IS NULL
-                AND id_sv_harvest != ''
-                GROUP By id_sv_harvest";
+                AND pengesah_id != ''
+                GROUP By pengesah_id";
                 $result_selection = $mysqli-> query($q_selection);
                 if ($result_selection -> num_rows > 0)
                 {
 	                while($record_selection = $result_selection -> fetch_assoc())
 	                {    
-						$user_id_selection = $record_selection['id_sv_harvest'];
+						$user_id_selection = $record_selection['pengesah_id'];
                         $pokok_id  = $record_selection['pokok_id'];
                         ?>
                           <tbody class="border border-dark">
                           <?php
                 
-                            $sql_count = "SELECT COUNT(id_sv_harvest) As num 
+                            $sql_count = "SELECT COUNT(pengesah_id) As num 
                             FROM harvests
-                            WHERE id_sv_harvest = '$user_id_selection'
+                            WHERE pengesah_id = '$user_id_selection'
                             AND created_at >= '$tarikh_mula'
                             AND created_at <= '$tarikh_akhir'
                             AND kerosakan_id IS NULL ";
@@ -156,7 +156,7 @@
                                             INNER JOIN pokoks P
                                             ON B.pokok_id = P.id
                                             WHERE B.pokok_id = '$pokok_id'
-                                            AND B.id_sv_harvest = '$user_id_selection'
+                                            AND B.pengesah_id = '$user_id_selection'
                                             AND P.jantina = 'Motherpalm'
                                             AND P.baka = '$baka'
                                             AND P.blok = '$blok'
@@ -229,7 +229,7 @@
                                                 INNER JOIN pokoks P
                                                 ON B.pokok_id = P.id
                                                 WHERE B.pokok_id = '$pokok_id'
-                                                AND B.id_sv_harvest = '$user_id_selection'
+                                                AND B.pengesah_id = '$user_id_selection'
                                                 AND P.jantina = 'Motherpalm'
                                                 AND P.baka = '$baka'
                                                 AND P.blok = '$blok'
@@ -244,7 +244,7 @@
                                                 INNER JOIN pokoks P
                                                 ON B.pokok_id = P.id
                                                 WHERE B.pokok_id = '$pokok_id'
-                                                AND B.id_sv_harvest = '$user_id_selection'
+                                                AND B.pengesah_id = '$user_id_selection'
                                                 AND P.jantina = 'Motherpalm'
                                                 AND B.kerosakan_id IS NULL
                                                 AND B.created_at Like '$selected_year-$selected_bulan-$i_value%'";
