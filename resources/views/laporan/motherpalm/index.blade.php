@@ -66,7 +66,7 @@
                     <div class="form-group row align-items-center">
                         <label class="col-form-label text-main col-sm-4 text-end">Bulan Akhir</label>
                         <div class="col-sm-8">
-                            <select name="bulan_akhir" class="form-select" id="bulanInput">
+                            <select name="bulan_akhir" class="form-select" id="bulanAkhirInput">
                                 <!--option value="all">All</option-->
                                 @for ($i = 1; $i < 13; $i++)
                                     <option value="{{ sprintf('%02d', $i) }}">
@@ -188,6 +188,17 @@
             {
                 switch (l)
                 {
+                    case '3':
+                        $("#bulanInput").html(``);
+                        $("#bulanInput").append(`
+                            <option value="all">All</option>
+                        `);
+                        $("#bulanAkhirInput").html(``);
+                        $("#bulanAkhirInput").append(`
+                            <option value="all">All</option>
+                        `);
+                        break;
+
                     case '4':
                         $("#bulanInput").html(``);
                         $("#bulanInput").append(`

@@ -26,7 +26,7 @@
       <h4 class="mt-5 text-bold">Rumusan Mengikut Bulan Batch</h4>
   </div>
   <div class="col-xl-12 text-left">
-      <span><b>Tempoh Laporan: {{$bulan_word}} {{$tahun}} - {{$bulan_akhir_word}} {{$tahun}}<b></span>
+      <span><b>Tempoh Laporan: {{$tahun}}<b></span>
   </div>
 
   @if ($hb == 'b')

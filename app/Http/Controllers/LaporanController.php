@@ -272,8 +272,6 @@ class LaporanController extends Controller
                         'hb' => $request->hb,
                         'bulan' => $request->bulan,
                         'bulan_akhir' => $request->bulan_akhir,
-                        'bulan_word' => $bulan_word,
-                        'bulan_akhir_word' => $bulan_akhir_word,
                         'tahun' => $request->tahun,
                         'tm' => $nTarikhMula ?? null,
                         'ta' => $nTarikhAkhir  ?? null,

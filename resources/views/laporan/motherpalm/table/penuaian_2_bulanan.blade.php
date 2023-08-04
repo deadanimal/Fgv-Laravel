@@ -97,7 +97,7 @@
         INNER JOIN tandans T
         ON H.tandan_id = T.id
         WHERE H.status = 'sah'
-        AND T.umur < '$empat_bulan_20_hari_days'
+        AND H.created_at >= DATE_SUB(CURDATE(), INTERVAL $empat_bulan_20_hari_days DAY)
         AND H.created_at Like '$tahun-$bulan-$i_value%'";
         $result_count_row_1 = $mysqli->query($sql_count_row_1);
         $row_count_row_1 = $result_count_row_1->fetch_assoc();
@@ -109,8 +109,8 @@
         INNER JOIN tandans T
         ON H.tandan_id = T.id
         WHERE H.status = 'sah'
-        AND T.umur >= '$empat_bulan_20_hari_days'
-        AND T.umur <= '$empat_bulan_25_hari_days'
+        AND H.created_at >= DATE_SUB(CURDATE(), INTERVAL $empat_bulan_20_hari_days DAY)
+        AND H.created_at <= DATE_SUB(CURDATE(), INTERVAL $empat_bulan_25_hari_days DAY)
         AND H.created_at Like '$tahun-$bulan-$i_value%'";
         $result_count_row_2 = $mysqli->query($sql_count_row_2);
         $row_count_row_2 = $result_count_row_2->fetch_assoc();
@@ -122,8 +122,8 @@
         INNER JOIN tandans T
         ON H.tandan_id = T.id
         WHERE H.status = 'sah'
-        AND T.umur >= '$empat_bulan_26_hari_days'
-        AND T.umur <= '$empat_bulan_29_hari_days'
+        AND H.created_at >= DATE_SUB(CURDATE(), INTERVAL $empat_bulan_26_hari_days DAY)
+        AND H.created_at <= DATE_SUB(CURDATE(), INTERVAL $empat_bulan_29_hari_days DAY)
         AND H.created_at Like '$tahun-$bulan-$i_value%'";
         $result_count_row_3 = $mysqli->query($sql_count_row_3);
         $row_count_row_3 = $result_count_row_3->fetch_assoc();
@@ -135,8 +135,8 @@
         INNER JOIN tandans T
         ON H.tandan_id = T.id
         WHERE H.status = 'sah'
-        AND T.umur >= '$lima_bulan_days'
-        AND T.umur <= '$lima_bulan_25_hari_days'
+        AND H.created_at >= DATE_SUB(CURDATE(), INTERVAL $lima_bulan_days DAY)
+        AND H.created_at <= DATE_SUB(CURDATE(), INTERVAL $lima_bulan_25_hari_days DAY)
         AND H.created_at Like '$tahun-$bulan-$i_value%'";
         $result_count_row_4 = $mysqli->query($sql_count_row_4);
         $row_count_row_4 = $result_count_row_4->fetch_assoc();
@@ -148,8 +148,8 @@
         INNER JOIN tandans T
         ON H.tandan_id = T.id
         WHERE H.status = 'sah'
-        AND T.umur >= '$lima_bulan_26_hari_days'
-        AND T.umur <= '$enam_bulan_days'
+        AND H.created_at >= DATE_SUB(CURDATE(), INTERVAL $lima_bulan_26_hari_days DAY)
+        AND H.created_at <= DATE_SUB(CURDATE(), INTERVAL $enam_bulan_days DAY)
         AND H.created_at Like '$tahun-$bulan-$i_value%'";
         $result_count_row_5 = $mysqli->query($sql_count_row_5);
         $row_count_row_5 = $result_count_row_5->fetch_assoc();
@@ -161,7 +161,7 @@
         INNER JOIN tandans T
         ON H.tandan_id = T.id
         WHERE H.status = 'sah'
-        AND T.umur >= '$enam_bulan_more_days'
+        AND H.created_at >= DATE_SUB(CURDATE(), INTERVAL $enam_bulan_more_days DAY)
         AND H.created_at Like '$tahun-$bulan-$i_value%'";
         $result_count_row_6 = $mysqli->query($sql_count_row_6);
         $row_count_row_6 = $result_count_row_6->fetch_assoc();
